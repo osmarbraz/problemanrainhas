@@ -1,2 +1,2 @@
-# queen-problem
-Queen problem resolution.
+# Problema das N Rainhas
+Resolução da Problema das N Rainhas

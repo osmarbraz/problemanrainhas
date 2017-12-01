@@ -1,5 +1,5 @@
 /**
- * @author osmar e maciel
+ * @author Ana Paula, Osmar e Samuel
  *
  * O programa utiliza o metodo de permutacao para gerar todas as solucoes do problema,
  * Utiliza um vetor para armazenar as posicoes das rainhas
@@ -39,7 +39,7 @@ public class ForcaBrutaPermutacao {
         }
     }
         
-    /**
+     /**
      * Uma das propriedades da rainha e que nao pode haver outra rainha na linha
      * ou na coluna onde esta se encontra. Assim, na construcao do algoritmo de
      * solucao, nao se pode colocar uma rainha em uma posicao que esteja sendo
@@ -51,40 +51,31 @@ public class ForcaBrutaPermutacao {
      *
      * @return true se a rainha [k] nao for atacada nas posicoes ja atacadas por
      * rainhas previamente inseridas
-     */      
+     */
     public static boolean valida(int[] rainhas, int k) {
-        int x, y;
-        for (int i = 0; i < k; i++) {
 
-            x = i;
-            //Recupera o numero da rainha da posicao i 
-            y = rainhas[i];
-            while (true) {
-                x = x + 1;
-                y = y - 1;
-                if ((x > k - 1) || (y < 0)) {
-                    break;
-                }
-                /* se duas rainhas na mesma coluna */
-                if (y == rainhas[x]) {
-                    return false;
-                }
+        //Percorre o vetor de rainhas
+        for (int i = 0; i < k; i++) {
+            //Verifica se a rainha esta na mesma coluna
+            if (rainhas[i] == rainhas[k]) {
+                return false;
             }
-            x = i;
-            y = rainhas[i];
-            while (true) {
-                x = x - 1;
-                y = y - 1;
-                if (x < 0 || y < 0) {
-                    break;
-                }
-                //Verifica as diagonais
-                if (y == rainhas[x]) {
-                    return false;
-                }
+            //Verifica se a rainha esta diagonal principal
+            if ((rainhas[i] - rainhas[k]) == (k - i)) {
+                return false;
             }
+            //Verifica se a rainha esta na diagonal secundaria
+            if ((rainhas[k] - rainhas[i]) == (k - i)) {
+                return false;
+            }
+
+            // Código alternativo, pois faz verificao da diagonal principal e secundaria simultaneamente usando abs para tirar o sinal*/
+            //if ( Math.abs(rainhas[i] - rainhas[qtdeRainha]) == (k - i)) {
+            // return false;                
+            //}
         }
-        return true;
+        // Retorna que a solucao e valida
+        return true;        
     }
 
     /**
@@ -107,7 +98,7 @@ public class ForcaBrutaPermutacao {
 
         //Se k e igual da quantidade rainhas cheguei no final da linha
         if (k == qtdeRainha) {
-            if (valida(rainhas, k)) {
+            if (valida(rainhas, k-1)) {
                 //Imprime o tabuleiro quando encontrar a solucao
                 imprime(rainhas);
                 //Conta o numero de solucoes encontradas
@@ -163,7 +154,7 @@ public class ForcaBrutaPermutacao {
         System.out.println("Permutacao");
         
         //Especifica a quantidade de rainhas serem testadas
-        int qtdeRainhasTeste[] = {4, 6, 8, 10};
+        int qtdeRainhasTeste[] = {4, 6, 8};
         //Especifica o numero de vezes a se realizado com cada qtde de rainhas
         int repeticoesTeste[] = {10};
         
