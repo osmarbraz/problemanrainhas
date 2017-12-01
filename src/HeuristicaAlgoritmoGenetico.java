@@ -5,7 +5,7 @@ import java.util.Set;
 
 /**
  *
- * @author Osmar e Maciel
+ * @author Ana Paula, Osmar e Samuel
  *
  */
 public class HeuristicaAlgoritmoGenetico {

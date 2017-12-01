@@ -3,7 +3,7 @@ import java.util.Random;
 
 /**
  *
- * @author admin
+ * @author Ana Paula, Osmar e Samuel
  */
 public class HeuristicaHillClimbing {
 

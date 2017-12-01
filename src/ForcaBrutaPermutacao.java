@@ -1,5 +1,5 @@
 /**
- * @author osmar e maciel
+ * @author Ana Paula, Osmar e Samuel
  *
  * O programa utiliza o metodo de permutacao para gerar todas as solucoes do problema,
  * Utiliza um vetor para armazenar as posicoes das rainhas
