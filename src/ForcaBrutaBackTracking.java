@@ -2,28 +2,46 @@
  *
  * @author osmar e osmar
  *
- * O programa utiliza o metodo de backtraking para buscar a solucao do problema,
- * movendo as rainhas a frente e retornando quando for impossivel achar a
- * solucao, funcionando como uma busca em profundidade pelas possiveis posicoes
- * onde as rainhas podem ser colocadas.
- *
- * Utiliza um vetor para armazenar as posicoes das rainhas
- *
+ * O programa utiliza o metodo de Backtraking, mais especificamente, aplicando 
+ * a técnica de busca em profundidade.
+ * 
+ * A computação inicia posicionando a primeira rainha. 
+ * 
+ * A cada nova rainha adicionada (sempre à direita da última), é realizado um 
+ * teste para verificar se a mesma está "atacada" pelas demais rainhas anteriormente 
+ * posicionadas no tabuleiro.
+ * 
+ * Caso a rainha em verificação esteja:
+ *    
+ *    Atacada: é feita uma nova tentativa de posicionamento, percorrendo uma a
+ *             uma as possíveis posições na coluna. 
+ * 
+ *             Caso:
+ *             
+ *             - Seja encontrada uma posição válida, repete-se o procedimento para  
+ *               a próxima coluna/rainha;
+ *             
+ *             - Todas as possíveis linhas da coluna analisada estejam atacadas,
+ *               A rainha é retirada da coluna e retroage-se o teste à última 
+ *               rainha anteriormente posicionada.
+ *   
  */
 public class ForcaBrutaBackTracking {
 
     /**
-     * Atributo do numero de solucoes encontradas ao final do algoritmo
+     * Quantidade de solucoes encontradas ao final do algoritmo
      */
     private static int solucoes;
 
-    //Habilita ou desabilida a saida dos dados de impressao
+    /**
+     * Habilita ou desabilida a saida dos dados de impressao
+     */
      private static boolean desabilidarImpressao = true;
 
     /**
      * Trata a saida de dados
      *
-     * @param string
+     * @param string a ser impressa
      */
     private static void println(String string) {
         if (!desabilidarImpressao) {
@@ -32,7 +50,7 @@ public class ForcaBrutaBackTracking {
     }
 
     /**
-     * Trata a saida de dados
+     * Trata a saida de dados.
      *
      * @param string
      */
@@ -170,7 +188,7 @@ public class ForcaBrutaBackTracking {
         
         System.out.println("BackTracking");
 
-        //Especifica a quantidade de rainhas serem testadas
+        //Quantidade de rainhas serem testadas
         int qtdeRainhasTeste[] = {4, 6, 8, 10};
         //Especifica o numero de vezes a se realizado com cada qtde de rainhas
         int repeticoesTeste[] = {10};
@@ -201,14 +219,15 @@ public class ForcaBrutaBackTracking {
                     //Executa o gc antes de cada teste
                     System.gc();
                                         
-                    //Pega o tempo corrente
+                    //Início da execução
                     long tempo = System.currentTimeMillis();
 
                     //Executa a solucao do algoritmo
                     backTracking(rainhas, 0);
 
-                    //Pega o tempo final do processamento da vez
+                    //Fim da execução
                     tempo = System.currentTimeMillis() - tempo;
+                    
                     //Acumula o tempo do teste ao tempo final
                     tempoFinal = tempoFinal + tempo;
                 }
