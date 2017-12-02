@@ -1,6 +1,6 @@
 /**
  *
- * @author osmar e osmar
+ * @author Ana Paula, Osmar e Samuel
  *
  * O programa utiliza o metodo de Backtraking, mais especificamente, aplicando 
  * a técnica de busca em profundidade.
