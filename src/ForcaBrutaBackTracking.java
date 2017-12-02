@@ -1,11 +1,21 @@
 /**
  *
- * @author osmar e osmar
+ * @author Ana Paula, Osmar e Samuel
  *
- * O programa utiliza o metodo de Backtraking, mais especificamente, aplicando 
- * a técnica de busca em profundidade.
+ * O objetivo deste programa é encontrar o número de possibilidades para posicionar 
+ * N Rainhas em um tabuleiro de dimensões N x N.
  * 
- * A computação inicia posicionando a primeira rainha. 
+ * A entrada do programa é um número inteiro que define as dimensões do tabuleiro
+ * e, consequentemente, o número de rainhas a serem posicionadas.
+ * 
+ * A estratégia consiste em utilizar o método de Backtraking, mais especificamente, 
+ * aplicando a técnica de busca em profundidade.
+ * 
+ * A computação inicia adicionando-se a primeira rainha na primeira linha e coluna 
+ * do tabuleiro e então segue o seguinte padrão:
+ * 
+ * Uma rainha somente pode ser adicionada ao tabuleiro se todas as posicionadas 
+ * não estão sob ataque.
  * 
  * A cada nova rainha adicionada (sempre à direita da última), é realizado um 
  * teste para verificar se a mesma está "atacada" pelas demais rainhas anteriormente 
@@ -14,16 +24,14 @@
  * Caso a rainha em verificação esteja:
  *    
  *    Atacada: é feita uma nova tentativa de posicionamento, percorrendo uma a
- *             uma as possíveis posições na coluna. 
+ *             uma as possíveis posições na coluna.
  * 
- *             Caso:
+ *             - Caso seja encontrada uma posição válida, repete-se o procedimento 
+ *               para a próxima coluna/rainha;
  *             
- *             - Seja encontrada uma posição válida, repete-se o procedimento para  
- *               a próxima coluna/rainha;
- *             
- *             - Todas as possíveis linhas da coluna analisada estejam atacadas,
- *               A rainha é retirada da coluna e retroage-se o teste à última 
- *               rainha anteriormente posicionada.
+ *             - Caso todas as possíveis linhas da coluna analisada estejam 
+ *               atacadas, a rainha é retirada da coluna e retroage-se o teste à
+ *               última rainha anteriormente posicionada.
  *   
  */
 public class ForcaBrutaBackTracking {
@@ -36,7 +44,7 @@ public class ForcaBrutaBackTracking {
     /**
      * Habilita ou desabilida a saida dos dados de impressao
      */
-     private static boolean desabilidarImpressao = true;
+     private static boolean desabilitarImpressao = true;
 
     /**
      * Trata a saida de dados
@@ -44,7 +52,7 @@ public class ForcaBrutaBackTracking {
      * @param string a ser impressa
      */
     private static void println(String string) {
-        if (!desabilidarImpressao) {
+        if (!desabilitarImpressao) {
             System.out.println(string);
         }
     }
@@ -52,10 +60,10 @@ public class ForcaBrutaBackTracking {
     /**
      * Trata a saida de dados.
      *
-     * @param string
+     * @param string a ser impressa
      */
     private static void print(String string) {
-        if (!desabilidarImpressao) {
+        if (!desabilitarImpressao) {
             System.out.print(string);
         }
     }
@@ -79,39 +87,33 @@ public class ForcaBrutaBackTracking {
     }
     
     /**
-     * Uma das propriedades da rainha e que nao pode haver outra rainha na linha
-     * ou na coluna onde esta se encontra. Assim, na construcao do algoritmo de
-     * solucao, nao se pode colocar uma rainha em uma posicao que esteja sendo
-     * atacada. Esta mesma propriedade tambem vale para as diagonais em relacao
-     * as rainha ja posicionadas.
-     *
+     * Valida a posição da k-ésima rainha posicionada.
+     * 
+     * Não se pode posicionar uma rainha sob ataque.
+     * 
+     * Uma rainha está sob ataque se há alguma outra na mesma linha, coluna ou 
+     * diagonal onde esta se encontra.
+     * 
      * @param rainhas o vetor das rainhas
      * @param k linha do vetor a ser analisa
      *
      * @return true se a rainha [k] nao for atacada nas posicoes ja atacadas por
      * rainhas previamente inseridas
      */
-    public static boolean valida(int[] rainhas, int k) {
+    public static boolean validaPosicao(int[] rainhas, int k) {
 
-        //Percorre o vetor de rainhas
+        //Para cada uma das rainhas anteriormente posicionadas:
         for (int i = 0; i < k; i++) {
-            //Verifica se a rainha esta na mesma coluna
+            
+            //Verifica se a rainha k está na mesma coluna da rainha i
             if (rainhas[i] == rainhas[k]) {
                 return false;
             }
-            //Verifica se a rainha esta diagonal principal
-            if ((rainhas[i] - rainhas[k]) == (k - i)) {
-                return false;
+            // Verifica se a rainha k está na mesma diagonal da rainha i
+            if ( Math.abs(rainhas[i] - rainhas[k]) == (k - i)) {
+             return false;                
             }
-            //Verifica se a rainha esta na diagonal secundaria
-            if ((rainhas[k] - rainhas[i]) == (k - i)) {
-                return false;
-            }
-
-            // Código alternativo, pois faz verificao da diagonal principal e secundaria simultaneamente usando abs para tirar o sinal*/
-            //if ( Math.abs(rainhas[i] - rainhas[qtdeRainha]) == (k - i)) {
-            // return false;                
-            //}
+            
         }
         // Retorna que a solucao e valida
         return true;        
@@ -145,7 +147,7 @@ public class ForcaBrutaBackTracking {
             for (int i = 0; i < qtdeRainha; i++) {
                 // Coloca uma nova rainha na posicao [k]                
                 rainhas[k] = i;
-                if (valida(rainhas, k)) {
+                if (validaPosicao(rainhas, k)) {
                     //Avanca para a proxima linha
                     backTracking(rainhas, k + 1);
                 }                
@@ -189,9 +191,9 @@ public class ForcaBrutaBackTracking {
         System.out.println("BackTracking");
 
         //Quantidade de rainhas serem testadas
-        int qtdeRainhasTeste[] = {4, 6, 8, 10};
+        int qtdeRainhasTeste[] = {16, 20, 25};
         //Especifica o numero de vezes a se realizado com cada qtde de rainhas
-        int repeticoesTeste[] = {10};
+        int repeticoesTeste[] = {1};
 
         //Declara o tempo total do teste
         double tempoTeste = 0;
