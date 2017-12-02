@@ -77,8 +77,8 @@ public class ForcaBrutaBackTracking {
      * @param rainhas o vetor das rainhas
      * @param k linha do vetor a ser analisa
      *
-     * @return true se a rainha [k] nao for atacada nas posicoes ja atacadas por
-     * rainhas previamente inseridas
+     * @return true se a k-ésima rainha não estiver sob ataque das demais já 
+     * posicionadas
      */
     public static boolean validaPosicao(int[] rainhas, int k) {
         
@@ -89,12 +89,14 @@ public class ForcaBrutaBackTracking {
             if (rainhas[i] == rainhas[k]) {
                 return false;
             }
+            
             // Verifica se a rainha k está na mesma diagonal da rainha i
             if ( Math.abs(rainhas[i] - rainhas[k]) == (k - i)) {
              return false;                
             }
         }
-        // Retorna que a solucao e valida
+        
+        // Se solução é válida
         return true;        
     }
 
@@ -105,25 +107,22 @@ public class ForcaBrutaBackTracking {
      * Cada instância do método é responsável por posicionar uma rainha na linha 
      * (em todas as colunas possiveis). 
      * 
-     * Se uma rainha pode ser posicionada, baseando-se nas suas propriedades, sem 
-     * que esta seja atacada pelas outras rainhas ja
-     * posicionadas, entao esta rainha e' posicionada na posicao corrente e,
-     * recursivamente, as rainhas seguintes sao posicionadas.
+     * Se uma rainha pode ser posicionada, baseando-se nas suas propriedades, 
+     * sem que esta seja atacada pelas outras rainhas já posicionadas, entao esta 
+     * rainha é posicionada na posição corrente e, recursivamente, as rainhas 
+     * seguintes sao posicionadas.
      *
      * @param rainhas o vetor onde as rainhas serao inseridas
      * @param k coordenada da linha corrente onde a rainha devera ser inserida
      */
     public static void backTracking(int[] rainhas, int k) {
 
-        //Recupera a quantidade de rainhas
         int quantidadeDeRainhas = rainhas.length;
 
-        /* solucao completa */
         if (k == quantidadeDeRainhas) {
             //Imprime o tabuleiro quando encontrar a solucao
             imprime(rainhas);
-            //Conta o numero de solucoes encontradas
-            quantidadeDeSolucoes = quantidadeDeSolucoes + 1;
+            quantidadeDeSolucoes++;
         } else {
             /* posiciona a rainha k + 1 */
             for (int i = 0; i < quantidadeDeRainhas; i++) {
@@ -145,13 +144,13 @@ public class ForcaBrutaBackTracking {
     private static void imprime(int rainhas[]) {
 
         //Recupera a quantidade de rainhas
-        int qtdeRainha = rainhas.length;
+        int tamanhoDoProblema = rainhas.length;
 
-        println(" Solucao numero " + (quantidadeDeSolucoes + 1) + ":");
+        println(" Solução número " + (quantidadeDeSolucoes + 1) + ":");
 
-        for (int i = 0; i < qtdeRainha; i++) {
-            for (int j = 0; j < qtdeRainha; j++) {
-                //Posicao ocupada
+        for (int i = 0; i < tamanhoDoProblema; i++) {
+            for (int j = 0; j < tamanhoDoProblema; j++) {
+                //Posição ocupada
                 if (rainhas[j] == i) {
                     print(" " + i + " ");
                 } else {
@@ -172,24 +171,28 @@ public class ForcaBrutaBackTracking {
         
         System.out.println("BackTracking");
 
-        //Quantidade de rainhas serem testadas
-        int qtdeRainhasTeste[] = {10, 12, 14};
-        //Especifica o numero de vezes a se realizado com cada qtde de rainhas
-        int repeticoesTeste[] = {1};
+        // Vetor contendo os problemas a serem processados.
+        // Cada elemento define a ordem do tabuleiro e, consequentemente, a 
+        // quantidade de rainhas a serem posicionadas.
+        int[] tamanhoDoProblema = {10, 12, 14};
+        
+        // Quantidade de repetições do processamento
+        // Útil para fins estatísticos.
+        int repeticoesTeste[] = {2};
 
         //Declara o tempo total do teste
         double tempoTeste = 0;
         
         //Realiza os testes para as quantidades das rainhas especificadas no vetor
-        for (int qtdeR = 0; qtdeR < qtdeRainhasTeste.length; qtdeR++) {
+        for (int qtdeR = 0; qtdeR < tamanhoDoProblema.length; qtdeR++) {
 
-            int qtdeRainha = qtdeRainhasTeste[qtdeR];
+            int qtdeRainha = tamanhoDoProblema[qtdeR];
             int rainhas[] = new int[qtdeRainha];
 
             //Realiza a repeticao do teste para a quantidade de rainhas    
-            for (int qtdeT = 0; qtdeT < repeticoesTeste.length; qtdeT++) {
+            for (int testeAtual = 0; testeAtual < repeticoesTeste.length; testeAtual++) {
 
-                println("Execuntando com " + qtdeRainha + " rainhas por " + repeticoesTeste[qtdeT] + " vezes.");
+                println("Executando com " + qtdeRainha + " rainhas por " + repeticoesTeste[testeAtual] + " vezes.");
                 
                 //Zera o numero de solucoes
                 quantidadeDeSolucoes = 0;
@@ -198,7 +201,7 @@ public class ForcaBrutaBackTracking {
                 long tempoFinal = 0;
 
                 //Repete o teste para as vezes especificadas no vetor
-                for (int qtdeV = 0; qtdeV < repeticoesTeste[qtdeT]; qtdeV++) {
+                for (int qtdeV = 0; qtdeV < repeticoesTeste[testeAtual]; qtdeV++) {
                     //Executa o gc antes de cada teste
                     System.gc();
                                         
@@ -215,8 +218,8 @@ public class ForcaBrutaBackTracking {
                     tempoFinal = tempoFinal + tempo;
                 }
                 //Calcula a media do tempo
-                double mediaTempo = tempoFinal / repeticoesTeste[qtdeT];                
-                System.out.println("O tempo medio para " + qtdeRainha + " rainhas, executando " + repeticoesTeste[qtdeT] + " é vezes é " + mediaTempo + " milisegundos com " + quantidadeDeSolucoes + " solucoes em " + repeticoesTeste[qtdeT] + " repeticoes");
+                double mediaTempo = tempoFinal / repeticoesTeste[testeAtual];                
+                System.out.println("O tempo medio para " + qtdeRainha + " rainhas, executando " + repeticoesTeste[testeAtual] + " é vezes é " + mediaTempo + " milisegundos com " + quantidadeDeSolucoes + " solucoes em " + repeticoesTeste[testeAtual] + " repeticoes");
                 tempoTeste = tempoTeste + mediaTempo;
             }
         }
