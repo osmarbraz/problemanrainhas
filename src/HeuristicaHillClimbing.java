@@ -164,7 +164,7 @@ public class HeuristicaHillClimbing {
     }
    
     /**
-     * Verifica se o indivíduo e uma solucao do problema
+     * Verifica se o indivíduo e uma solução do problema
      *
      * @param individuo Uma solução a ser verificada
      * @return true se o indivíduo e uma solução do problema
@@ -182,7 +182,7 @@ public class HeuristicaHillClimbing {
     }
 
     /**
-     * Algoritmo que executa as interacoes do algoritmo Hill Climbing
+     * Algoritmo que executa as interações do algoritmo Hill Climbing
      *
      * @param qtdeInteracoes Números de vezes a executar as interações no algoritmo
      * @param qtdeRainha Quantidade de rainhas no tabuleiro
@@ -196,37 +196,38 @@ public class HeuristicaHillClimbing {
 
         //Controla as interações 
         int interacao = 0;
-        //Pàra se chegar no numero máximo de interacoes ou achar a solucao
+        //Pàra se chegar no número máximo de interacoes ou achar a solução
         while ((interacao < qtdeInteracoes) && (verificaSolucao(candidato) == false)) {
             // Gera o proximo candidato aleatoriamente
             int[] vizinho = mutacao(candidato);
-            //Calcula o Custo do novo vizinho
+            //Calcula o custo do novo vizinho
             int custoVizinho = funcaoFitness(vizinho);
             // Verifica se é maior que o anterior
             if (custoVizinho >= custoCandidato) {
                 //Troca se o custo for maior
                 candidato = vizinho;
             }
-            //Avanca para a proxima interacao
+            //Avança para a próxima interação
             interacao = interacao + 1;
         }
-        //Armazena a interacao que encontrou a solucao
+        //Armazena a interação que encontrou a solução
         interacaoSolucao = interacao;
         //Retorna o candidato
         return candidato;
     }
 
     /**
-     * Faz a chamada do algoritmo e Hill Climbine apresenta as estatisticas
+     * Faz a chamada do algoritmo e Hill Climbine apresenta as estatisticas.
+     * 
      * @param qtdeInteracoes
      * @param qtdeRainha 
      */    
     public static void algoritmoHillClimbing(int qtdeInteracoes, int qtdeRainha) {
-        //Guarda em que interacao ocorreu a solucao
+        //Guarda em que interação ocorreu a solução
         interacaoSolucao = -1;
-        //Guarda o melhor invididuo
+        //Guarda o melhor indivíduo
 
-        //Procura o menor individuo
+        //Procura o menor indivíduo
         int[] melhorIndividuo = hillClimbing(qtdeInteracoes, qtdeRainha);
 
         if (verificaSolucao(melhorIndividuo)) {
