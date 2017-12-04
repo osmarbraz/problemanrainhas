@@ -38,19 +38,11 @@ public class ForcaBrutaPermutacao {
             if (rainhas[i] == rainhas[k]) {
                 return false;
             }
-            //Verifica se a rainha esta diagonal principal
-            if ((rainhas[i] - rainhas[k]) == (k - i)) {
-                return false;
+           
+            // Verifica se a rainha k está na mesma diagonal da rainha i
+            if ( Math.abs(rainhas[i] - rainhas[k]) == (k - i)) {
+             return false;                
             }
-            //Verifica se a rainha esta na diagonal secundaria
-            if ((rainhas[k] - rainhas[i]) == (k - i)) {
-                return false;
-            }
-
-            // Código alternativo, pois faz verificao da diagonal principal e secundaria simultaneamente usando abs para tirar o sinal*/
-            //if ( Math.abs(rainhas[i] - rainhas[qtdeRainha]) == (k - i)) {
-            // return false;                
-            //}
         }
         // Retorna que a solucao e valida
         return true;
