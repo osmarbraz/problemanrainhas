@@ -8,34 +8,34 @@ import java.util.Random;
 public class HeuristicaHillClimbing {
 
     /**
-     * Atributo do numero de solucoes encontradas ao final do algoritmo
+     * Atributo do número de soluções encontradas ao final do algoritmo
      */
     private static int solucoes;
     private static int interacaoSolucao;
 
-    private static Random randomico = new Random();
+    private static final Random RANDOMICO = new Random();
 
     //Habilita ou desabilida a saida dos dados de impressao
-    private static boolean desabilidarImpressao = true;
+    private static final boolean DESABILITARIMPRESSAO = true;
 
     /**
-     * Trata a saida de dados
+     * Trata a saída de dados
      *
      * @param string
      */
     private static void println(String string) {
-        if (!desabilidarImpressao) {
+        if (!DESABILITARIMPRESSAO) {
             System.out.println(string);
         }
     }
 
     /**
-     * Trata a saida de dados
+     * Trata a saída de dados
      *
      * @param string
      */
     private static void print(String string) {
-        if (!desabilidarImpressao) {
+        if (!DESABILITARIMPRESSAO) {
             System.out.print(string);
         }
     }
@@ -59,7 +59,7 @@ public class HeuristicaHillClimbing {
     }
 
     /**
-     * Imprime o tabuleiro da solucao do problema das Rainhas
+     * Imprime o tabuleiro da solução do problema das Rainhas
      *
      * @param rainhas vetor das rainhas
      */
@@ -78,36 +78,24 @@ public class HeuristicaHillClimbing {
         println(" ");
     }
 
-    public static int getNumeroRainhasTabuleiro(int[][] tabuleiro) {
-        int count = 0;
-        for (int i = 0; i < tabuleiro.length; i++) {
-            for (int j = 0; j < tabuleiro.length; j++) {
-                if (tabuleiro[i][j] == 1) {
-                    count++;
-                }
-            }
-        }
-        return count;
-    }
-
     /**
-     * Realiza a mutacao em um individuo de forma aleatoria
+     * Realiza a mutação em um indivíduo de forma aleatória
      *
-     * @param individuo Um individuo a sofrer mutacao
-     * @return um individuo com a mutacao
+     * @param individuo Um indivíduo a sofrer mutação
+     * @return um indivíduo com a mutacao
      */
     private static int[] mutacao(int[] individuo) {
-        //Seleciona a posicao da mutacao
-        int posicao = randomico.nextInt(individuo.length);
+        //Seleciona a posição da mutação
+        int posicao = RANDOMICO.nextInt(individuo.length);
         //Novo valor para a posicao selecionado
-        int novovalor = randomico.nextInt(individuo.length);
-        //Realiza a mutacao na posicao com o novoValor
+        int novovalor = RANDOMICO.nextInt(individuo.length);
+        //Realiza a mutação na posição com o novoValor
         individuo[posicao] = novovalor;
         return individuo;
     }
 
     /**
-     * Carrega a populacao inicial de individuos
+     * Carrega a população inicial de indivíduos
      *
      * @param tamanhoIndividuo quantidade de individuos do conjunto inicial
      */
@@ -115,9 +103,9 @@ public class HeuristicaHillClimbing {
         //Inicializa o vetor de retorno
         int[] ret = new int[tamanhoIndividuo];
         int i = 0;
-        //Gera os individuos de acordo com o tamanho do candidato
+        //Gera os indivíduos de acordo com o tamanho do candidato
         while (i < tamanhoIndividuo) {
-            //Gera um uma rainha aleatoria
+            //Gera um uma rainha aleatória
             ret[i] = new Random().nextInt(tamanhoIndividuo);
             i = i + 1;
         }
@@ -125,162 +113,80 @@ public class HeuristicaHillClimbing {
     }
 
     /**
-     * Função de avaliacao do individuo, retorna a quantidade de rainhas a
+     * Função de avaliação do indivíduo, retorna a quantidade de rainhas a
      * salvo.
      *
-     * @param individuo
-     * @return a quantidade de rainhas salvas no individuo
+     * @param individuo Uma solução a ser verificada
+     * @return a quantidade de rainhas salvas no indivíduo
      */
     public static int funcaoFitness(int[] individuo) {
-        int[][] tabuleiro = new int[individuo.length][individuo.length];
-
-        // Monta o tabuleiro com 0 em posicao vazia e 1 com a rainha
-        for (int i = 0; i < individuo.length; i++) {
-            int posicaoRainha = individuo[i];
-            for (int j = 0; j < individuo.length; j++) {
-                if (posicaoRainha == j) {
-                    tabuleiro[i][j] = 1;
-                } else {
-                    tabuleiro[i][j] = 0;
-                }
-            }
-        }
-
+      
         // Verifica se as rainhas estao salvas
         // A quantidade rainhas na salvas e o retorno da função fitness
         int ret = 0;
         for (int i = 0; i < individuo.length; i++) {
-            for (int j = 0; j < individuo.length; j++) {
-                if (tabuleiro[i][j] == 1) {
-                    if (valida(tabuleiro, i, j) == false) {
-                        ret++;
-                    }
-                }
+            if (validaPosicao(individuo, i)) {
+                ret++;
             }
         }
         return ret;
     }
-
+    
     /**
-     * Verifica se existe uma rainha ameaçando a posicao linha,coluna existindo
-     * retorna true caso contrário retorna false
+     * Valida se a k-ésima rainha posicionada está sob ataque.
+     * 
+     * Uma rainha está sob ataque se há outra rainha na mesma linha, coluna ou 
+     * diagonal onde esta se encontra.
+     * 
+     * @param rainhas o vetor das rainhas
+     * @param k linha do vetor a ser analisa
      *
-     * @param tabuleiro a ser validado
-     * @param linha linha da rainha
-     * @param coluna coluna da rainha
-     * @return true se a rainha esta salva.
-     *
+     * @return true se a k-ésima rainha não estiver sob ataque das demais já 
+     * posicionadas
      */
-    private static boolean valida(int[][] tabuleiro, int linha, int coluna) {
-
-        // verificar na linha da rainha
-        for (int i = 0; i < tabuleiro.length; i++) {
-            if (i != linha && tabuleiro[i][coluna] == 1) {
-                return true;
+    public static boolean validaPosicao(int[] rainhas, int k) {
+        
+        //Para cada uma das rainhas anteriormente posicionadas:
+        for (int i = 0; i < k; i++) {
+            
+            //Verifica se a rainha k está na mesma coluna da rainha i
+            if (rainhas[i] == rainhas[k]) {
+                return false;
             }
-        }
-
-        // verificar na coluna da rainha
-        for (int j = 0; j < tabuleiro.length; j++) {
-            if (j != coluna && tabuleiro[linha][j] == 1) {
-                return true;
+            
+            // Verifica se a rainha k está na mesma diagonal da rainha i
+            if ( Math.abs(rainhas[i] - rainhas[k]) == (k - i)) {
+             return false;                
             }
-        }
-
-        // verificar na diagonal1
-        int i = linha - 1;
-        int j = coluna - 1;
-        while (i >= 0 && j >= 0) {
-            if (tabuleiro[i][j] == 1) {
-                return true;
-            }
-            i--;
-            j--;
-        }
-
-        // verificar na diagonal2
-        i = linha + 1;
-        j = coluna + 1;
-        while (i < tabuleiro.length && j < tabuleiro.length) {
-            if (tabuleiro[i][j] == 1) {
-                return true;
-            }
-            i++;
-            j++;
-        }
-
-        // Verificar a diagonal3
-        i = linha + 1;
-        j = coluna - 1;
-        while (i < tabuleiro.length && j >= 0) {
-            if (tabuleiro[i][j] == 1) {
-                return true;
-            }
-            i++;
-            j--;
-        }
-        // Verifica a diagonal4
-        i = linha - 1;
-        j = coluna + 1;
-        while (i >= 0 && j < tabuleiro.length) {
-            if (tabuleiro[i][j] == 1) {
-                return true;
-            }
-            i--;
-            j++;
-        }
-        return false; // esta a salvo
+        }        
+        // Se a posição é válida
+        return true;        
     }
-
+   
     /**
-     * Verifica se o individuo e uma solucao do problema
+     * Verifica se o indivíduo e uma solucao do problema
      *
-     * @param individuo um solucao a ser verifica
-     * @return true se o individuo e uma solucao do problema
+     * @param individuo Uma solução a ser verificada
+     * @return true se o indivíduo e uma solução do problema
      */
     public static boolean verificaSolucao(int[] individuo) {
-        int[][] tabuleiro = new int[individuo.length][individuo.length];
-
-        // Monta o tabuleiro com 0 em posicao vazia e 1 com a rainha
-        for (int i = 0; i < individuo.length; i++) {
-            int posicaoRainha = individuo[i];
-            for (int j = 0; j < individuo.length; j++) {
-                if (posicaoRainha == j) {
-                    tabuleiro[i][j] = 1;
-                } else {
-                    tabuleiro[i][j] = 0;
-                }
-            }
-        }
-
-        //Verifica se todas as rainhas estao em posicoes validas
+       
+        //Verifica se todas as rainhas estao em posições validas
         int cont = 0;
-        for (int i = 0; i < individuo.length; i++) {
-            for (int j = 0; j < individuo.length; j++) {
-                //Verifica se a posicao esta ocupada
-                if (tabuleiro[i][j] == 1) {
-                    if (valida(tabuleiro, i, j) == true) {
-                        cont = cont + 1;
-                    }
-                }
-            }
-        }
-        boolean ret = false;
-        //if ((cont == 0) && (getNumeroRainhasTabuleiro(tabuleiro) == individuo.length)) {
-        if (cont == 0) {
-            ret = true;
-        }
-        return ret;
+        for (int i = 0; i < individuo.length; i++) {         
+            if (validaPosicao(individuo, i)==false) {
+                cont++;
+            }       
+        }        
+        return (cont==0);
     }
 
     /**
      * Algoritmo que executa as interacoes do algoritmo Hill Climbing
      *
-     * @param qtdeInteracoes Numeros de vezes a executar as interacoes no
-     * algoritmo
+     * @param qtdeInteracoes Números de vezes a executar as interações no algoritmo
      * @param qtdeRainha Quantidade de rainhas no tabuleiro
-     * 
-     * @return Retorna o melhor individuo encontrado nas interacoes
+     * @return Retorna o melhor indivíduo encontrado nas interações
      */
     public static int[] hillClimbing(int qtdeInteracoes, int qtdeRainha) {
         //Gera o candidato inicial
@@ -288,9 +194,9 @@ public class HeuristicaHillClimbing {
         //Calcula o custo do candidato inicial
         int custoCandidato = funcaoFitness(candidato);
 
-        //Controla as interacoes 
+        //Controla as interações 
         int interacao = 0;
-        //Pàra se chegar no numero maximo de interacoes ou achar a solucao
+        //Pàra se chegar no numero máximo de interacoes ou achar a solucao
         while ((interacao < qtdeInteracoes) && (verificaSolucao(candidato) == false)) {
             // Gera o proximo candidato aleatoriamente
             int[] vizinho = mutacao(candidato);
@@ -346,7 +252,7 @@ public class HeuristicaHillClimbing {
         //Especifica o numero de vezes a se realizado com cada qtde de rainhas
         int repeticoesTeste[] = {10};
 
-        //Parametros do algoritmo genetico
+        //Parâmetros do algoritmo genético
         //Quantidade de geracoes
         int qtdeIteracoes = 1000000;
 
@@ -358,15 +264,15 @@ public class HeuristicaHillClimbing {
 
             int qtdeRainha = qtdeRainhasTeste[qtdeR];
 
-            //Realiza a repeticao do teste para a quantidade de rainhas    
+            //Realiza a repetição do teste para a quantidade de rainhas    
             for (int qtdeT = 0; qtdeT < repeticoesTeste.length; qtdeT++) {
 
                 println("Execuntando com " + qtdeRainha + " rainhas por " + repeticoesTeste[qtdeT] + " vezes.");
 
-                //Zera o numero de solucoes
+                //Zera o número de soluções
                 solucoes = 0;
 
-                //Declara o tempo final da repeticao
+                //Declara o tempo final da repetição
                 long tempoFinal = 0;
 
                 //Repete o teste para as vezes especificadas no vetor
@@ -378,7 +284,7 @@ public class HeuristicaHillClimbing {
                     //Pega o tempo corrente
                     long tempo = System.currentTimeMillis();
 
-                    //Executa a solucao do algoritmo         
+                    //Executa a solução do algoritmo         
                     algoritmoHillClimbing(qtdeIteracoes, qtdeRainha);
 
                     //Pega o tempo final do processamento da vez
@@ -386,14 +292,12 @@ public class HeuristicaHillClimbing {
                     //Acumula o tempo do teste ao tempo final
                     tempoFinal = tempoFinal + tempo;
                 }
-                //Calcula a media do tempo
+                //Calcula a média do tempo
                 double mediaTempo = tempoFinal / repeticoesTeste[qtdeT];
                 System.out.println("O tempo medio para " + qtdeRainha + " rainhas, executando " + repeticoesTeste[qtdeT] + " é vezes é " + mediaTempo + " milisegundos com " + solucoes + " solucoes em " + repeticoesTeste[qtdeT] + " repeticoes");
                 tempoTeste = tempoTeste + mediaTempo;
             }
         }
         System.out.println("O tempo total do teste e " + tempoTeste + " milisegundos.");
-
     }
-
 }
