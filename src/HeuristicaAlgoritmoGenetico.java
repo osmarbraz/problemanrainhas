@@ -501,9 +501,9 @@ public class HeuristicaAlgoritmoGenetico {
         System.out.println("Algoritmo Genetico");
         
         //Especifica a quantidade de rainhas serem testadas
-        int qtdeRainhasTeste[] = {4,6,8,10};
+        int qtdeRainhasTeste[] = {8,12, 14};
         //Especifica o numero de vezes a se realizado com cada qtde de rainhas
-        int repeticoesTeste[] = {10};
+        int repeticoesTeste[] = {1};
 
         //Declara o tempo total do teste
         double tempoTeste = 0;

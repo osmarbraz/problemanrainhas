@@ -1,10 +1,10 @@
+
 /**
  * @author Ana Paula, Osmar e Samuel
  *
- * O programa utiliza o metodo de permutacao para gerar todas as solucoes do problema,
- * Utiliza um vetor para armazenar as posicoes das rainhas
- *
- * Forca bruta por permutacao
+ * Forca bruta por permutacao*
+ * O programa utiliza o método de permutação para gerar todas as soluções do problema.
+ * Utiliza um vetor para armazenar as posições das rainhas.
  *
  */
 public class ForcaBrutaPermutacao {
@@ -12,34 +12,12 @@ public class ForcaBrutaPermutacao {
     /**
      * Atributo do numero de solucoes encontradas ao final do algoritmo
      */
-    private static int solucoes;
+    private static int quantidadeSolucoesEncontradas;
 
     //Habilita ou desabilida a saida dos dados de impressao
-     private static boolean desabilidarImpressao = true;
+    private static boolean imprimeTabuleiro = false;
 
     /**
-     * Trata a saida de dados
-     *
-     * @param string
-     */
-    private static void println(String string) {
-        if (!desabilidarImpressao) {
-            System.out.println(string);
-        }
-    }
-
-    /**
-     * Trata a saida de dados
-     *
-     * @param string
-     */
-    private static void print(String string) {
-        if (!desabilidarImpressao) {
-            System.out.print(string);
-        }
-    }
-        
-     /**
      * Uma das propriedades da rainha e que nao pode haver outra rainha na linha
      * ou na coluna onde esta se encontra. Assim, na construcao do algoritmo de
      * solucao, nao se pode colocar uma rainha em uma posicao que esteja sendo
@@ -75,7 +53,7 @@ public class ForcaBrutaPermutacao {
             //}
         }
         // Retorna que a solucao e valida
-        return true;        
+        return true;
     }
 
     /**
@@ -98,11 +76,13 @@ public class ForcaBrutaPermutacao {
 
         //Se k e igual da quantidade rainhas cheguei no final da linha
         if (k == qtdeRainha) {
-            if (valida(rainhas, k-1)) {
+            if (valida(rainhas, k - 1)) {
                 //Imprime o tabuleiro quando encontrar a solucao
-                imprime(rainhas);
+                if (imprimeTabuleiro) {
+                    imprimeTabuleiroSolucoes(rainhas);
+                }
                 //Conta o numero de solucoes encontradas
-                solucoes = solucoes + 1;
+                quantidadeSolucoesEncontradas = quantidadeSolucoesEncontradas + 1;
             }
         } else {
             //Percorre o vetor de rainhas
@@ -124,24 +104,82 @@ public class ForcaBrutaPermutacao {
      *
      * @param rainhas
      */
-    private static void imprime(int rainhas[]) {
+    private static void imprimeTabuleiroSolucoes(int rainhas[]) {
 
         //Recupera a quantidade de rainhas
         int qtdeRainha = rainhas.length;
 
-        println(" Solucao numero " + (solucoes + 1) + ":");
+        System.out.println(" Solução número " + (quantidadeSolucoesEncontradas + 1) + ":");
 
         for (int i = 0; i < qtdeRainha; i++) {
             for (int j = 0; j < qtdeRainha; j++) {
                 if (rainhas[j] == i) {
-                    print(" " + i + " ");
+                    System.out.print(" " + i + " ");
                 } else {
-                    print(" . ");
+                    System.out.print(" . ");
                 }
             }
-            println(" ");
+            System.out.println(" ");
         }
-        println(" ");
+        System.out.println(" ");
+    }
+
+    private static void nRainhas(int[] listaProblemasASolucionar, int repeticoesTeste) {
+        
+        double tempoTotalDeTeste = 0;
+        double mediaTempo;
+        long tempoAcumulado;
+        long tempo;
+        
+        //Realiza os testes para as quantidades das rainhas especificadas no vetor
+        for (int problemaAtual = 0; problemaAtual < listaProblemasASolucionar.length; problemaAtual++) {
+
+            int n = listaProblemasASolucionar[problemaAtual];
+            int rainhas[] = new int[n];
+            int usado[] = new int[n];
+
+            System.out.println("-----------------------------------------------------------");
+            System.out.println("Para " + n + " Rainhas \n"); 
+            
+            tempoAcumulado = 0;
+            
+            //Repete o teste para as vezes especificadas no vetor
+            for (int testeAtual = 1; testeAtual <= repeticoesTeste; testeAtual++) {
+            
+                //Zera o numero de solucoes
+                quantidadeSolucoesEncontradas = 0;
+                
+                //Executa o garbage collector (gc) antes de cada teste
+                System.gc();
+
+                //Início da execução
+                tempo = System.currentTimeMillis();
+
+                /* se um elemento i estiver em uso, entao used[i] == 1, caso contrario, used[i] == 0. */
+                for (int i = 0; i < n; i++) {
+                    usado[i] = 0;
+                }
+                permutacao(rainhas, usado, 0);
+
+                //Pega o tempo final do processamento da vez
+                tempo = System.currentTimeMillis() - tempo;
+                //Acumula o tempo do teste ao tempo final
+                tempoAcumulado = tempoAcumulado + tempo;
+                System.out.println("Resultado da " + testeAtual + "ª execução: " + tempo + " milisegundos");
+            }
+
+            mediaTempo = tempoAcumulado / repeticoesTeste;   
+
+            System.out.println("\nSoluções...: " + quantidadeSolucoesEncontradas);
+            System.out.println("Tempo Médio: " + mediaTempo + " milisegundos");
+            System.out.println("Acumulado..: " + tempoAcumulado + " milisegundos");
+
+            tempoTotalDeTeste = tempoTotalDeTeste + tempoAcumulado;
+        }
+        
+        System.out.println("===========================================================");
+        System.out.println("O tempo total do teste e " + tempoTotalDeTeste + " milisegundos.");
+        System.out.println("===========================================================");
     }
 
     /**
@@ -150,62 +188,20 @@ public class ForcaBrutaPermutacao {
      * @param args
      */
     public static void main(String args[]) {
-        
+
+        // Vetor contendo os problemas a serem processados.
+        // Cada elemento define a ordem do tabuleiro e, consequentemente, a 
+        // quantidade de rainhas a serem posicionadas.
+        int[] listaProblemasASolucionar = {6, 7};
+
+        // Quantidade de repetições do processamento
+        // Útil para fins estatísticos.
+        int repeticoesTeste = 2;
+
         System.out.println("Permutacao");
-        
-        //Especifica a quantidade de rainhas serem testadas
-        int qtdeRainhasTeste[] = {4, 6, 8};
-        //Especifica o numero de vezes a se realizado com cada qtde de rainhas
-        int repeticoesTeste[] = {10};
-        
-        //Declara o tempo total do teste
-        double tempoTeste = 0;
+        System.out.println("Executando N-Rainhas com " + repeticoesTeste + " repetições.\n\n");
+        nRainhas(listaProblemasASolucionar, repeticoesTeste);
 
-        //Testa as quantidades das rainhas especificadas no vetor
-        for (int qtdeR = 0; qtdeR < qtdeRainhasTeste.length; qtdeR++) {
-
-            int qtdeRainha = qtdeRainhasTeste[qtdeR];
-            int rainhas[] = new int[qtdeRainha];
-            int usado[] = new int[qtdeRainha];
-
-            //Realiza a repeticao das quantidades           
-            for (int qtdeT = 0; qtdeT < repeticoesTeste.length; qtdeT++) {
-
-                println("Execuntando com " + qtdeRainha + " rainhas por " + repeticoesTeste[qtdeT] + " vezes.");
-                
-                //Zera o numero de solucoes
-                solucoes = 0;
-
-                //Declara o tempo final da repeticao
-                long tempoFinal = 0;
-
-                //Repete o teste as vezes especificadas
-                for (int qtdeV = 0; qtdeV < repeticoesTeste[qtdeT]; qtdeV++) {
-
-                    //Executa o gc antes de cada teste
-                    System.gc();
-                    
-                    //Zera o tempo de inicio da vez
-                    long tempo = 0;
-                    tempo = System.currentTimeMillis();
-
-                    /* se um elemento i estiver em uso, entao used[i] == 1, caso contrario, used[i] == 0. */
-                    for (int i = 0; i < qtdeRainha; i++) {
-                        usado[i] = 0;
-                    }
-                    permutacao(rainhas, usado, 0);
-
-                    //Pega o tempo final do processamento da vez
-                    tempo = System.currentTimeMillis() - tempo;
-                    //Acumula o tempo do teste ao tempo final
-                    tempoFinal = tempoFinal + tempo;
-                }
-                //Calcula a media do tempo
-                double mediaTempo = tempoFinal / repeticoesTeste[qtdeT];
-                System.out.println("O tempo medio para " + qtdeRainha + " rainhas, executando " + repeticoesTeste[qtdeT] + " é vezes é " + mediaTempo + " milisegundos com " + solucoes + " solucoes em " + repeticoesTeste[qtdeT] + " repeticoes");
-                tempoTeste = tempoTeste + mediaTempo;
-            }
-        }
-        System.out.println("O tempo total do teste e " + tempoTeste + " milisegundos.");
     }
+
 }

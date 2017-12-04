@@ -17,21 +17,22 @@
  * Uma rainha somente pode ser adicionada ao tabuleiro se todas as posicionadas 
  * não estão sob ataque.
  * 
- * A cada nova rainha adicionada (sempre à direita da última), é realizado um 
- * teste para verificar se a mesma está "atacada" pelas demais rainhas anteriormente 
- * posicionadas no tabuleiro.
+ * A cada nova rainha adicionada (sempre na coluna à direita da  última rainha 
+ * adicionada), é realizado um teste para verificar se a mesma está sob ataque de 
+ * alguma rainha já posicionadas no tabuleiro.
  * 
  * Caso a rainha em verificação esteja:
  *    
  *    Atacada: é feita uma nova tentativa de posicionamento, percorrendo uma a
- *             uma as possíveis posições na coluna.
+ *             uma as possíveis posições na coluna, ou seja, variando, a linha.
  * 
  *             - Caso seja encontrada uma posição válida, repete-se o procedimento 
  *               para a próxima coluna/rainha;
  *             
  *             - Caso todas as possíveis linhas da coluna analisada estejam 
  *               atacadas, a rainha é retirada da coluna e retroage-se o teste à
- *               última rainha anteriormente posicionada.
+ *               última rainha anteriormente posicionada, buscando uma posição 
+ *               distinta para a mesma.
  *   
  */
 public class ForcaBrutaBackTracking {
@@ -39,35 +40,13 @@ public class ForcaBrutaBackTracking {
     /**
      * Quantidade de solucoes encontradas ao final do algoritmo
      */
-    private static int quantidadeDeSolucoes;
+    private static int quantidadeSolucoesEncontradas;
 
     /**
      * Habilita ou desabilida a saida dos dados de impressao
      */
-     private static boolean desabilitarImpressao = true;
+     private static boolean imprimeTabuleiro = false;
 
-    /**
-     * Trata a saida de dados
-     *
-     * @param string a ser impressa
-     */
-    private static void println(String string) {
-        if (!desabilitarImpressao) {
-            System.out.println(string);
-        }
-    }
-
-    /**
-     * Trata a saida de dados.
-     *
-     * @param string a ser impressa
-     */
-    private static void print(String string) {
-        if (!desabilitarImpressao) {
-            System.out.print(string);
-        }
-    }
-    
     /**
      * Valida se a k-ésima rainha posicionada está sob ataque.
      * 
@@ -96,7 +75,7 @@ public class ForcaBrutaBackTracking {
             }
         }
         
-        // Se solução é válida
+        // Se a posição é válida
         return true;        
     }
 
@@ -121,8 +100,10 @@ public class ForcaBrutaBackTracking {
 
         if (k == quantidadeDeRainhas) {
             //Imprime o tabuleiro quando encontrar a solucao
-            imprime(rainhas);
-            quantidadeDeSolucoes++;
+            if (imprimeTabuleiro) {
+                imprimeTabuleiroSolucoes(rainhas);
+            }
+            quantidadeSolucoesEncontradas++;
         } else {
             /* posiciona a rainha k + 1 */
             for (int i = 0; i < quantidadeDeRainhas; i++) {
@@ -137,92 +118,110 @@ public class ForcaBrutaBackTracking {
     }
 
     /**
-     * Imprime o tabuleiro com as rainhas
+     * Imprime as soluções: tabuleiro e o posicionamento das rainhas
      *
      * @param rainhas
      */
-    private static void imprime(int rainhas[]) {
+    private static void imprimeTabuleiroSolucoes(int rainhas[]) {
 
         //Recupera a quantidade de rainhas
         int tamanhoDoProblema = rainhas.length;
 
-        println(" Solução número " + (quantidadeDeSolucoes + 1) + ":");
-
+        System.out.println(" Solução número " + (quantidadeSolucoesEncontradas + 1) + ":");
+        
         for (int i = 0; i < tamanhoDoProblema; i++) {
             for (int j = 0; j < tamanhoDoProblema; j++) {
                 //Posição ocupada
                 if (rainhas[j] == i) {
-                    print(" " + i + " ");
+                    System.out.print(" " + i + " ");
                 } else {
-                    print(" . ");
+                    System.out.print(" . ");
                 }
             }
-            println(" ");
+            System.out.println(" ");
         }
-        println(" ");
+        System.out.println(" ");
     }
 
+    private static void nRainhas (int[] listaProblemasASolucionar, int repeticoesTeste) {
+        
+        double tempoTotalDeTeste = 0;
+        double mediaTempo;
+        long tempoAcumulado;
+        long tempo;
+        
+        //Realiza os testes para as quantidades das rainhas especificadas no vetor
+        for (int problemaAtual = 0; problemaAtual < listaProblemasASolucionar.length; problemaAtual++) {
+
+            int n = listaProblemasASolucionar[problemaAtual];
+            int rainhas[] = new int[n];
+
+            System.out.println("-----------------------------------------------------------");
+            System.out.println("Para " + n + " Rainhas \n"); 
+            
+            //Declara o tempo final da repeticao
+            tempoAcumulado = 0;
+
+            //Repete o teste para as vezes especificadas no vetor
+            for (int testeAtual = 1; testeAtual <= repeticoesTeste; testeAtual++) {
+            
+                //Zera o numero de solucoes
+                quantidadeSolucoesEncontradas = 0;
+                
+                //Executa o garbage collector (gc) antes de cada teste
+                System.gc();
+
+                //Início da execução
+                tempo = System.currentTimeMillis();
+                
+                backTracking(rainhas, 0);
+
+                //Fim da execução
+                tempo = System.currentTimeMillis() - tempo;
+
+                //Acumula o tempo do teste ao tempo final
+                tempoAcumulado = tempoAcumulado + tempo;
+                System.out.println("Resultado da " + testeAtual + "ª execução: " + tempo + " milisegundos");                
+            
+            }
+            
+            mediaTempo = tempoAcumulado / repeticoesTeste;                
+            System.out.println("\nSoluções...: " + quantidadeSolucoesEncontradas);
+            System.out.println("Tempo Médio: " + mediaTempo + " milisegundos");
+            System.out.println("Acumulado..: " + tempoAcumulado + " milisegundos");
+                    
+            tempoTotalDeTeste = tempoTotalDeTeste + tempoAcumulado;
+            
+        }
+        
+        System.out.println("Tempo Global...: " + tempoTotalDeTeste + " milisegundos.");
+                
+    } 
+    
     /**
-     * Executa o teste do agoritmo
+     * Executa o algoritmo.
+     * 
+     * Informações relevantes:
+     * 
+     * listaProblemasASolucionar: vetor contendo os tamanhos a serem resolvidos.
+     * repeticoesTeste: Quantidade de vezes que cada problema é solucionado.
      *
      * @param args
      */
     public static void main(String args[]) {
         
-        System.out.println("BackTracking");
-
         // Vetor contendo os problemas a serem processados.
         // Cada elemento define a ordem do tabuleiro e, consequentemente, a 
         // quantidade de rainhas a serem posicionadas.
-        int[] tamanhoDoProblema = {10, 12, 14};
+        int[] listaProblemasASolucionar = {12, 13};
         
         // Quantidade de repetições do processamento
         // Útil para fins estatísticos.
-        int repeticoesTeste[] = {2};
-
-        //Declara o tempo total do teste
-        double tempoTeste = 0;
+        int repeticoesTeste = 2;
         
-        //Realiza os testes para as quantidades das rainhas especificadas no vetor
-        for (int qtdeR = 0; qtdeR < tamanhoDoProblema.length; qtdeR++) {
+        System.out.println("BackTracking");
+        System.out.println("Executando N-Rainhas com " + repeticoesTeste + " repetições.\n\n"); 
+        nRainhas(listaProblemasASolucionar, repeticoesTeste);
 
-            int qtdeRainha = tamanhoDoProblema[qtdeR];
-            int rainhas[] = new int[qtdeRainha];
-
-            //Realiza a repeticao do teste para a quantidade de rainhas    
-            for (int testeAtual = 0; testeAtual < repeticoesTeste.length; testeAtual++) {
-
-                println("Executando com " + qtdeRainha + " rainhas por " + repeticoesTeste[testeAtual] + " vezes.");
-                
-                //Zera o numero de solucoes
-                quantidadeDeSolucoes = 0;
-
-                //Declara o tempo final da repeticao
-                long tempoFinal = 0;
-
-                //Repete o teste para as vezes especificadas no vetor
-                for (int qtdeV = 0; qtdeV < repeticoesTeste[testeAtual]; qtdeV++) {
-                    //Executa o gc antes de cada teste
-                    System.gc();
-                                        
-                    //Início da execução
-                    long tempo = System.currentTimeMillis();
-
-                    //Executa a solucao do algoritmo
-                    backTracking(rainhas, 0);
-
-                    //Fim da execução
-                    tempo = System.currentTimeMillis() - tempo;
-                    
-                    //Acumula o tempo do teste ao tempo final
-                    tempoFinal = tempoFinal + tempo;
-                }
-                //Calcula a media do tempo
-                double mediaTempo = tempoFinal / repeticoesTeste[testeAtual];                
-                System.out.println("O tempo medio para " + qtdeRainha + " rainhas, executando " + repeticoesTeste[testeAtual] + " é vezes é " + mediaTempo + " milisegundos com " + quantidadeDeSolucoes + " solucoes em " + repeticoesTeste[testeAtual] + " repeticoes");
-                tempoTeste = tempoTeste + mediaTempo;
-            }
-        }
-        System.out.println("O tempo total do teste e " + tempoTeste + " milisegundos.");
     }
 }
