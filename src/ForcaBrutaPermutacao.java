@@ -85,7 +85,7 @@ public class ForcaBrutaPermutacao {
         //Verifica se todas as rainhas estão em posições validas
         for (int i = 0; i < n; i++) {         
             if (validaPosicao(R, i)==false) {
-                cont++;
+                cont = cont + 1;
             }       
         }        
         return (cont==0);
