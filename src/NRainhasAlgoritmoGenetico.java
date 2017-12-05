@@ -7,7 +7,7 @@ import java.util.Set;
  * @author Ana Paula, Osmar e Samuel
  *
  */
-public class HeuristicaAlgoritmoGenetico {
+public class NRainhasAlgoritmoGenetico {
 
     /**
      * Atributo do numero de soluções encontradas ao final do algoritmo

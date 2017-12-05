@@ -5,7 +5,7 @@ import java.util.Random;
  *
  * @author Ana Paula, Osmar e Samuel
  */
-public class HeuristicaHillClimbing {
+public class NRainhasHillClimbing {
 
     /**
      * Atributo do número de soluções encontradas ao final do algoritmo
