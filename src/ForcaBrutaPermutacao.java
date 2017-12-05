@@ -78,11 +78,12 @@ public class ForcaBrutaPermutacao {
      * 
      * @return True ou False se existe alguma rainha em posição inválida.
      */
-    public static boolean valida(int[] R) {
-       
-        //Verifica se todas as rainhas estão em posições validas
+    public static boolean valida(int[] R) {               
+        //Recupera a quantidade de rainhas
+        int n = R.length;
         int cont = 0;
-        for (int i = 0; i < R.length; i++) {         
+        //Verifica se todas as rainhas estão em posições validas
+        for (int i = 0; i < n; i++) {         
             if (validaPosicao(R, i)==false) {
                 cont++;
             }       
@@ -127,7 +128,7 @@ public class ForcaBrutaPermutacao {
             for (int i = 0; i < n; i++) {
                 //realiza a permutação somente para elementos não utilizados                
                 if (visitado[i] == 0) {
-                   visitado[i] = 1;
+                    visitado[i] = 1;
                     R[k] = i;
                     //Avança para próxima linha (k=k+1)                                   
                     permutacao(R, visitado, k + 1);
