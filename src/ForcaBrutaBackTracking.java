@@ -56,26 +56,26 @@ public class ForcaBrutaBackTracking {
      * Como as rainhas são adicionadas sempre na coluna seguinte, não há necessi-
      * dade de validar conflitos na mesma coluna.
      * 
-     * @param posicaoRainhas vetor das rainhas posicionadas. O elemento corresponde à
+     * @param R vetor das rainhas posicionadas. O elemento corresponde à
      * coluna e seu respectivo conteúdo corresponde à linha.
      * 
-     * @param totalDeColunas linha do vetor a ser analisada
+     * @param k linha do vetor a ser analisada
      *
      * @return true se a k-ésima rainha não estiver sob ataque das demais já 
      * posicionadas
      */
-    public static boolean validaPosicao(int[] posicaoRainhas, int totalDeColunas) {
+    public static boolean validaPosicao(int[] R, int k) {
         
         // Rainhas anteriormente posicionadas:
-        for (int colunaAtual = 0; colunaAtual < totalDeColunas; colunaAtual++) {
+        for (int i = 0; i < k; i++) {
             
             // Se sob ataque na linha
-            if (posicaoRainhas[colunaAtual] == posicaoRainhas[totalDeColunas]) {
+            if (R[i] == R[k]) {
                 return false;
             }
             
             // Se sob ataque na diagonal
-            if (Math.abs(posicaoRainhas[colunaAtual] - posicaoRainhas[totalDeColunas]) == (totalDeColunas - colunaAtual)) {
+            if (Math.abs(R[i] - R[k]) == (k - i)) {
              return false;                
             }
         }

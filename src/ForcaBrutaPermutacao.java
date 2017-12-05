@@ -12,12 +12,13 @@ public class ForcaBrutaPermutacao {
      /**
      * Quantidade de solucoes encontradas ao final do algoritmo
      */
-    private static int quantidadeSolucoesEncontradas;
+    private static int quantidadeSolucoes;
 
     /**
      * Habilita ou desabilida a saida dos dados de impressao
      */
      private static final boolean HABILITARIMPRESSAO = false;
+
 
     /**
      * Valida se a k-ésima rainha posicionada está sob ataque.
@@ -28,34 +29,31 @@ public class ForcaBrutaPermutacao {
      * Como as rainhas são adicionadas sempre na coluna seguinte, não há necessi-
      * dade de validar conflitos na mesma coluna.
      * 
-     * @param posicaoRainhas vetor das rainhas posicionadas. O elemento corresponde à
+     * @param R vetor das rainhas posicionadas. O elemento corresponde à
      * coluna e seu respectivo conteúdo corresponde à linha.
      * 
-     * @param totalDeColunas linha do vetor a ser analisada
+     * @param k linha do vetor a ser analisada
      *
      * @return true se a k-ésima rainha não estiver sob ataque das demais já 
      * posicionadas
      */
-    public static boolean validaPosicao(int[] posicaoRainhas, int totalDeColunas) {
+    public static boolean validaPosicao(int[] R, int k) {
         
         // Rainhas anteriormente posicionadas:
-        for (int colunaAtual = 0; colunaAtual < totalDeColunas; colunaAtual++) {
+        for (int i = 0; i < k; i++) {
             
             // Se sob ataque na linha
-            if (posicaoRainhas[colunaAtual] == posicaoRainhas[totalDeColunas]) {
+            if (R[i] == R[k]) {
                 return false;
             }
             
             // Se sob ataque na diagonal
-            if (Math.abs(posicaoRainhas[colunaAtual] - posicaoRainhas[totalDeColunas]) == (totalDeColunas - colunaAtual)) {
+            if (Math.abs(R[i] - R[k]) == (k - i)) {
              return false;                
             }
         }
-        
-        // Posição válida
-        return true;        
     }
-
+    
     /**
      * *************************************************
      * A funcao recursiva do metodo permutacao(). 
@@ -67,35 +65,35 @@ public class ForcaBrutaPermutacao {
      * posicionadas, entao esta rainha e' posicionada na posicao corrente e,
      * recursivamente, as rainhas seguintes sao posicionadas.
      *
-     * @param rainhas o vetor onde as rainhas serao inseridas
-     * @param usado o vetor onde as posicoes usadas sao marcadas
+     * @param R o vetor onde as rainhas serao inseridas
+     * @param visitado o vetor onde as posicoes usadas sao marcadas
      * @param k coordenada da linha corrente onde a rainhas devera ser inserida
      */
-    public static void permutacao(int rainhas[], int[] usado, int k) {
+    public static void permutacao(int[] R, int[] visitado, int k) {
 
         //Recupera a quantidade de rainhas
-        int qtdeRainha = rainhas.length;
+        int n = R.length;
 
         //Se k e igual da quantidade rainhas cheguei no final da linha
-        if (k == qtdeRainha) {
-            if (validaPosicao(rainhas, k - 1)) {
+        if (k == n) {
+            if (validaPosicao(R, k-1)) {
                 //Imprime o tabuleiro quando encontrar a solucao
                 if (HABILITARIMPRESSAO) {
-                    imprimeTabuleiroSolucoes(rainhas);
+                    imprimeTabuleiro(R);
                 }
                 //Conta o numero de solucoes encontradas
-                quantidadeSolucoesEncontradas = quantidadeSolucoesEncontradas + 1;
+                quantidadeSolucoes++;
             }
         } else {
             //Percorre o vetor de rainhas
-            for (int i = 0; i < qtdeRainha; i++) {
+            for (int i = 0; i < n; i++) {
                 //realiza a permutacao somente para elementos não utilizados
-                if (usado[i] == 0) {
-                    usado[i] = 1;
-                    rainhas[k] = i;
+                if (visitado[i] == 0) {
+                    visitado[i] = 1;
+                    R[k] = i;
                     //Avanca para proxima linha (k=k+1)
-                    permutacao(rainhas, usado, k + 1);
-                    usado[i] = 0;
+                    permutacao(R, visitado, k + 1);
+                    visitado[i] = 0;
                 }
             }
         }
@@ -106,12 +104,12 @@ public class ForcaBrutaPermutacao {
      *
      * @param posicaoRainhas
      */
-    private static void imprimeTabuleiroSolucoes(int[] posicaoRainhas) {
+    private static void imprimeTabuleiro(int[] posicaoRainhas) {
 
         // Tamanho do Problema
         int n = posicaoRainhas.length;
 
-        System.out.println(" Solução número " + (quantidadeSolucoesEncontradas + 1) + ":");
+        System.out.println(" Solução número " + (quantidadeSolucoes + 1) + ":");
         
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -159,7 +157,7 @@ public class ForcaBrutaPermutacao {
             for (int testeAtual = 1; testeAtual <= repeticoesTeste; testeAtual++) {
             
                 //Zera o numero de solucoes
-                quantidadeSolucoesEncontradas = 0;
+                quantidadeSolucoes = 0;
                 
                 //Executa o garbage collector (gc) antes de cada teste
                 System.gc();
@@ -182,7 +180,7 @@ public class ForcaBrutaPermutacao {
 
             mediaTempo = tempoAcumulado / repeticoesTeste;   
 
-            System.out.println("\nSoluções...: " + quantidadeSolucoesEncontradas);
+            System.out.println("\nSoluções...: " + quantidadeSolucoes);
             System.out.println("Tempo Médio: " + mediaTempo + " milisegundos");
             System.out.println("Acumulado..: " + tempoAcumulado + " milisegundos");
 
