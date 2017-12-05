@@ -127,13 +127,13 @@ public class ForcaBrutaBackTracking {
      */
     private static void imprimeTabuleiroSolucoes(int[] posicaoRainhas) {
 
-        //Recupera a quantidade de rainhas
-        int tamanhoDoProblema = posicaoRainhas.length;
+        // Tamanho do Problema
+        int n = posicaoRainhas.length;
 
         System.out.println(" Solução número " + (quantidadeSolucoesEncontradas + 1) + ":");
         
-        for (int i = 0; i < tamanhoDoProblema; i++) {
-            for (int j = 0; j < tamanhoDoProblema; j++) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
                 //Posição ocupada
                 if (posicaoRainhas[j] == i) {
                     System.out.print(" " + i + " ");
@@ -146,6 +146,15 @@ public class ForcaBrutaBackTracking {
         System.out.println(" ");
     }
 
+    /**
+     * Chamada do algoritmo.
+     * 
+     * Provê o resultado da execução para cada problema resolvido, imprimindo em 
+     * tela detalhes estatísticos para cada caso e tempo global.
+     * 
+     * @param listaProblemasASolucionar vetor contendo os problemas a serem executados.
+     * @param repeticoesTeste quantidade de repetições para cada problema.
+    */
     private static void nRainhas (int[] listaProblemasASolucionar, int repeticoesTeste) {
         
         double tempoTotalDeTeste = 0;
