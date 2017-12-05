@@ -1,4 +1,3 @@
-
 /**
  * @author Ana Paula, Osmar e Samuel
  *
@@ -15,9 +14,9 @@ public class ForcaBrutaPermutacao {
     private static int quantidadeSolucoes;
 
     /**
-     * Habilita ou desabilida a saida dos dados de impressao
+     * Habilita ou desabilida a saída dos dados de impressao
      */
-     private static final boolean HABILITARIMPRESSAO = true;
+     private static final boolean HABILITARIMPRESSAO = false;
 
     /**
      * Valida se a k-ésima rainha posicionada está sob ataque.
@@ -36,11 +35,27 @@ public class ForcaBrutaPermutacao {
      * @return true se a k-ésima rainha não estiver sob ataque das demais já 
      * posicionadas
      */
+     /**
+     * Valida se a k-ésima rainha posicionada está sob ataque.
+     * 
+     * Uma rainha está sob ataque se há outra rainha na mesma linha, coluna ou 
+     * diagonal onde esta se encontra.
+     * 
+     * Como as rainhas são adicionadas sempre na coluna seguinte, não há necessi-
+     * dade de validar conflitos na mesma coluna.
+     * 
+     * @param R vetor das rainhas posicionadas. O elemento corresponde à
+     * coluna e seu respectivo conteúdo corresponde à linha.
+     * 
+     * @param k linha do vetor a ser analisada
+     *
+     * @return true se a k-ésima rainha não estiver sob ataque das demais já 
+     * posicionadas
+     */
     public static boolean validaPosicao(int[] R, int k) {
-        
+                
         // Rainhas anteriormente posicionadas:
-        for (int i=0; i<k; i++) {
-            
+        for (int i=0; i<k; i++) {            
             // Se sob ataque na linha
             if (R[i]==R[k]) {
                 return false;
@@ -50,47 +65,30 @@ public class ForcaBrutaPermutacao {
             if (Math.abs(R[i]-R[k])==(k-i)) {
              return false;                
             }
-        }
-        
+        }        
         // Posição válida
         return true;        
     }
-
-    public static boolean validaPosicao1(int[] rainhas, int k) {
-        int x, y;
-        for (int i = 0; i < k; i++) {
-
-            x = i;
-            //Recupera o numero da rainha da posicao i 
-            y = rainhas[i];
-            while (true) {
-                x = x + 1;
-                y = y - 1;
-                if ((x > k - 1) || (y < 0)) {
-                    break;
-                }
-                /* se duas rainhas na mesma coluna */
-                if (y == rainhas[x]) {
-                    return false;
-                }
-            }
-            x = i;
-            y = rainhas[i];
-            while (true) {
-                x = x - 1;
-                y = y - 1;
-                if (x < 0 || y < 0) {
-                    break;
-                }
-                //Verifica as diagonais
-                if (y == rainhas[x]) {
-                    return false;
-                }
-            }
-        }
-        return true;
+   
+    /**
+     * Avalia todas as rainhas posicionadas.
+     * 
+     * @param R vetor das rainhas posicionadas. O elemento corresponde à
+     * coluna e seu respectivo conteúdo corresponde à linha.
+     * 
+     * @return True ou False se existe alguma rainha em posição inválida.
+     */
+    public static boolean valida(int[] R) {
+       
+        //Verifica se todas as rainhas estão em posições validas
+        int cont = 0;
+        for (int i = 0; i < R.length; i++) {         
+            if (validaPosicao(R, i)==false) {
+                cont++;
+            }       
+        }        
+        return (cont==0);
     }
-    
     
     /**
      * *************************************************
@@ -114,32 +112,33 @@ public class ForcaBrutaPermutacao {
         int n = R.length;
 
         //Se k e igual da quantidade rainhas cheguei no final da linha
-        if (k == n-1) {            
-            if (validaPosicao(R, k)) {
-                //Imprime o tabuleiro quando encontrar a solucao
+        if (k == n) {  
+            //Avalia todas as rainhas colocadas 
+            if (valida(R)) {
+                //Imprime o tabuleiro quando encontrar a solução valida
                 if (HABILITARIMPRESSAO) {
-                    imprimeTabuleiro(R);
-                }
-                //Conta o numero de solucoes encontradas
+                     imprimeTabuleiro(R);
+                 }
+                 //Conta o número de soluções encontradas
                 quantidadeSolucoes++;
-            }
+           }
         } else {
-            //Percorre o vetor de rainhas
+            //Percorre o vetor de rainhas           
             for (int i = 0; i < n; i++) {
-                //realiza a permutacao somente para elementos não utilizados
+                //realiza a permutação somente para elementos não utilizados                
                 if (visitado[i] == 0) {
-                    visitado[i] = 1;
+                   visitado[i] = 1;
                     R[k] = i;
-                    //Avanca para proxima linha (k=k+1)
+                    //Avança para próxima linha (k=k+1)                                   
                     permutacao(R, visitado, k + 1);
                     visitado[i] = 0;
-                }
+                }             
             }
         }
     }
     
     /**
-     * Imprime as soluções: tabuleiro e o posicionamento das rainhas
+     * Imprime as soluções: tabuleiro e o posicionamento das rainhas.
      *
      * @param posicaoRainhas
      */
@@ -154,7 +153,7 @@ public class ForcaBrutaPermutacao {
             for (int j = 0; j < n; j++) {
                 //Posição ocupada
                 if (posicaoRainhas[j] == i) {
-                    System.out.print(" " + i + " ");
+                    System.out.print(" " + i + " ");                    
                 } else {
                     System.out.print(" . ");
                 }
