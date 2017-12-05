@@ -40,7 +40,7 @@ public class ForcaBrutaBackTracking {
     /**
      * Quantidade de solucoes encontradas ao final do algoritmo
      */
-    private static int quantidadeSolucoesEncontradas;
+    private static int quantidadeSolucoes;
 
     /**
      * Habilita ou desabilida a saida dos dados de impressao
@@ -94,27 +94,27 @@ public class ForcaBrutaBackTracking {
      * Se uma rainha está em uma posição válida, então a mesma é posicionada e, 
      * recursivamente, as rainhas seguintes são posicionadas.
      *
-     * @param posicaoRainhas vetor das rainhas posicionadas. O elemento corresponde à
+     * @param R vetor das rainhas posicionadas. O elemento corresponde à
      * coluna e seu respectivo conteúdo corresponde à linha.
      * 
-     * @param colunaEmAnalise coordenada da linha corrente onde a rainha devera ser inserida
+     * @param k coordenada da linha corrente onde a rainha devera ser inserida
      */
-    public static void backTracking(int[] posicaoRainhas, int colunaEmAnalise) {
+    public static void backTracking(int[] R, int k) {
 
-        int n = posicaoRainhas.length;
+        int n = R.length;
 
-        if (colunaEmAnalise == n) {
+        if (k == n) {
             if (HABILITARIMPRESSAO) {
-                imprimeTabuleiroSolucoes(posicaoRainhas);
+                imprimeTabuleiro(R);
             }
-            quantidadeSolucoesEncontradas++;
+            quantidadeSolucoes++;
         } else {
             /* posiciona a rainha k + 1 */
-            for (int linhaAtual = 0; linhaAtual < n; linhaAtual++) {
-                posicaoRainhas[colunaEmAnalise] = linhaAtual;
+            for (int i = 0; i < n; i++) {
+                R[k] = i;
                 //Avança para a próxima rainha/coluna
-                if (validaPosicao(posicaoRainhas, colunaEmAnalise)) {
-                    backTracking(posicaoRainhas, colunaEmAnalise + 1);
+                if (validaPosicao(R, k)) {
+                    backTracking(R, k + 1);
                 }                
             }
         }
@@ -125,12 +125,12 @@ public class ForcaBrutaBackTracking {
      *
      * @param posicaoRainhas
      */
-    private static void imprimeTabuleiroSolucoes(int[] posicaoRainhas) {
+    private static void imprimeTabuleiro(int[] posicaoRainhas) {
 
         // Tamanho do Problema
         int n = posicaoRainhas.length;
 
-        System.out.println(" Solução número " + (quantidadeSolucoesEncontradas + 1) + ":");
+        System.out.println(" Solução número " + (quantidadeSolucoes + 1) + ":");
         
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -178,7 +178,7 @@ public class ForcaBrutaBackTracking {
             for (int testeAtual = 1; testeAtual <= repeticoesTeste; testeAtual++) {
             
                 //Zera o numero de solucoes
-                quantidadeSolucoesEncontradas = 0;
+                quantidadeSolucoes = 0;
                 
                 //Executa o garbage collector (gc) antes de cada teste
                 System.gc();
@@ -198,7 +198,7 @@ public class ForcaBrutaBackTracking {
             }
             
             mediaTempo = tempoAcumulado / repeticoesTeste;                
-            System.out.println("\nSoluções...: " + quantidadeSolucoesEncontradas);
+            System.out.println("\nSoluções...: " + quantidadeSolucoes);
             System.out.println("Tempo Médio: " + mediaTempo + " milisegundos");
             System.out.println("Acumulado..: " + tempoAcumulado + " milisegundos");
                     
