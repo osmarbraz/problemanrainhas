@@ -1,4 +1,3 @@
-
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -24,7 +23,7 @@ public class HeuristicaAlgoritmoGenetico {
     private static final boolean HABILITARIMPRESSAO = true;
 
     /**
-     * Trata a saída de dados
+     * Trata a saída de dados.
      *
      * @param string Uma string a ser impressa com uma nova linha após.
      */
@@ -35,7 +34,7 @@ public class HeuristicaAlgoritmoGenetico {
     }
 
     /**
-     * Trata a saída de dados
+     * Trata a saída de dados.
      *
      * @param string Uma string a ser impressa.
      */
@@ -64,15 +63,15 @@ public class HeuristicaAlgoritmoGenetico {
     }
 
     /**
-     * Carrega a população inicial de indivíduos do AG
+     * Carrega a população inicial de indivíduos do AG.
      *
      * @param populacao Conjunto de indivíduos da população
-     * @param tamanhoIndividuo quantidade de indivíduos da população
+     * @param tamanhoPopulacao quantidade de indivíduos da população
      * inicial
      */
-    private static Set geraPopulacaoInicial(int tamanhoIndividuo) {
+    private static Set geraPopulacaoInicial(int tamanhoPopulacao ){
         Set populacao = new HashSet();
-        while (populacao.size() < tamanhoIndividuo) {
+        while (populacao.size() < tamanhoPopulacao) {
             //Gera um individuo
             int[] individuo = gerarIndividuo();
             println("individuo=" + vetorToString(individuo));
@@ -120,7 +119,7 @@ public class HeuristicaAlgoritmoGenetico {
         while (novaPopulacao.size() < tamanhoPopulacao) {
             //Seleciona o primeiro individuo para realizar o crossover
             int individuo1[] = selecionarIndividuo(populacao, null);
-            //Seleciona o segundo indiviuo diferente do anterior para realiar o crossover
+            //Seleciona o segundo individuo diferente do anterior para realiar o crossover
             int individuo2[] = selecionarIndividuo(populacao, individuo1);
             //Gera o crossover entre individuo1 e individuo2 para gerar u novo indivíduo do cruzamento
             int novoIndividuo[] = crossover(individuo1, individuo2);
@@ -159,7 +158,7 @@ public class HeuristicaAlgoritmoGenetico {
                     break;
                 }
             }
-            //Decrementa o fitness para pegar o proximo
+            //Decrementa o fitness para pegar o próximo
             melhorF--;
         }        
         novaPopulacao.addAll(populacao);
@@ -193,7 +192,7 @@ public class HeuristicaAlgoritmoGenetico {
     }
 
     /**
-     * Realiza a mutacao em um indivíduo de forma aleatória
+     * Realiza a mutação em um indivíduo de forma aleatória.
      *
      * @param individuo Um individuo a sofrer mutação
      * @return um indivíduo com a mutação
@@ -209,7 +208,7 @@ public class HeuristicaAlgoritmoGenetico {
     }
 
     /**
-     * Realiza o crossover entre dois individuos da populacao
+     * Realiza o crossover entre dois individuos da população.
      *
      * @param individuo1 Indivíduo que fornece a 1a parte dos genes para o novo indivíduo
      * @param individuo2 Indivíduo que fornece a 2a parte dos genes para o novo indivíduo
@@ -232,9 +231,9 @@ public class HeuristicaAlgoritmoGenetico {
     }
 
     /**
-     * Seleciona um indivíduo da população aleatoriamente
+     * Seleciona um indivíduo da população aleatoriamente.
      *
-     * @param populacao
+     * @param populacao Conjunto da população
      * @param individuoBase para ser utilizado para nao selecionar
      * @return Um individuo selecionado aleatoramente da população
      */
@@ -254,8 +253,7 @@ public class HeuristicaAlgoritmoGenetico {
     }
     
     /**
-     * Gera um individuo com n posicoes de forma aleatória de acordo com a
-     * quantidade de rainhas. 
+     * Gera um indivíduo com n posições de forma aleatória. 
      * 
      * Gera rainhas repetidas
      *
@@ -342,24 +340,24 @@ public class HeuristicaAlgoritmoGenetico {
      * Uma rainha está sob ataque se há outra rainha na mesma linha, coluna ou 
      * diagonal onde esta se encontra.
      * 
-     * @param rainhas o vetor das rainhas
+     * @param R o vetor das rainhas
      * @param k linha do vetor a ser analisa
      *
      * @return true se a k-ésima rainha não estiver sob ataque das demais já 
      * posicionadas
      */
-    public static boolean validaPosicao(int[] rainhas, int k) {
+    public static boolean validaPosicao(int[] R, int k) {
         
         //Para cada uma das rainhas anteriormente posicionadas:
         for (int i = 0; i < k; i++) {
             
             //Verifica se a rainha k está na mesma coluna da rainha i
-            if (rainhas[i] == rainhas[k]) {
+            if (R[i] == R[k]) {
                 return false;
             }
             
             // Verifica se a rainha k está na mesma diagonal da rainha i
-            if ( Math.abs(rainhas[i] - rainhas[k]) == (k - i)) {
+            if ( Math.abs(R[i] - R[k]) == (k - i)) {
              return false;                
             }
         }
@@ -371,13 +369,12 @@ public class HeuristicaAlgoritmoGenetico {
     /**
      * Executa as gerações do Algoritmo Genético
      * 
-     * @param qRainha
-     * @param qtdeGeracoes
-     * @param tamanhoIndividuo
-     * @param probabilidadeMutacao
-     * @param repeticao 
+     * @param qRainha Quantidade de rainhas.
+     * @param qtdeGeracoes Quantidade de gerações a ser executado o algoritmo genético.
+     * @param tamanhoPopulacao Tamanho de população.
+     * @param probabilidadeMutacao Percentual de probabilidade de mutação dos indivíduos.     
      */
-    public static void algoritmoGenetico(int qRainha, int qtdeGeracoes, int tamanhoIndividuo, double probabilidadeMutacao) {
+    public static void algoritmoGenetico(int qRainha, int qtdeGeracoes, int tamanhoPopulacao, double probabilidadeMutacao) {
 
         //Define a quantidade rainhas        
         qtdeRainha = qRainha;
@@ -385,7 +382,7 @@ public class HeuristicaAlgoritmoGenetico {
         maiorFitness = qtdeRainha;
 
         // gerar a populacao inicial com 10 individuos
-        Set populacao = geraPopulacaoInicial(tamanhoIndividuo);
+        Set populacao = geraPopulacaoInicial(tamanhoPopulacao);
         
         int[] melhorIndividuo = null;
         int melhorFitness = 0;
@@ -414,7 +411,7 @@ public class HeuristicaAlgoritmoGenetico {
                     //Limpa populacao
                     populacao.clear();
                     //Carrega uma nova população
-                    populacao = geraPopulacaoInicial(tamanhoIndividuo);
+                    populacao = geraPopulacaoInicial(tamanhoPopulacao);
                     probabilidadeMutacao = 0.10;
                     melhorFitness = -1;
                 }
@@ -443,7 +440,7 @@ public class HeuristicaAlgoritmoGenetico {
         System.out.println("Algoritmo Genetico");
         
         //Especifica a quantidade de rainhas serem testadas
-        int qtdeRainhasTeste[] = {8};
+        int qtdeRainhasTeste[] = {4};
         //Especifica o número de vezes a se realizado com cada qtde de rainhas
         int repeticoesTeste[] = {1};
 
@@ -482,12 +479,12 @@ public class HeuristicaAlgoritmoGenetico {
                     //Quantidade de gerações
                     int qtdeGeracoes = 300000;
                     //Tamanho da populacao
-                    int tamanhoIndividuo = 20;
+                    int tamanhoPopulacao = 20;
                     //Probabilidade de mutação dos individuos
                     double probabilidadeMutacao = 0.15;                   
                                         
                     //Executa a solução do algoritmo
-                    algoritmoGenetico(qRainha, qtdeGeracoes, tamanhoIndividuo,probabilidadeMutacao);
+                    algoritmoGenetico(qRainha, qtdeGeracoes, tamanhoPopulacao, probabilidadeMutacao);
 
                     //Pega o tempo final do processamento da vez
                     tempo = System.currentTimeMillis() - tempo;

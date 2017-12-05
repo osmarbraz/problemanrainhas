@@ -140,24 +140,24 @@ public class HeuristicaHillClimbing {
      * Uma rainha está sob ataque se há outra rainha na mesma linha, coluna ou 
      * diagonal onde esta se encontra.
      * 
-     * @param rainhas o vetor das rainhas
+     * @param R o vetor das rainhas
      * @param k linha do vetor a ser analisa
      *
      * @return true se a k-ésima rainha não estiver sob ataque das demais já 
      * posicionadas
      */
-    public static boolean validaPosicao(int[] rainhas, int k) {
+    public static boolean validaPosicao(int[] R, int k) {
         
         //Para cada uma das rainhas anteriormente posicionadas:
         for (int i = 0; i < k; i++) {
             
             //Verifica se a rainha k está na mesma coluna da rainha i
-            if (rainhas[i] == rainhas[k]) {
+            if (R[i] == R[k]) {
                 return false;
             }
             
             // Verifica se a rainha k está na mesma diagonal da rainha i
-            if ( Math.abs(rainhas[i] - rainhas[k]) == (k - i)) {
+            if ( Math.abs(R[i] - R[k]) == (k - i)) {
              return false;                
             }
         }        
@@ -238,7 +238,7 @@ public class HeuristicaHillClimbing {
             println("Melhor Individuo = " + vetorToString(melhorIndividuo));
             println("Fitness  = " + funcaoFitness(melhorIndividuo));
         } else {
-            println("Solucao nao encontrada em " + interacaoSolucao + " interacoes");
+            println("Solucao não encontrada em " + interacaoSolucao + " interacoes");
             println("Melhor Individuo = " + vetorToString(melhorIndividuo));
             println("Fitness  = " + funcaoFitness(melhorIndividuo));
         }
@@ -251,9 +251,9 @@ public class HeuristicaHillClimbing {
         System.out.println("HillClimbing");
         
         //Especifica a quantidade de rainhas serem testadas
-        int qtdeRainhasTeste[] = {4, 6, 8, 10};
+        int qtdeRainhasTeste[] = {4};
         //Especifica o numero de vezes a se realizado com cada qtde de rainhas
-        int repeticoesTeste[] = {10};
+        int repeticoesTeste[] = {1};
 
         //Parâmetros do algoritmo genético
         //Quantidade de geracoes
