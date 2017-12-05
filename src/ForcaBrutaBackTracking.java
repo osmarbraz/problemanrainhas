@@ -110,7 +110,7 @@ public class ForcaBrutaBackTracking {
             quantidadeSolucoes++;
         } else {
             /* posiciona a rainha k + 1 */
-            for (int i = 0; i < n; i++) {
+            for (int i=0; i<n; i++) {
                 R[k] = i;
                 //Avança para a próxima rainha/coluna
                 if (validaPosicao(R, k)) {
