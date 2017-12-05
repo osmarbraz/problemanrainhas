@@ -67,13 +67,11 @@ public class ForcaBrutaBackTracking {
     public static boolean validaPosicao(int[] R, int k) {
                 
         // Rainhas anteriormente posicionadas:
-        for (int i=0; i<k; i++) {
-            
+        for (int i=0; i<k; i++) {            
             // Se sob ataque na linha
             if (R[i]==R[k]) {
                 return false;
-            }
-            
+            }            
             // Se sob ataque na diagonal
             if (Math.abs(R[i]-R[k])==(k-i)) {
              return false;                
@@ -102,7 +100,7 @@ public class ForcaBrutaBackTracking {
     public static void backTracking(int[] R, int k) {
 
         int n = R.length;
-        if (k == n) {            
+        if (k == n) {   
             if (HABILITARIMPRESSAO) {
                 imprimeTabuleiro(R);
             }
