@@ -58,17 +58,18 @@ public class ForcaBrutaPermutacao {
 
     /**
      * *************************************************
-     * A funcao recursiva do metodo permutacao(). 
+     * A função recursiva do método permutação(). 
      * 
-     * Cada instancia do metodo e
-     * responsavel por posicionar uma rainha na linha (em todas as colunas
-     * possiveis). Se uma rainha pode ser posicionada, baseando-se nas suas
-     * propriedades, sem que esta seja atacada pelas outras rainhas ja
-     * posicionadas, entao esta rainha e' posicionada na posicao corrente e,
-     * recursivamente, as rainhas seguintes sao posicionadas.
+     * Cada instância é responsável por posicionar uma rainha na primeira linha 
+     * válida da coluna em análise, ou seja, sem que a mesma esteja sob ataque. 
+     * 
+     * Se uma rainha está em uma posição válida, então a mesma é posicionada e, 
+     * recursivamente, as rainhas seguintes são posicionadas.
      *
-     * @param R o vetor onde as rainhas serao inseridas
-     * @param visitado o vetor onde as posicoes usadas sao marcadas
+     * Ma
+     * 
+     * @param R vetor onde as rainhas serão inseridas
+     * @param visitado vetor onde as posições usadas são marcadas
      * @param k coordenada da linha corrente onde a rainhas devera ser inserida
      */
     public static void permutacao(int[] R, int[] visitado, int k) {
