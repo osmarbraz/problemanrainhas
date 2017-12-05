@@ -17,7 +17,7 @@ public class ForcaBrutaPermutacao {
     /**
      * Habilita ou desabilida a saida dos dados de impressao
      */
-     private static final boolean HABILITARIMPRESSAO = false;
+     private static final boolean HABILITARIMPRESSAO = true;
 
     /**
      * Valida se a k-ésima rainha posicionada está sob ataque.
@@ -56,6 +56,42 @@ public class ForcaBrutaPermutacao {
         return true;        
     }
 
+    public static boolean validaPosicao1(int[] rainhas, int k) {
+        int x, y;
+        for (int i = 0; i < k; i++) {
+
+            x = i;
+            //Recupera o numero da rainha da posicao i 
+            y = rainhas[i];
+            while (true) {
+                x = x + 1;
+                y = y - 1;
+                if ((x > k - 1) || (y < 0)) {
+                    break;
+                }
+                /* se duas rainhas na mesma coluna */
+                if (y == rainhas[x]) {
+                    return false;
+                }
+            }
+            x = i;
+            y = rainhas[i];
+            while (true) {
+                x = x - 1;
+                y = y - 1;
+                if (x < 0 || y < 0) {
+                    break;
+                }
+                //Verifica as diagonais
+                if (y == rainhas[x]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    
+    
     /**
      * *************************************************
      * A função recursiva do método permutação(). 
@@ -71,15 +107,15 @@ public class ForcaBrutaPermutacao {
      * @param R vetor onde as rainhas serão inseridas
      * @param visitado vetor onde as posições usadas são marcadas
      * @param k coordenada da linha corrente onde a rainhas devera ser inserida
-     */
-    public static void permutacao(int[] R, int[] visitado, int k) {
+     */  
+     public static void permutacao(int[] R, int[] visitado, int k) {
 
         //Recupera a quantidade de rainhas
         int n = R.length;
 
         //Se k e igual da quantidade rainhas cheguei no final da linha
-        if (k == n) {
-            if (validaPosicao(R, k-1)) {
+        if (k == n-1) {            
+            if (validaPosicao(R, k)) {
                 //Imprime o tabuleiro quando encontrar a solucao
                 if (HABILITARIMPRESSAO) {
                     imprimeTabuleiro(R);
@@ -101,7 +137,7 @@ public class ForcaBrutaPermutacao {
             }
         }
     }
-
+    
     /**
      * Imprime as soluções: tabuleiro e o posicionamento das rainhas
      *
@@ -210,11 +246,11 @@ public class ForcaBrutaPermutacao {
         // Vetor contendo os problemas a serem processados.
         // Cada elemento define a ordem do tabuleiro e, consequentemente, a 
         // quantidade de rainhas a serem posicionadas.
-        int[] listaProblemasASolucionar = {4, 6};
+        int[] listaProblemasASolucionar = {4};
         
         // Quantidade de repetições do processamento
         // Útil para fins estatísticos.
-        int repeticoesTeste = 2;
+        int repeticoesTeste = 1;
         
         System.out.println("Permutação");
         System.out.println("Executando N-Rainhas com " + repeticoesTeste + " repetições.\n\n"); 

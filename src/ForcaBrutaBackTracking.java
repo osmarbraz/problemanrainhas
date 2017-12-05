@@ -45,7 +45,7 @@ public class ForcaBrutaBackTracking {
     /**
      * Habilita ou desabilida a saida dos dados de impressao
      */
-     private static final boolean HABILITARIMPRESSAO = false;
+     private static final boolean HABILITARIMPRESSAO = true;
 
     /**
      * Valida se a k-ésima rainha posicionada está sob ataque.
@@ -65,7 +65,7 @@ public class ForcaBrutaBackTracking {
      * posicionadas
      */
     public static boolean validaPosicao(int[] R, int k) {
-        
+                
         // Rainhas anteriormente posicionadas:
         for (int i=0; i<k; i++) {
             
@@ -102,8 +102,7 @@ public class ForcaBrutaBackTracking {
     public static void backTracking(int[] R, int k) {
 
         int n = R.length;
-
-        if (k == n) {
+        if (k == n) {            
             if (HABILITARIMPRESSAO) {
                 imprimeTabuleiro(R);
             }
@@ -226,11 +225,11 @@ public class ForcaBrutaBackTracking {
         // Vetor contendo os problemas a serem processados.
         // Cada elemento define a ordem do tabuleiro e, consequentemente, a 
         // quantidade de rainhas a serem posicionadas.
-        int[] listaProblemasASolucionar = {4, 6};
+        int[] listaProblemasASolucionar = {4};
         
         // Quantidade de repetições do processamento
         // Útil para fins estatísticos.
-        int repeticoesTeste = 2;
+        int repeticoesTeste = 1;
         
         System.out.println("BackTracking");
         System.out.println("Executando N-Rainhas com " + repeticoesTeste + " repetições.\n\n"); 
