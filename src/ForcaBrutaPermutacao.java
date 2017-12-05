@@ -19,7 +19,6 @@ public class ForcaBrutaPermutacao {
      */
      private static final boolean HABILITARIMPRESSAO = false;
 
-
     /**
      * Valida se a k-ésima rainha posicionada está sob ataque.
      * 
@@ -40,20 +39,23 @@ public class ForcaBrutaPermutacao {
     public static boolean validaPosicao(int[] R, int k) {
         
         // Rainhas anteriormente posicionadas:
-        for (int i = 0; i < k; i++) {
+        for (int i=0; i<k; i++) {
             
             // Se sob ataque na linha
-            if (R[i] == R[k]) {
+            if (R[i]==R[k]) {
                 return false;
             }
             
             // Se sob ataque na diagonal
-            if (Math.abs(R[i] - R[k]) == (k - i)) {
+            if (Math.abs(R[i]-R[k])==(k-i)) {
              return false;                
             }
         }
+        
+        // Posição válida
+        return true;        
     }
-    
+
     /**
      * *************************************************
      * A funcao recursiva do metodo permutacao(). 
