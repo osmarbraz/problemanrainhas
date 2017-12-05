@@ -45,7 +45,7 @@ public class ForcaBrutaBackTracking {
     /**
      * Habilita ou desabilida a saida dos dados de impressao
      */
-     private static boolean imprimeTabuleiro = false;
+     private static final boolean HABILITARIMPRESSAO = false;
 
     /**
      * Valida se a k-ésima rainha posicionada está sob ataque.
@@ -53,65 +53,68 @@ public class ForcaBrutaBackTracking {
      * Uma rainha está sob ataque se há outra rainha na mesma linha, coluna ou 
      * diagonal onde esta se encontra.
      * 
-     * @param rainhas o vetor das rainhas
-     * @param k linha do vetor a ser analisa
+     * Como as rainhas são adicionadas sempre na coluna seguinte, não há necessi-
+     * dade de validar conflitos na mesma coluna.
+     * 
+     * @param posicaoRainhas vetor das rainhas posicionadas. O elemento corresponde à
+     * coluna e seu respectivo conteúdo corresponde à linha.
+     * 
+     * @param totalDeColunas linha do vetor a ser analisada
      *
      * @return true se a k-ésima rainha não estiver sob ataque das demais já 
      * posicionadas
      */
-    public static boolean validaPosicao(int[] rainhas, int k) {
+    public static boolean validaPosicao(int[] posicaoRainhas, int totalDeColunas) {
         
-        //Para cada uma das rainhas anteriormente posicionadas:
-        for (int i = 0; i < k; i++) {
+        // Rainhas anteriormente posicionadas:
+        for (int colunaAtual = 0; colunaAtual < totalDeColunas; colunaAtual++) {
             
-            //Verifica se a rainha k está na mesma coluna da rainha i
-            if (rainhas[i] == rainhas[k]) {
+            // Se sob ataque na linha
+            if (posicaoRainhas[colunaAtual] == posicaoRainhas[totalDeColunas]) {
                 return false;
             }
             
-            // Verifica se a rainha k está na mesma diagonal da rainha i
-            if ( Math.abs(rainhas[i] - rainhas[k]) == (k - i)) {
+            // Se sob ataque na diagonal
+            if (Math.abs(posicaoRainhas[colunaAtual] - posicaoRainhas[totalDeColunas]) == (totalDeColunas - colunaAtual)) {
              return false;                
             }
         }
         
-        // Se a posição é válida
+        // Posição válida
         return true;        
     }
 
     /**
      * *************************************************
-     * A funcao recursiva do metodo backTracking(). 
+     * A função recursiva do método backTracking(). 
      * 
-     * Cada instância do método é responsável por posicionar uma rainha na linha 
-     * (em todas as colunas possiveis). 
+     * Cada instância é responsável por posicionar uma rainha na primeira linha 
+     * válida da coluna em análise, ou seja, sem que a mesma esteja sob ataque. 
      * 
-     * Se uma rainha pode ser posicionada, baseando-se nas suas propriedades, 
-     * sem que esta seja atacada pelas outras rainhas já posicionadas, entao esta 
-     * rainha é posicionada na posição corrente e, recursivamente, as rainhas 
-     * seguintes sao posicionadas.
+     * Se uma rainha está em uma posição válida, então a mesma é posicionada e, 
+     * recursivamente, as rainhas seguintes são posicionadas.
      *
-     * @param rainhas o vetor onde as rainhas serao inseridas
-     * @param k coordenada da linha corrente onde a rainha devera ser inserida
+     * @param posicaoRainhas vetor das rainhas posicionadas. O elemento corresponde à
+     * coluna e seu respectivo conteúdo corresponde à linha.
+     * 
+     * @param colunaEmAnalise coordenada da linha corrente onde a rainha devera ser inserida
      */
-    public static void backTracking(int[] rainhas, int k) {
+    public static void backTracking(int[] posicaoRainhas, int colunaEmAnalise) {
 
-        int quantidadeDeRainhas = rainhas.length;
+        int n = posicaoRainhas.length;
 
-        if (k == quantidadeDeRainhas) {
-            //Imprime o tabuleiro quando encontrar a solucao
-            if (imprimeTabuleiro) {
-                imprimeTabuleiroSolucoes(rainhas);
+        if (colunaEmAnalise == n) {
+            if (HABILITARIMPRESSAO) {
+                imprimeTabuleiroSolucoes(posicaoRainhas);
             }
             quantidadeSolucoesEncontradas++;
         } else {
             /* posiciona a rainha k + 1 */
-            for (int i = 0; i < quantidadeDeRainhas; i++) {
-                // Coloca uma nova rainha na posicao [k]                
-                rainhas[k] = i;
-                if (validaPosicao(rainhas, k)) {
-                    //Avanca para a proxima linha
-                    backTracking(rainhas, k + 1);
+            for (int linhaAtual = 0; linhaAtual < n; linhaAtual++) {
+                posicaoRainhas[colunaEmAnalise] = linhaAtual;
+                //Avança para a próxima rainha/coluna
+                if (validaPosicao(posicaoRainhas, colunaEmAnalise)) {
+                    backTracking(posicaoRainhas, colunaEmAnalise + 1);
                 }                
             }
         }
@@ -120,19 +123,19 @@ public class ForcaBrutaBackTracking {
     /**
      * Imprime as soluções: tabuleiro e o posicionamento das rainhas
      *
-     * @param rainhas
+     * @param posicaoRainhas
      */
-    private static void imprimeTabuleiroSolucoes(int rainhas[]) {
+    private static void imprimeTabuleiroSolucoes(int[] posicaoRainhas) {
 
-        //Recupera a quantidade de rainhas
-        int tamanhoDoProblema = rainhas.length;
+        // Tamanho do Problema
+        int n = posicaoRainhas.length;
 
         System.out.println(" Solução número " + (quantidadeSolucoesEncontradas + 1) + ":");
         
-        for (int i = 0; i < tamanhoDoProblema; i++) {
-            for (int j = 0; j < tamanhoDoProblema; j++) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
                 //Posição ocupada
-                if (rainhas[j] == i) {
+                if (posicaoRainhas[j] == i) {
                     System.out.print(" " + i + " ");
                 } else {
                     System.out.print(" . ");
@@ -143,6 +146,15 @@ public class ForcaBrutaBackTracking {
         System.out.println(" ");
     }
 
+    /**
+     * Chamada do algoritmo.
+     * 
+     * Provê o resultado da execução para cada problema resolvido, imprimindo em 
+     * tela detalhes estatísticos para cada caso e tempo global.
+     * 
+     * @param listaProblemasASolucionar vetor contendo os problemas a serem executados.
+     * @param repeticoesTeste quantidade de repetições para cada problema.
+    */
     private static void nRainhas (int[] listaProblemasASolucionar, int repeticoesTeste) {
         
         double tempoTotalDeTeste = 0;
@@ -193,8 +205,9 @@ public class ForcaBrutaBackTracking {
             tempoTotalDeTeste = tempoTotalDeTeste + tempoAcumulado;
             
         }
-        
+        System.out.println("===========================================================");
         System.out.println("Tempo Global...: " + tempoTotalDeTeste + " milisegundos.");
+        System.out.println("===========================================================");
                 
     } 
     
@@ -213,7 +226,7 @@ public class ForcaBrutaBackTracking {
         // Vetor contendo os problemas a serem processados.
         // Cada elemento define a ordem do tabuleiro e, consequentemente, a 
         // quantidade de rainhas a serem posicionadas.
-        int[] listaProblemasASolucionar = {12, 13};
+        int[] listaProblemasASolucionar = {4, 6};
         
         // Quantidade de repetições do processamento
         // Útil para fins estatísticos.

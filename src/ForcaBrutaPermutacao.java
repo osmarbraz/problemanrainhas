@@ -9,48 +9,58 @@
  */
 public class ForcaBrutaPermutacao {
 
-    /**
-     * Atributo do numero de solucoes encontradas ao final do algoritmo
+     /**
+     * Quantidade de solucoes encontradas ao final do algoritmo
      */
     private static int quantidadeSolucoesEncontradas;
 
-    //Habilita ou desabilida a saida dos dados de impressao
-    private static boolean imprimeTabuleiro = false;
+    /**
+     * Habilita ou desabilida a saida dos dados de impressao
+     */
+     private static final boolean HABILITARIMPRESSAO = false;
 
     /**
-     * Uma das propriedades da rainha e que nao pode haver outra rainha na linha
-     * ou na coluna onde esta se encontra. Assim, na construcao do algoritmo de
-     * solucao, nao se pode colocar uma rainha em uma posicao que esteja sendo
-     * atacada. Esta mesma propriedade tambem vale para as diagonais em relacao
-     * as rainha ja posicionadas.
+     * Valida se a k-ésima rainha posicionada está sob ataque.
+     * 
+     * Uma rainha está sob ataque se há outra rainha na mesma linha, coluna ou 
+     * diagonal onde esta se encontra.
+     * 
+     * Como as rainhas são adicionadas sempre na coluna seguinte, não há necessi-
+     * dade de validar conflitos na mesma coluna.
+     * 
+     * @param posicaoRainhas vetor das rainhas posicionadas. O elemento corresponde à
+     * coluna e seu respectivo conteúdo corresponde à linha.
+     * 
+     * @param totalDeColunas linha do vetor a ser analisada
      *
-     * @param rainhas o vetor das rainhas
-     * @param k linha do vetor a ser analisa
-     *
-     * @return true se a rainha [k] nao for atacada nas posicoes ja atacadas por
-     * rainhas previamente inseridas
+     * @return true se a k-ésima rainha não estiver sob ataque das demais já 
+     * posicionadas
      */
-    public static boolean valida(int[] rainhas, int k) {
-
-        //Percorre o vetor de rainhas
-        for (int i = 0; i < k; i++) {
-            //Verifica se a rainha esta na mesma coluna
-            if (rainhas[i] == rainhas[k]) {
+    public static boolean validaPosicao(int[] posicaoRainhas, int totalDeColunas) {
+        
+        // Rainhas anteriormente posicionadas:
+        for (int colunaAtual = 0; colunaAtual < totalDeColunas; colunaAtual++) {
+            
+            // Se sob ataque na linha
+            if (posicaoRainhas[colunaAtual] == posicaoRainhas[totalDeColunas]) {
                 return false;
             }
-           
-            // Verifica se a rainha k está na mesma diagonal da rainha i
-            if ( Math.abs(rainhas[i] - rainhas[k]) == (k - i)) {
+            
+            // Se sob ataque na diagonal
+            if (Math.abs(posicaoRainhas[colunaAtual] - posicaoRainhas[totalDeColunas]) == (totalDeColunas - colunaAtual)) {
              return false;                
             }
         }
-        // Retorna que a solucao e valida
-        return true;
+        
+        // Posição válida
+        return true;        
     }
 
     /**
      * *************************************************
-     * A funcao recursiva do metodo permutacao(). Cada instancia do metodo e
+     * A funcao recursiva do metodo permutacao(). 
+     * 
+     * Cada instancia do metodo e
      * responsavel por posicionar uma rainha na linha (em todas as colunas
      * possiveis). Se uma rainha pode ser posicionada, baseando-se nas suas
      * propriedades, sem que esta seja atacada pelas outras rainhas ja
@@ -68,9 +78,9 @@ public class ForcaBrutaPermutacao {
 
         //Se k e igual da quantidade rainhas cheguei no final da linha
         if (k == qtdeRainha) {
-            if (valida(rainhas, k - 1)) {
+            if (validaPosicao(rainhas, k - 1)) {
                 //Imprime o tabuleiro quando encontrar a solucao
-                if (imprimeTabuleiro) {
+                if (HABILITARIMPRESSAO) {
                     imprimeTabuleiroSolucoes(rainhas);
                 }
                 //Conta o numero de solucoes encontradas
@@ -92,20 +102,21 @@ public class ForcaBrutaPermutacao {
     }
 
     /**
-     * Imprime o tabuleiro com as rainhas
+     * Imprime as soluções: tabuleiro e o posicionamento das rainhas
      *
-     * @param rainhas
+     * @param posicaoRainhas
      */
-    private static void imprimeTabuleiroSolucoes(int rainhas[]) {
+    private static void imprimeTabuleiroSolucoes(int[] posicaoRainhas) {
 
-        //Recupera a quantidade de rainhas
-        int qtdeRainha = rainhas.length;
+        // Tamanho do Problema
+        int n = posicaoRainhas.length;
 
         System.out.println(" Solução número " + (quantidadeSolucoesEncontradas + 1) + ":");
-
-        for (int i = 0; i < qtdeRainha; i++) {
-            for (int j = 0; j < qtdeRainha; j++) {
-                if (rainhas[j] == i) {
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                //Posição ocupada
+                if (posicaoRainhas[j] == i) {
                     System.out.print(" " + i + " ");
                 } else {
                     System.out.print(" . ");
@@ -116,6 +127,15 @@ public class ForcaBrutaPermutacao {
         System.out.println(" ");
     }
 
+     /**
+     * Chamada do algoritmo.
+     * 
+     * Provê o resultado da execução para cada problema resolvido, imprimindo em 
+     * tela detalhes estatísticos para cada caso e tempo global.
+     * 
+     * @param listaProblemasASolucionar vetor contendo os problemas a serem executados.
+     * @param repeticoesTeste quantidade de repetições para cada problema.
+    */
     private static void nRainhas(int[] listaProblemasASolucionar, int repeticoesTeste) {
         
         double tempoTotalDeTeste = 0;
@@ -175,25 +195,29 @@ public class ForcaBrutaPermutacao {
     }
 
     /**
-     * Executa o teste do agoritmo
+     * Executa o algoritmo.
+     * 
+     * Informações relevantes:
+     * 
+     * listaProblemasASolucionar: vetor contendo os tamanhos a serem resolvidos.
+     * repeticoesTeste: Quantidade de vezes que cada problema é solucionado.
      *
      * @param args
      */
     public static void main(String args[]) {
-
+        
         // Vetor contendo os problemas a serem processados.
         // Cada elemento define a ordem do tabuleiro e, consequentemente, a 
         // quantidade de rainhas a serem posicionadas.
-        int[] listaProblemasASolucionar = {6, 7};
-
+        int[] listaProblemasASolucionar = {4, 6};
+        
         // Quantidade de repetições do processamento
         // Útil para fins estatísticos.
         int repeticoesTeste = 2;
-
-        System.out.println("Permutacao");
-        System.out.println("Executando N-Rainhas com " + repeticoesTeste + " repetições.\n\n");
+        
+        System.out.println("Permutação");
+        System.out.println("Executando N-Rainhas com " + repeticoesTeste + " repetições.\n\n"); 
         nRainhas(listaProblemasASolucionar, repeticoesTeste);
 
     }
-
 }
