@@ -16,18 +16,20 @@ public class HeuristicaAlgoritmoGenetico {
     private static int solucoes;
     private static int qtdeRainha;
     private static int maiorFitness;
+    
+    //Gerador de número aleatórios
     private static final Random RANDOMICO = new Random();
 
-    //Habilita ou desabilida a saida dos dados de impressão
-    private static final boolean DESABILITARIMPRESSAO = true;
+    //Habilita ou desabilita a saida dos dados de impressão
+    private static final boolean HABILITARIMPRESSAO = true;
 
     /**
      * Trata a saída de dados
      *
-     * @param string
+     * @param string Uma string a ser impressa com uma nova linha após.
      */
     private static void println(String string) {
-        if (!DESABILITARIMPRESSAO) {
+        if (!HABILITARIMPRESSAO) {
             System.out.println(string);
         }
     }
@@ -35,10 +37,10 @@ public class HeuristicaAlgoritmoGenetico {
     /**
      * Trata a saída de dados
      *
-     * @param string
+     * @param string Uma string a ser impressa.
      */
     private static void print(String string) {
-        if (!DESABILITARIMPRESSAO) {
+        if (!HABILITARIMPRESSAO) {
             System.out.print(string);
         }
     }

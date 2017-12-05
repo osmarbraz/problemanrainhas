@@ -13,29 +13,30 @@ public class HeuristicaHillClimbing {
     private static int solucoes;
     private static int interacaoSolucao;
 
+    //Gerador de número aleatórios
     private static final Random RANDOMICO = new Random();
 
-    //Habilita ou desabilida a saida dos dados de impressao
-    private static final boolean DESABILITARIMPRESSAO = true;
+    //Habilita ou desabilita a saída dos dados de impressao
+    private static final boolean HABILITARIMPRESSAO = true;
 
     /**
-     * Trata a saída de dados
+     * Trata a saída de dados com nova linha.
      *
-     * @param string
+     * @param string Uma string a ser impressa com uma nova linha após.
      */
     private static void println(String string) {
-        if (!DESABILITARIMPRESSAO) {
+        if (!HABILITARIMPRESSAO) {
             System.out.println(string);
         }
     }
 
     /**
-     * Trata a saída de dados
+     * Trata a saída de dados na mesma linha.
      *
-     * @param string
+     * @param string Uma string a ser impressa.
      */
     private static void print(String string) {
-        if (!DESABILITARIMPRESSAO) {
+        if (!HABILITARIMPRESSAO) {
             System.out.print(string);
         }
     }
@@ -66,7 +67,7 @@ public class HeuristicaHillClimbing {
     private static void imprime(int[] rainhas) {
         for (int i = 0; i < rainhas.length; i++) {
             for (int j = 0; j < rainhas.length; j++) {
-                //Posicao ocupada
+                //Posição ocupada
                 if (rainhas[j] == i) {
                     print(" " + i + " ");
                 } else {
@@ -82,7 +83,7 @@ public class HeuristicaHillClimbing {
      * Realiza a mutação em um indivíduo de forma aleatória
      *
      * @param individuo Um indivíduo a sofrer mutação
-     * @return um indivíduo com a mutacao
+     * @return um indivíduo com a mutação
      */
     private static int[] mutacao(int[] individuo) {
         //Seleciona a posição da mutação
@@ -95,11 +96,12 @@ public class HeuristicaHillClimbing {
     }
 
     /**
-     * Carrega a população inicial de indivíduos
+     * Gera um indivíduo aleatóriamente.
      *
-     * @param tamanhoIndividuo quantidade de individuos do conjunto inicial
+     * @param tamanhoIndividuo O tamanho do indivíduo a ser gerado.
+     * @return Um vetor com um novo indivíduo gerado aleatoriamente.
      */
-    private static int[] geraPopulacaoInicial(int tamanhoIndividuo) {
+    private static int[] geraIndividuo(int tamanhoIndividuo) {
         //Inicializa o vetor de retorno
         int[] ret = new int[tamanhoIndividuo];
         int i = 0;
@@ -166,12 +168,12 @@ public class HeuristicaHillClimbing {
     /**
      * Verifica se o indivíduo e uma solução do problema
      *
-     * @param individuo Uma solução a ser verificada
-     * @return true se o indivíduo e uma solução do problema
+     * @param individuo Uma solução a ser verificada.
+     * @return true se o indivíduo e uma solução do problema.
      */
     public static boolean verificaSolucao(int[] individuo) {
        
-        //Verifica se todas as rainhas estao em posições validas
+        //Verifica se todas as rainhas estão em posições validas
         int cont = 0;
         for (int i = 0; i < individuo.length; i++) {         
             if (validaPosicao(individuo, i)==false) {
@@ -190,13 +192,13 @@ public class HeuristicaHillClimbing {
      */
     public static int[] hillClimbing(int qtdeInteracoes, int qtdeRainha) {
         //Gera o candidato inicial
-        int[] candidato = geraPopulacaoInicial(qtdeRainha);
+        int[] candidato = geraIndividuo(qtdeRainha);
         //Calcula o custo do candidato inicial
         int custoCandidato = funcaoFitness(candidato);
 
         //Controla as interações 
         int interacao = 0;
-        //Pàra se chegar no número máximo de interacoes ou achar a solução
+        //Para se chegar no número máximo de interacoes ou achar a solução
         while ((interacao < qtdeInteracoes) && (verificaSolucao(candidato) == false)) {
             // Gera o proximo candidato aleatoriamente
             int[] vizinho = mutacao(candidato);
@@ -217,7 +219,7 @@ public class HeuristicaHillClimbing {
     }
 
     /**
-     * Faz a chamada do algoritmo e Hill Climbine apresenta as estatisticas.
+     * Faz a chamada do algoritmo e HillClimbing apresenta as estatísticas.
      * 
      * @param qtdeInteracoes
      * @param qtdeRainha 
