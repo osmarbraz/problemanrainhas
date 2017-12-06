@@ -12,12 +12,12 @@ public class NRainhasForcaBruta {
      /**
      * Quantidade de solucoes encontradas ao final do algoritmo
      */
-    private static int quantidadeSolucoes;
+    private static int totalSolucoes;
 
     /**
-     * Habilita ou desabilida a saída dos dados de impressao
+     * Controla impressão do tabuleiro
      */
-     private static final boolean HABILITARIMPRESSAO = true;
+     private static final boolean IMPRIMIRTABULEIRO = true;
 
     /**
      * Valida se a k-ésima rainha posicionada está sob ataque.
@@ -105,7 +105,6 @@ public class NRainhasForcaBruta {
      * Ma
      * 
      * @param R vetor onde as rainhas serão inseridas
-     * @param visitado vetor onde as posições usadas são marcadas
      * @param k coordenada da linha corrente onde a rainhas devera ser inserida
      */  
      public static void forcaBruta(int[] R, int k) {
@@ -117,12 +116,7 @@ public class NRainhasForcaBruta {
         if (k == n) {  
             //Avalia todas as rainhas colocadas 
             if (valida(R)) {
-                //Imprime o tabuleiro quando encontrar a solução valida
-                if (HABILITARIMPRESSAO) {
-                     imprimeTabuleiro(R);
-                 }
-                 //Conta o número de soluções encontradas
-                quantidadeSolucoes++;
+                imprimeSolucao(R);
            }
         } else {
             //Percorre o vetor de rainhas           
@@ -133,31 +127,36 @@ public class NRainhasForcaBruta {
             }
         }
     }
-    
+
     /**
      * Imprime as soluções: tabuleiro e o posicionamento das rainhas.
      *
-     * @param posicaoRainhas
+     * @param R
      */
-    private static void imprimeTabuleiro(int[] posicaoRainhas) {
+    private static void imprimeSolucao(int[] R) {
 
         // Tamanho do Problema
-        int n = posicaoRainhas.length;
+        int n = R.length;
 
-        System.out.println(" Solução número " + (quantidadeSolucoes + 1) + ":");
-        
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                //Posição ocupada
-                if (posicaoRainhas[j] == i) {
-                    System.out.print(" " + i + " ");                    
-                } else {
-                    System.out.print(" . ");
+        totalSolucoes++;
+
+        if (IMPRIMIRTABULEIRO) {
+            
+            System.out.println(" Solução número " + totalSolucoes + ":");
+            
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    //Posição ocupada
+                    if (R[j] == i) {
+                        System.out.print(" " + i + " ");
+                    } else {
+                        System.out.print(" . ");
+                    }
                 }
+                System.out.println(" ");
             }
             System.out.println(" ");
         }
-        System.out.println(" ");
     }
 
      /**
@@ -181,8 +180,7 @@ public class NRainhasForcaBruta {
 
             int n = listaProblemasASolucionar[problemaAtual];
             int rainhas[] = new int[n];
-            int usado[] = new int[n];
-
+            
             System.out.println("-----------------------------------------------------------");
             System.out.println("Para " + n + " Rainhas \n"); 
             
@@ -192,7 +190,7 @@ public class NRainhasForcaBruta {
             for (int testeAtual = 1; testeAtual <= repeticoesTeste; testeAtual++) {
             
                 //Zera o numero de solucoes
-                quantidadeSolucoes = 0;
+                totalSolucoes = 0;
                 
                 //Executa o garbage collector (gc) antes de cada teste
                 System.gc();
@@ -211,7 +209,7 @@ public class NRainhasForcaBruta {
 
             mediaTempo = tempoAcumulado / repeticoesTeste;   
 
-            System.out.println("\nSoluções...: " + quantidadeSolucoes);
+            System.out.println("\nSoluções...: " + totalSolucoes);
             System.out.println("Tempo Médio: " + mediaTempo + " milisegundos");
             System.out.println("Acumulado..: " + tempoAcumulado + " milisegundos");
 

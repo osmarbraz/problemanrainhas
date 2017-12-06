@@ -1,3 +1,4 @@
+
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -12,37 +13,15 @@ public class NRainhasAlgoritmoGenetico {
     /**
      * Atributo do numero de soluções encontradas ao final do algoritmo
      */
-    private static int solucoes;
+    private static int totalSolucoes;
     private static int qtdeRainha;
     private static int maiorFitness;
-    
+
     //Gerador de número aleatórios
     private static final Random RANDOMICO = new Random();
 
     //Habilita ou desabilita a saida dos dados de impressão
-    private static final boolean HABILITARIMPRESSAO = true;
-
-    /**
-     * Trata a saída de dados.
-     *
-     * @param string Uma string a ser impressa com uma nova linha após.
-     */
-    private static void println(String string) {
-        if (!HABILITARIMPRESSAO) {
-            System.out.println(string);
-        }
-    }
-
-    /**
-     * Trata a saída de dados.
-     *
-     * @param string Uma string a ser impressa.
-     */
-    private static void print(String string) {
-        if (!HABILITARIMPRESSAO) {
-            System.out.print(string);
-        }
-    }
+    private static final boolean IMPRIMIRTABULEIRO = true;
 
     /**
      * Transforma o vetor em uma string para escrever em tela.
@@ -66,15 +45,14 @@ public class NRainhasAlgoritmoGenetico {
      * Carrega a população inicial de indivíduos do AG.
      *
      * @param populacao Conjunto de indivíduos da população
-     * @param tamanhoPopulacao quantidade de indivíduos da população
-     * inicial
+     * @param tamanhoPopulacao quantidade de indivíduos da população inicial
      */
-    private static Set geraPopulacaoInicial(int tamanhoPopulacao ){
+    private static Set geraPopulacaoInicial(int tamanhoPopulacao) {
         Set populacao = new HashSet();
         while (populacao.size() < tamanhoPopulacao) {
             //Gera um individuo
             int[] individuo = gerarIndividuo();
-            println("individuo=" + vetorToString(individuo));
+            System.out.println("individuo=" + vetorToString(individuo));
             //Adiciona o novo individuo a populacao
             populacao.add(individuo);
         }
@@ -82,35 +60,44 @@ public class NRainhasAlgoritmoGenetico {
     }
 
     /**
-     * Imprime o tabuleiro da solução do problema das Rainhas
+     * Imprime as soluções: tabuleiro e o posicionamento das rainhas.
      *
-     * @param rainhas vetor das rainhas
+     * @param R
      */
-    private static void imprime(int[] rainhas) {
-        for (int i = 0; i < qtdeRainha; i++) {
-            for (int j = 0; j < qtdeRainha; j++) {
-                //Posicao ocupada
-                if (rainhas[j] == i) {
-                    print(" " + i + " ");
-                } else {
-                    print(" . ");
+    private static void imprimeSolucao(int[] R) {
+
+        // Tamanho do Problema
+        int n = R.length;
+
+        if (IMPRIMIRTABULEIRO) {
+
+            System.out.println(" Solução número " + totalSolucoes + ":");
+
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    //Posição ocupada
+                    if (R[j] == i) {
+                        System.out.print(" " + i + " ");
+                    } else {
+                        System.out.print(" . ");
+                    }
                 }
+                System.out.println(" ");
             }
-            println(" ");
+            System.out.println(" ");
         }
-        println(" ");
     }
 
     /**
-     * Lógica do Algoritmo Genético mantendo os melhores na população. 
-     * 
+     * Lógica do Algoritmo Genético mantendo os melhores na população.
+     *
      * Retorna o melhor indivíduo da população.
      *
      * @param populacao População de individuos
      * @param probabilidadeMutacao Taxa de probabilidade de mutação da população
      */
     private static int[] proximaGeracao(Set populacao, double probabilidadeMutacao, int fitnessAtual) {
-        
+
         //Conjunto de novos indivíduos da próxima geração
         Set novaPopulacao = new HashSet();
         //Gera a nova populacao com base na população anteior        
@@ -137,7 +124,7 @@ public class NRainhasAlgoritmoGenetico {
         // Adicionar dois dos melhores pais a população
         Object[] pais = populacao.toArray();
         int[] fitness = new int[pais.length];
-        //Um numero baixo para o menor fitness
+        //Um numero baixo para o melhor fitness
         int melhorF = -1;
         for (int i = 0; i < pais.length; i++) {
             fitness[i] = avaliacaoIndividuo((int[]) pais[i]);
@@ -160,10 +147,10 @@ public class NRainhasAlgoritmoGenetico {
             }
             //Decrementa o fitness para pegar o próximo
             melhorF--;
-        }        
+        }
         novaPopulacao.addAll(populacao);
-                
-         //Guarda o melhor indivíduo
+
+        //Guarda o melhor indivíduo
         int[] melhorIndividuo = null;
         //Procura o melhor indivíduo na nova população
         Object[] pop = novaPopulacao.toArray();
@@ -210,8 +197,10 @@ public class NRainhasAlgoritmoGenetico {
     /**
      * Realiza o crossover entre dois individuos da população.
      *
-     * @param individuo1 Indivíduo que fornece a 1a parte dos genes para o novo indivíduo
-     * @param individuo2 Indivíduo que fornece a 2a parte dos genes para o novo indivíduo
+     * @param individuo1 Indivíduo que fornece a 1a parte dos genes para o novo
+     * indivíduo
+     * @param individuo2 Indivíduo que fornece a 2a parte dos genes para o novo
+     * indivíduo
      * @return um indivíduo resultante do crossover
      */
     private static int[] crossover(int[] individuo1, int[] individuo2) {
@@ -251,10 +240,10 @@ public class NRainhasAlgoritmoGenetico {
         }
         return individuoSelecionado;
     }
-    
+
     /**
-     * Gera um indivíduo com n posições de forma aleatória. 
-     * 
+     * Gera um indivíduo com n posições de forma aleatória.
+     *
      * Gera rainhas repetidas
      *
      * @return um indivíduo da populacao com repetição de rainha.
@@ -275,10 +264,10 @@ public class NRainhasAlgoritmoGenetico {
 
     /**
      * NAO ESTA SENDO UTILIZADO
-     * 
+     *
      * Gera um indivíduo com n posições de forma aleatória de acordo com a
-     * quantidade de rainhas. 
-     * 
+     * quantidade de rainhas.
+     *
      * Usa uma roleta para evitar indivíduos reptidos
      *
      * @return um indivíduo da população sem repetição de rainha.
@@ -316,63 +305,69 @@ public class NRainhasAlgoritmoGenetico {
     }
 
     /**
-     * Função de avaliacao do indivíduo, retorna a quantidade de rainhas a salvo.
+     * Função de avaliacao do indivíduo, retorna a quantidade de rainhas a
+     * salvo.
      *
      * @param individuo Um indivíduo da população
      * @return a quantidade de rainhas salvas no indivíduo
      */
     public static int avaliacaoIndividuo(int[] individuo) {
         int ret = 0;
-       
+
         // Verifica se as rainhas estao salvas
         // A quantidade rainhas não salvas retorno da função fitness
         for (int i = 0; i < qtdeRainha; i++) {
             if (validaPosicao(individuo, i)) {
                 ret++;
             }
-        }                    
+        }
         return ret;
     }
-    
+
     /**
      * Valida se a k-ésima rainha posicionada está sob ataque.
-     * 
-     * Uma rainha está sob ataque se há outra rainha na mesma linha, coluna ou 
-     * diagonal onde esta se encontra.
-     * 
-     * @param R o vetor das rainhas
-     * @param k linha do vetor a ser analisa
      *
-     * @return true se a k-ésima rainha não estiver sob ataque das demais já 
+     * Uma rainha está sob ataque se há outra rainha na mesma linha, coluna ou
+     * diagonal onde esta se encontra.
+     *
+     * Como as rainhas são adicionadas sempre na coluna seguinte, não há
+     * necessi- dade de validar conflitos na mesma coluna.
+     *
+     * @param R vetor das rainhas posicionadas. O elemento corresponde à coluna
+     * e seu respectivo conteúdo corresponde à linha.
+     *
+     * @param k linha do vetor a ser analisada
+     *
+     * @return true se a k-ésima rainha não estiver sob ataque das demais já
      * posicionadas
      */
     public static boolean validaPosicao(int[] R, int k) {
-        
-        //Para cada uma das rainhas anteriormente posicionadas:
+
+        // Rainhas anteriormente posicionadas:
         for (int i = 0; i < k; i++) {
-            
-            //Verifica se a rainha k está na mesma coluna da rainha i
+            // Se sob ataque na linha
             if (R[i] == R[k]) {
                 return false;
             }
-            
-            // Verifica se a rainha k está na mesma diagonal da rainha i
-            if ( Math.abs(R[i] - R[k]) == (k - i)) {
-             return false;                
+            // Se sob ataque na diagonal
+            if (Math.abs(R[i] - R[k]) == (k - i)) {
+                return false;
             }
         }
-        
-        // Se a posição é válida
-        return true;        
+
+        // Posição válida
+        return true;
     }
-    
+
     /**
      * Executa as gerações do Algoritmo Genético
-     * 
+     *
      * @param qRainha Quantidade de rainhas.
-     * @param qtdeGeracoes Quantidade de gerações a ser executado o algoritmo genético.
+     * @param qtdeGeracoes Quantidade de gerações a ser executado o algoritmo
+     * genético.
      * @param tamanhoPopulacao Tamanho de população.
-     * @param probabilidadeMutacao Percentual de probabilidade de mutação dos indivíduos.     
+     * @param probabilidadeMutacao Percentual de probabilidade de mutação dos
+     * indivíduos.
      */
     public static void algoritmoGenetico(int qRainha, int qtdeGeracoes, int tamanhoPopulacao, double probabilidadeMutacao) {
 
@@ -383,14 +378,14 @@ public class NRainhasAlgoritmoGenetico {
 
         // gerar a populacao inicial com 10 individuos
         Set populacao = geraPopulacaoInicial(tamanhoPopulacao);
-        
+
         int[] melhorIndividuo = null;
         int melhorFitness = 0;
         int fitness = 0;
         int geracao = 0;
         int contador = 0;
-        
-        do{            
+
+        do {
             //Retorna o melhor indivíduo da população
             melhorIndividuo = proximaGeracao(populacao, probabilidadeMutacao, melhorFitness);
             //Retorna o fitness do melhor inidividuo da população
@@ -417,86 +412,114 @@ public class NRainhasAlgoritmoGenetico {
                 }
             }
             geracao = geracao + 1;
-        // Ate que a geração atinja o maxiou ou alcance o maior fitness    
-        }  while ((geracao < qtdeGeracoes) && (fitness != maiorFitness));
-        
+            // Ate que a geração atinja o maxiou ou alcance o maior fitness    
+        } while ((geracao < qtdeGeracoes) && (fitness != maiorFitness));
+
         //Estatisticas da execucao
         if (fitness == maiorFitness) {
-            solucoes = solucoes + 1;
-            println("Solucao encontrada em " + geracao + " geracoes");
-            println("Solucao = " + vetorToString(melhorIndividuo));
-            println("Fitness = " + avaliacaoIndividuo(melhorIndividuo));
+            totalSolucoes = totalSolucoes + 1;
+            System.out.println("Solucao encontrada em " + geracao + " geracoes");
+            System.out.println("Solucao = " + vetorToString(melhorIndividuo));
+            System.out.println("Fitness = " + avaliacaoIndividuo(melhorIndividuo));
         } else {
-            println("Solucao nao encontrada após " + geracao + " geracoes");
-            println("Melhor Individuo = " + vetorToString(melhorIndividuo));
-            println("Fitness = " + avaliacaoIndividuo(melhorIndividuo));            
+            System.out.println("Solucao nao encontrada após " + geracao + " geracoes");
+            System.out.println("Melhor Individuo = " + vetorToString(melhorIndividuo));
+            System.out.println("Fitness = " + avaliacaoIndividuo(melhorIndividuo));
         }
-        println("Solucao");
-        imprime(melhorIndividuo);
+        System.out.println("Solucao");
+        imprimeSolucao(melhorIndividuo);
     }
+
+    /**
+     * Chamada do algoritmo.
+     *
+     * Provê o resultado da execução para cada problema resolvido, imprimindo em
+     * tela detalhes estatísticos para cada caso e tempo global.
+     *
+     * @param listaProblemasASolucionar vetor contendo os problemas a serem
+     * executados.
+     * @param repeticoesTeste quantidade de repetições para cada problema.
+     */
+    private static void nRainhas(int[] listaProblemasASolucionar, int repeticoesTeste) {
+
+   
+        double tempoTotalDeTeste = 0;
+        double mediaTempo;
+        long tempoAcumulado;
+        long tempo;
+        
+        //Realiza os testes para as quantidades das rainhas especificadas no vetor
+        for (int problemaAtual = 0; problemaAtual < listaProblemasASolucionar.length; problemaAtual++) {
+
+            int n = listaProblemasASolucionar[problemaAtual];
+            int rainhas[] = new int[n];
+            
+            System.out.println("-----------------------------------------------------------");
+            System.out.println("Para " + n + " Rainhas \n"); 
+            
+            tempoAcumulado = 0;
+            
+            //Repete o teste para as vezes especificadas no vetor
+            for (int testeAtual = 1; testeAtual <= repeticoesTeste; testeAtual++) {
+            
+                //Zera o numero de solucoes
+                totalSolucoes = 0;
+                
+                //Executa o garbage collector (gc) antes de cada teste
+                System.gc();
+
+                //Início da execução
+                tempo = System.currentTimeMillis();
+
+                //Parâmetros do Algoritmo Genético
+                //Quantidade de gerações
+                int qtdeGeracoes = 300000;
+                //Tamanho da populacao
+                int tamanhoPopulacao = 20;
+                //Probabilidade de mutação dos individuos
+                double probabilidadeMutacao = 0.15;
+
+                //Executa a solução do algoritmo
+                algoritmoGenetico(n, qtdeGeracoes, tamanhoPopulacao, probabilidadeMutacao);
+
+                
+                //Pega o tempo final do processamento da vez
+                tempo = System.currentTimeMillis() - tempo;
+                //Acumula o tempo do teste ao tempo final
+                tempoAcumulado = tempoAcumulado + tempo;
+                System.out.println("Resultado da " + testeAtual + "ª execução: " + tempo + " milisegundos");
+            }
+
+            mediaTempo = tempoAcumulado / repeticoesTeste;   
+
+            System.out.println("\nSoluções...: " + totalSolucoes);
+            System.out.println("Tempo Médio: " + mediaTempo + " milisegundos");
+            System.out.println("Acumulado..: " + tempoAcumulado + " milisegundos");
+
+            tempoTotalDeTeste = tempoTotalDeTeste + tempoAcumulado;
+        }
+        
+        System.out.println("===========================================================");
+        System.out.println("O tempo total do teste e " + tempoTotalDeTeste + " milisegundos.");
+        System.out.println("===========================================================");
+    }
+
 
     public static void main(String[] args) {
 
-        System.out.println("Algoritmo Genetico");
+        System.out.println("Algoritmo Genético");
         
-        //Especifica a quantidade de rainhas serem testadas
-        int qtdeRainhasTeste[] = {4};
-        //Especifica o número de vezes a se realizado com cada qtde de rainhas
-        int repeticoesTeste[] = {1};
+        // Vetor contendo os problemas a serem processados.
+        // Cada elemento define a ordem do tabuleiro e, consequentemente, a 
+        // quantidade de rainhas a serem posicionadas.
+        int[] listaProblemasASolucionar = {4};
 
-        //Declara o tempo total do teste
-        double tempoTeste = 0;
-        
-        //Realiza os testes para as quantidades das rainhas especificadas no vetor
-        for (int qtdeR = 0; qtdeR < qtdeRainhasTeste.length; qtdeR++) {
+        // Quantidade de repetições do processamento
+        // Útil para fins estatísticos.
+        int repeticoesTeste = 1;
 
-            int qRainha = qtdeRainhasTeste[qtdeR];            
+        System.out.println("Executando N-Rainhas com " + repeticoesTeste + " repetições.\n\n");
+        nRainhas(listaProblemasASolucionar, repeticoesTeste);
 
-            //Realiza a repetição do teste para a quantidade de rainhas    
-            for (int qtdeT = 0; qtdeT < repeticoesTeste.length; qtdeT++) {
-
-                println("Execuntando com " + qRainha + " rainhas por " + repeticoesTeste[qtdeT] + " vezes.");
-                
-                //Zera o numero de solucoes
-                solucoes = 0;
-
-                //Declara o tempo final da repetição
-                long tempoFinal = 0;
-
-                //Repete o teste para as vezes especificadas no vetor
-                for (int qtdeV = 0; qtdeV < repeticoesTeste[qtdeT]; qtdeV++) {
-
-                    //Executa o gc antes de cada teste
-                    System.gc();
-                    
-                    //Zera o tempo de início da vez
-                    long tempo = 0;
-                    
-                    //Pega o tempo corrente
-                    tempo = System.currentTimeMillis();
-
-                    //Parâmetros do Algoritmo Genético
-                    //Quantidade de gerações
-                    int qtdeGeracoes = 300000;
-                    //Tamanho da populacao
-                    int tamanhoPopulacao = 20;
-                    //Probabilidade de mutação dos individuos
-                    double probabilidadeMutacao = 0.15;                   
-                                        
-                    //Executa a solução do algoritmo
-                    algoritmoGenetico(qRainha, qtdeGeracoes, tamanhoPopulacao, probabilidadeMutacao);
-
-                    //Pega o tempo final do processamento da vez
-                    tempo = System.currentTimeMillis() - tempo;
-                    //Acumula o tempo do teste ao tempo final
-                    tempoFinal = tempoFinal + tempo;
-                }
-                //Calcula a média do tempo
-                double mediaTempo = tempoFinal / repeticoesTeste[qtdeT];
-                System.out.println("O tempo medio para " + qRainha + " rainhas, executando " + repeticoesTeste[qtdeT] + " é vezes é " + mediaTempo + " milisegundos com " + solucoes + " solucoes em " + repeticoesTeste[qtdeT] + " repeticoes");
-                tempoTeste = tempoTeste + mediaTempo;
-            }
-        }
-        System.out.println("O tempo total do teste e " + tempoTeste + " milisegundos.");
     }
 }
