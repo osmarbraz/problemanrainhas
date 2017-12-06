@@ -10,7 +10,7 @@ public class NRainhasHillClimbing {
     /**
      * Atributo do número de soluções encontradas ao final do algoritmo
      */
-    private static indt totalSolucoes;
+    private static int totalSolucoes;
     private static int interacaoSolucao;
 
     //Gerador de número aleatórios
@@ -231,7 +231,7 @@ public class NRainhasHillClimbing {
             System.out.println("Fitness  = " + funcaoFitness(melhorIndividuo));
         }
         System.out.println("Solucao:");
-        imprimeTabuleiro(melhorIndividuo);
+        imprimeSolucao(melhorIndividuo);
     }
 
     /**
@@ -252,6 +252,9 @@ public class NRainhasHillClimbing {
 
         //Declara o tempo total do teste
         double tempoTeste = 0;
+        
+        long tempoFinal = 0;
+        
 
         //Realiza os testes para as quantidades das rainhas especificadas no vetor
         for (int problemaAtual = 0; problemaAtual < listaProblemasASolucionar.length; problemaAtual++) {
@@ -265,7 +268,7 @@ public class NRainhasHillClimbing {
 
                 totalSolucoes = 0;
 
-                long tempoFinal = 0;
+                tempoFinal = 0;
 
                 //Executa o gc antes de cada teste
                 System.gc();

@@ -17,7 +17,7 @@ public class NRainhasForcaBruta {
     /**
      * Controla impressão do tabuleiro
      */
-     private static final boolean IMPRIMIRTABULEIRO = true;
+     private static final boolean IMPRIMIRTABULEIRO = false;
 
     /**
      * Valida se a k-ésima rainha posicionada está sob ataque.
@@ -236,7 +236,7 @@ public class NRainhasForcaBruta {
         // Vetor contendo os problemas a serem processados.
         // Cada elemento define a ordem do tabuleiro e, consequentemente, a 
         // quantidade de rainhas a serem posicionadas.
-        int[] listaProblemasASolucionar = {4};
+        int[] listaProblemasASolucionar = {4, 6, 8, 10, 12, 14};
         
         // Quantidade de repetições do processamento
         // Útil para fins estatísticos.
