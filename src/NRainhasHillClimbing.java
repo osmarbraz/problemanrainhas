@@ -232,17 +232,18 @@ public class NRainhasHillClimbing {
 
         if (valida(melhorIndividuo)) {
             //Incrementa o contador de soluções
-            solucoes = solucoes + 1;
+            solucoes = solucoes + 1;            
             //System.out.println("Solucao encontrada em " + interacaoSolucao + " interacoes");
             //System.out.println("Melhor Individuo = " + vetorToString(melhorIndividuo));
             //System.out.println("Fitness  = " + fitness(melhorIndividuo));
+            //System.out.println("Solucao:");
+            imprimeSolucao(melhorIndividuo);
         } else {
             //System.out.println("Solucao não encontrada em " + interacaoSolucao + " interacoes");
             //System.out.println("Melhor Individuo = " + vetorToString(melhorIndividuo));
             //System.out.println("Fitness  = " + fitness(melhorIndividuo));
         }
-        //System.out.println("Solucao:");
-        //imprimeSolucao(melhorIndividuo);
+       
     }
 
     /**

@@ -2,7 +2,7 @@
 /**
  * @author Ana Paula, Osmar e Samuel
  *
- * Forca bruta por permutacao*
+ * Forca bruta por permutacao
  * O programa utiliza o método de permutação para gerar todas as soluções do problema.
  * Utiliza um vetor para armazenar as posições das rainhas.
  *
@@ -19,23 +19,6 @@ public class NRainhasPermutacao {
      */
     private static final boolean IMPRIMIRTABULEIRO = false;
 
-    /**
-     * Valida se a k-ésima rainha posicionada está sob ataque.
-     *
-     * Uma rainha está sob ataque se há outra rainha na mesma linha, coluna ou
-     * diagonal onde esta se encontra.
-     *
-     * Como as rainhas são adicionadas sempre na coluna seguinte, não há
-     * necessi- dade de validar conflitos na mesma coluna.
-     *
-     * @param R vetor das rainhas posicionadas. O elemento corresponde à coluna
-     * e seu respectivo conteúdo corresponde à linha.
-     *
-     * @param k linha do vetor a ser analisada
-     *
-     * @return true se a k-ésima rainha não estiver sob ataque das demais já
-     * posicionadas
-     */
     /**
      * Valida se a k-ésima rainha posicionada está sob ataque.
      *

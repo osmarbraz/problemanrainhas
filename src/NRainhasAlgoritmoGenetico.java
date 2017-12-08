@@ -368,13 +368,13 @@ public class NRainhasAlgoritmoGenetico {
             //System.out.println("Solucao encontrada em " + geracao + " geracoes");
             //System.out.println("Solucao = " + vetorToString(melhorIndividuo));
             //System.out.println("Fitness = " + fitness(melhorIndividuo));
+            //System.out.println("Solucao");
+             imprimeSolucao(melhorIndividuo);
         } else {
             //System.out.println("Solucao nao encontrada após " + geracao + " geracoes");
             //System.out.println("Melhor Individuo = " + vetorToString(melhorIndividuo));
             //System.out.println("Fitness = " + fitness(melhorIndividuo));
-        }
-        //System.out.println("Solucao");
-        //imprimeSolucao(melhorIndividuo);
+        }        
     }
 
     /**
