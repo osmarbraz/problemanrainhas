@@ -183,9 +183,9 @@ public class NRainhasHillClimbing {
         int custoCandidato = funcaoFitness(candidato);
 
         //Controla as interações 
-        int interacao = 0;
+        int iteracao = 0;
         //Para se chegar no número máximo de interacoes ou achar a solução
-        while ((interacao < qtdeInteracoes) && (verificaSolucao(candidato) == false)) {
+        while ((iteracao < qtdeInteracoes) && (verificaSolucao(candidato) == false)) {
             // Gera o proximo candidato aleatoriamente
             int[] vizinho = mutacao(candidato);
             //Calcula o custo do novo vizinho
@@ -196,10 +196,10 @@ public class NRainhasHillClimbing {
                 candidato = vizinho;
             }
             //Avança para a próxima interação
-            interacao = interacao + 1;
+            iteracao = iteracao + 1;
         }
         //Armazena a interação que encontrou a solução
-        interacaoSolucao = interacao;
+        interacaoSolucao = iteracao;
         //Retorna o candidato
         return candidato;
     }
