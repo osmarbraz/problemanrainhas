@@ -101,8 +101,6 @@ public class NRainhasForcaBruta {
      * 
      * Se uma rainha está em uma posição válida, então a mesma é posicionada e, 
      * recursivamente, as rainhas seguintes são posicionadas.
-     *
-     * Ma
      * 
      * @param R vetor onde as rainhas serão inseridas
      * @param k coordenada da linha corrente onde a rainhas devera ser inserida
@@ -131,11 +129,11 @@ public class NRainhasForcaBruta {
     /**
      * Imprime as soluções: tabuleiro e o posicionamento das rainhas.
      *
-     * @param R
+     * @param R vetor das rainhas.
      */
     private static void imprimeSolucao(int[] R) {
 
-        // Tamanho do Problema
+        //Tamanho do Problema
         int n = R.length;
 
         totalSolucoes++;

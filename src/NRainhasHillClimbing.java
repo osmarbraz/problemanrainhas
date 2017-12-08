@@ -40,21 +40,19 @@ public class NRainhasHillClimbing {
     /**
      * Imprime as soluções: tabuleiro e o posicionamento das rainhas.
      *
-     * @param posicaoRainhas
+     * @param R vetor das rainhas.
      */
-    private static void imprimeSolucao(int[] posicaoRainhas) {
+    private static void imprimeSolucao(int[] R) {
 
         // Tamanho do Problema
-        int n = posicaoRainhas.length;
-
-        totalSolucoes++;
+        int n = R.length;
 
         System.out.println(" Solução número " + totalSolucoes + ":");
         if (IMPRIMIRTABULEIRO) {
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < n; j++) {
                     //Posição ocupada
-                    if (posicaoRainhas[j] == i) {
+                    if (R[j] == i) {
                         System.out.print(" " + i + " ");
                     } else {
                         System.out.print(" . ");
@@ -304,11 +302,11 @@ public class NRainhasHillClimbing {
         // Vetor contendo os problemas a serem processados.
         // Cada elemento define a ordem do tabuleiro e, consequentemente, a 
         // quantidade de rainhas a serem posicionadas.
-        int[] listaProblemasASolucionar = {4, 6, 8, 10 ,12, 14};
+        int[] listaProblemasASolucionar = {4, 6, };
         
         // Quantidade de repetições do processamento
         // Útil para fins estatísticos.
-        int repeticoesTeste = 10;
+        int repeticoesTeste = 2;
                 
         System.out.println("Executando N-Rainhas com " + repeticoesTeste + " repetições.\n"); 
         nRainhas(listaProblemasASolucionar, repeticoesTeste);

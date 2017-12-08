@@ -22,25 +22,7 @@ public class NRainhasAlgoritmoGenetico {
 
     //Habilita ou desabilita a saida dos dados de impressão
     private static final boolean IMPRIMIRTABULEIRO = false;
-
-    /**
-     * Transforma o vetor em uma string para escrever em tela.
-     *
-     * @param vet Vetor com os dados inteiros a serem transformados em string
-     * @return Um literal com os dados do vetor separados por ;
-     */
-    private static String vetorToString(int[] vet) {
-        String ret = "";
-        if ((vet != null) && (vet.length > 0)) {
-            for (int i = 0; i < vet.length; i++) {
-                ret = ret + vet[i] + ";";
-            }
-            //retira o ultimo ; da string
-            ret = ret.substring(0, ret.length() - 1);
-        }
-        return ret;
-    }
-
+    
     /**
      * Carrega a população inicial de indivíduos do AG.
      *
@@ -61,11 +43,11 @@ public class NRainhasAlgoritmoGenetico {
     /**
      * Imprime as soluções: tabuleiro e o posicionamento das rainhas.
      *
-     * @param R
+     * @param R vetor das rainhas.
      */
     private static void imprimeSolucao(int[] R) {
 
-        // Tamanho do Problema
+        //Tamanho do Problema
         int n = R.length;
 
         if (IMPRIMIRTABULEIRO) {

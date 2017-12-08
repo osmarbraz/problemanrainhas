@@ -137,11 +137,11 @@ public class NRainhasPermutacao {
     /**
      * Imprime as soluções: tabuleiro e o posicionamento das rainhas.
      *
-     * @param R
+     * @param R vetor das rainhas.
      */
     private static void imprimeSolucao(int[] R) {
 
-        // Tamanho do Problema
+        //Tamanho do Problema
         int n = R.length;
 
         totalSolucoes++;
@@ -206,7 +206,7 @@ public class NRainhasPermutacao {
                 //Início da execução
                 tempo = System.currentTimeMillis();
 
-                /* se um elemento i estiver em uso, entao used[i] == 1, caso contrario, used[i] == 0. */
+                /* se um elemento i estiver em uso, entao usado[i] == 1, caso contrario, usado[i] == 0. */
                 for (int i = 0; i < n; i++) {
                     usado[i] = 0;
                 }

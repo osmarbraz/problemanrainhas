@@ -118,12 +118,12 @@ public class NRainhasBackTracking {
     /**
      * Imprime as soluções: tabuleiro e o posicionamento das rainhas.
      *
-     * @param posicaoRainhas
+     * @param R vetor das rainhas.
      */
-    private static void imprimeSolucao(int[] posicaoRainhas) {
+    private static void imprimeSolucao(int[] R) {
 
-        // Tamanho do Problema
-        int n = posicaoRainhas.length;
+        //Tamanho do Problema
+        int n = R.length;
 
         totalSolucoes++;
         
@@ -134,7 +134,7 @@ public class NRainhasBackTracking {
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < n; j++) {
                     //Posição ocupada
-                    if (posicaoRainhas[j] == i) {
+                    if (R[j] == i) {
                         System.out.print(" " + i + " ");
                     } else {
                         System.out.print(" . ");
