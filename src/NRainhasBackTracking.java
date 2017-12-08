@@ -46,7 +46,7 @@ public class NRainhasBackTracking {
     /**
      * Habilita ou desabilida a saida dos dados de impressao
      */
-    private static final boolean IMPRIMIRTABULEIRO = true;
+    private static final boolean IMPRIMIRTABULEIRO = false;
 
     /**
      * Valida se a k-ésima rainha posicionada está sob ataque.
@@ -126,9 +126,11 @@ public class NRainhasBackTracking {
         int n = posicaoRainhas.length;
 
         totalSolucoes++;
-
-        System.out.println(" Solução número " + totalSolucoes + ":");
+        
         if (IMPRIMIRTABULEIRO) {
+            
+            System.out.println(" Solução número " + totalSolucoes + ":");
+            
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < n; j++) {
                     //Posição ocupada
@@ -225,14 +227,14 @@ public class NRainhasBackTracking {
         // Vetor contendo os problemas a serem processados.
         // Cada elemento define a ordem do tabuleiro e, consequentemente, a 
         // quantidade de rainhas a serem posicionadas.
-        int[] listaProblemasASolucionar = {4, 6, 8, 10, 12, 14};
+        int[] listaProblemasASolucionar = {4, 6};
 
         // Quantidade de repetições do processamento
         // Útil para fins estatísticos.
-        int repeticoesTeste = 1;
+        int repeticoesTeste = 2;
 
         System.out.println("BackTracking");
-        System.out.println("Executando N-Rainhas com " + repeticoesTeste + " repetições.\n\n");
+        System.out.println("Executando N-Rainhas com " + repeticoesTeste + " repetições.\n");
         nRainhas(listaProblemasASolucionar, repeticoesTeste);
 
     }

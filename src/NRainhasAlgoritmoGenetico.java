@@ -21,7 +21,7 @@ public class NRainhasAlgoritmoGenetico {
     private static final Random RANDOMICO = new Random();
 
     //Habilita ou desabilita a saida dos dados de impressão
-    private static final boolean IMPRIMIRTABULEIRO = true;
+    private static final boolean IMPRIMIRTABULEIRO = false;
 
     /**
      * Transforma o vetor em uma string para escrever em tela.
@@ -51,8 +51,7 @@ public class NRainhasAlgoritmoGenetico {
         Set populacao = new HashSet();
         while (populacao.size() < tamanhoPopulacao) {
             //Gera um individuo
-            int[] individuo = gerarIndividuo();
-            System.out.println("individuo=" + vetorToString(individuo));
+            int[] individuo = gerarIndividuo();                        
             //Adiciona o novo individuo a populacao
             populacao.add(individuo);
         }
@@ -418,16 +417,16 @@ public class NRainhasAlgoritmoGenetico {
         //Estatisticas da execucao
         if (fitness == maiorFitness) {
             totalSolucoes = totalSolucoes + 1;
-            System.out.println("Solucao encontrada em " + geracao + " geracoes");
-            System.out.println("Solucao = " + vetorToString(melhorIndividuo));
-            System.out.println("Fitness = " + avaliacaoIndividuo(melhorIndividuo));
+            //System.out.println("Solucao encontrada em " + geracao + " geracoes");
+            //System.out.println("Solucao = " + vetorToString(melhorIndividuo));
+            //System.out.println("Fitness = " + avaliacaoIndividuo(melhorIndividuo));
         } else {
-            System.out.println("Solucao nao encontrada após " + geracao + " geracoes");
-            System.out.println("Melhor Individuo = " + vetorToString(melhorIndividuo));
-            System.out.println("Fitness = " + avaliacaoIndividuo(melhorIndividuo));
+            //System.out.println("Solucao nao encontrada após " + geracao + " geracoes");
+            //System.out.println("Melhor Individuo = " + vetorToString(melhorIndividuo));
+            //System.out.println("Fitness = " + avaliacaoIndividuo(melhorIndividuo));
         }
-        System.out.println("Solucao");
-        imprimeSolucao(melhorIndividuo);
+        //System.out.println("Solucao");
+        //imprimeSolucao(melhorIndividuo);
     }
 
     /**
@@ -441,7 +440,6 @@ public class NRainhasAlgoritmoGenetico {
      * @param repeticoesTeste quantidade de repetições para cada problema.
      */
     private static void nRainhas(int[] listaProblemasASolucionar, int repeticoesTeste) {
-
    
         double tempoTotalDeTeste = 0;
         double mediaTempo;
@@ -452,7 +450,6 @@ public class NRainhasAlgoritmoGenetico {
         for (int problemaAtual = 0; problemaAtual < listaProblemasASolucionar.length; problemaAtual++) {
 
             int n = listaProblemasASolucionar[problemaAtual];
-            int rainhas[] = new int[n];
             
             System.out.println("-----------------------------------------------------------");
             System.out.println("Para " + n + " Rainhas \n"); 
@@ -481,7 +478,6 @@ public class NRainhasAlgoritmoGenetico {
 
                 //Executa a solução do algoritmo
                 algoritmoGenetico(n, qtdeGeracoes, tamanhoPopulacao, probabilidadeMutacao);
-
                 
                 //Pega o tempo final do processamento da vez
                 tempo = System.currentTimeMillis() - tempo;
@@ -489,7 +485,7 @@ public class NRainhasAlgoritmoGenetico {
                 tempoAcumulado = tempoAcumulado + tempo;
                 System.out.println("Resultado da " + testeAtual + "ª execução: " + tempo + " milisegundos");
             }
-
+            //Calcula a média do tempo
             mediaTempo = tempoAcumulado / repeticoesTeste;   
 
             System.out.println("\nSoluções...: " + totalSolucoes);
@@ -512,11 +508,11 @@ public class NRainhasAlgoritmoGenetico {
         // Vetor contendo os problemas a serem processados.
         // Cada elemento define a ordem do tabuleiro e, consequentemente, a 
         // quantidade de rainhas a serem posicionadas.
-        int[] listaProblemasASolucionar = {4, 6, 8};
+        int[] listaProblemasASolucionar = {4, 6};
 
         // Quantidade de repetições do processamento
         // Útil para fins estatísticos.
-        int repeticoesTeste = 1;
+        int repeticoesTeste = 2;
 
         System.out.println("Executando N-Rainhas com " + repeticoesTeste + " repetições.\n\n");
         nRainhas(listaProblemasASolucionar, repeticoesTeste);

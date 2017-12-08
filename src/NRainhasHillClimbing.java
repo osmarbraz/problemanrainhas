@@ -17,7 +17,7 @@ public class NRainhasHillClimbing {
     private static final Random RANDOMICO = new Random();
 
     //Habilita ou desabilita a saída dos dados de impressao
-    private static final boolean IMPRIMIRTABULEIRO = true;
+    private static final boolean IMPRIMIRTABULEIRO = false;
 
     /**
      * Transforma o vetor em uma string para escrever em tela.
@@ -222,16 +222,16 @@ public class NRainhasHillClimbing {
 
         if (verificaSolucao(melhorIndividuo)) {
             totalSolucoes = totalSolucoes + 1;
-            System.out.println("Solucao encontrada em " + interacaoSolucao + " interacoes");
-            System.out.println("Melhor Individuo = " + vetorToString(melhorIndividuo));
-            System.out.println("Fitness  = " + funcaoFitness(melhorIndividuo));
+            //System.out.println("Solucao encontrada em " + interacaoSolucao + " interacoes");
+            //System.out.println("Melhor Individuo = " + vetorToString(melhorIndividuo));
+            //System.out.println("Fitness  = " + funcaoFitness(melhorIndividuo));
         } else {
-            System.out.println("Solucao não encontrada em " + interacaoSolucao + " interacoes");
-            System.out.println("Melhor Individuo = " + vetorToString(melhorIndividuo));
-            System.out.println("Fitness  = " + funcaoFitness(melhorIndividuo));
+            //System.out.println("Solucao não encontrada em " + interacaoSolucao + " interacoes");
+            //System.out.println("Melhor Individuo = " + vetorToString(melhorIndividuo));
+            //System.out.println("Fitness  = " + funcaoFitness(melhorIndividuo));
         }
-        System.out.println("Solucao:");
-        imprimeSolucao(melhorIndividuo);
+        //System.out.println("Solucao:");
+        //imprimeSolucao(melhorIndividuo);
     }
 
     /**
@@ -246,67 +246,71 @@ public class NRainhasHillClimbing {
      */
     private static void nRainhas(int[] listaProblemasASolucionar, int repeticoesTeste) {
 
-        //Parâmetros do algoritmo genético
-        //Quantidade de geracoes
         int qtdeIteracoes = 1000000;
-
-        //Declara o tempo total do teste
-        double tempoTeste = 0;
+        double tempoTotalDeTeste = 0;        
+        long tempoAcumulado = 0;
         
-        long tempoFinal = 0;
-        
-
         //Realiza os testes para as quantidades das rainhas especificadas no vetor
         for (int problemaAtual = 0; problemaAtual < listaProblemasASolucionar.length; problemaAtual++) {
 
-            int qtdeRainha = listaProblemasASolucionar[problemaAtual];
+            int n = listaProblemasASolucionar[problemaAtual];
+            
+            System.out.println("-----------------------------------------------------------");
+            System.out.println("Para " + n + " Rainhas \n");
+            
+            tempoAcumulado = 0;
 
             //Realiza a repetição do teste para a quantidade de rainhas    
-            for (int testeAtual = 0; testeAtual < repeticoesTeste; testeAtual++) {
-
-                System.out.println("Execuntando com " + qtdeRainha + " rainhas por " + testeAtual + " vezes.");
-
-                totalSolucoes = 0;
-
-                tempoFinal = 0;
+            for (int testeAtual = 1; testeAtual <= repeticoesTeste; testeAtual++) {               
+                
+                //Zera o numero de solucoes
+                totalSolucoes = 0;             
 
                 //Executa o gc antes de cada teste
                 System.gc();
 
-                //Pega o tempo corrente
+                //Início da execução
                 long tempo = System.currentTimeMillis();
 
                 //Executa a solução do algoritmo         
-                algoritmoHillClimbing(qtdeIteracoes, qtdeRainha);
+                algoritmoHillClimbing(qtdeIteracoes, n);
 
                 //Pega o tempo final do processamento da vez
                 tempo = System.currentTimeMillis() - tempo;
                 //Acumula o tempo do teste ao tempo final
-                tempoFinal = tempoFinal + tempo;
+                tempoAcumulado = tempoAcumulado + tempo;
+                System.out.println("Resultado da " + testeAtual + "ª execução: " + tempo + " milisegundos");
             }
             //Calcula a média do tempo
-            double mediaTempo = tempoFinal / repeticoesTeste;
-            System.out.println("O tempo medio para " + qtdeRainha + " rainhas, executando " + repeticoesTeste + " é vezes é " + mediaTempo + " milisegundos com " + totalSolucoes + " solucoes em " + repeticoesTeste + " repeticoes");
-            tempoTeste = tempoTeste + mediaTempo;
+            double mediaTempo = tempoAcumulado / repeticoesTeste;            
+            
+            System.out.println("\nSoluções...: " + totalSolucoes);
+            System.out.println("Tempo Médio: " + mediaTempo + " milisegundos");
+            System.out.println("Acumulado..: " + tempoAcumulado + " milisegundos");            
+            
+            tempoTotalDeTeste = tempoTotalDeTeste + mediaTempo;
+        }
+    
+        System.out.println("===========================================================");
+        System.out.println("O tempo total do teste e " + tempoTotalDeTeste + " milisegundos.");
+        System.out.println("===========================================================");
+
     }
-
-    System.out.println("O tempo total do teste e " + tempoTeste + " milisegundos.");
-
-}
     
     public static void main(String[] args) {
 
+        System.out.println("HillClimbing");
+        
         // Vetor contendo os problemas a serem processados.
         // Cada elemento define a ordem do tabuleiro e, consequentemente, a 
         // quantidade de rainhas a serem posicionadas.
-        int[] listaProblemasASolucionar = {4, 6, 8, 10, 12, 14};
+        int[] listaProblemasASolucionar = {4, 6};
         
         // Quantidade de repetições do processamento
         // Útil para fins estatísticos.
-        int repeticoesTeste = 10;
-        
-        System.out.println("HillC");
-        System.out.println("Executando N-Rainhas com " + repeticoesTeste + " repetições.\n\n"); 
+        int repeticoesTeste = 2;
+                
+        System.out.println("Executando N-Rainhas com " + repeticoesTeste + " repetições.\n"); 
         nRainhas(listaProblemasASolucionar, repeticoesTeste);
 
     }
