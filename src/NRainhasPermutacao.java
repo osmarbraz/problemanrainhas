@@ -12,7 +12,7 @@ public class NRainhasPermutacao {
     /**
      * Quantidade de solucoes encontradas ao final do algoritmo
      */
-    private static int totalSolucoes;
+    private static int solucoes;
 
     /**
      * Habilita ou desabilida a saída dos dados de impressao
@@ -144,11 +144,12 @@ public class NRainhasPermutacao {
         //Tamanho do Problema
         int n = R.length;
 
-        totalSolucoes++;
+        //Incrementa o contador de soluções
+        solucoes = solucoes + 1;
 
         if (IMPRIMIRTABULEIRO) {
             
-            System.out.println(" Solução número " + totalSolucoes + ":");
+            System.out.println(" Solução número " + solucoes + ":");
         
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < n; j++) {
@@ -198,7 +199,7 @@ public class NRainhasPermutacao {
             for (int testeAtual = 1; testeAtual <= repeticoesTeste; testeAtual++) {
 
                 //Zera o numero de solucoes
-                totalSolucoes = 0;
+                solucoes = 0;
 
                 //Executa o garbage collector (gc) antes de cada teste
                 System.gc();
@@ -221,7 +222,7 @@ public class NRainhasPermutacao {
 
             mediaTempo = tempoAcumulado / repeticoesTeste;
 
-            System.out.println("\nSoluções...: " + totalSolucoes);
+            System.out.println("\nSoluções...: " + solucoes);
             System.out.println("Tempo Médio: " + mediaTempo + " milisegundos");
             System.out.println("Acumulado..: " + tempoAcumulado + " milisegundos");
 

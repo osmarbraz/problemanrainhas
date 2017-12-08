@@ -10,7 +10,7 @@ public class NRainhasHillClimbing {
     /**
      * Atributo do número de soluções encontradas ao final do algoritmo
      */
-    private static int totalSolucoes;
+    private static int solucoes;
     private static int interacaoSolucao;
 
     //Gerador de número aleatórios
@@ -46,9 +46,11 @@ public class NRainhasHillClimbing {
 
         // Tamanho do Problema
         int n = R.length;
-
-        System.out.println(" Solução número " + totalSolucoes + ":");
+        
         if (IMPRIMIRTABULEIRO) {
+            
+            System.out.println(" Solução número " + solucoes + ":");
+            
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < n; j++) {
                     //Posição ocupada
@@ -88,118 +90,128 @@ public class NRainhasHillClimbing {
      */
     private static int[] geraIndividuo(int tamanhoIndividuo) {
         //Inicializa o vetor de retorno
-        int[] ret = new int[tamanhoIndividuo];
+        int[] novoIndividuo = new int[tamanhoIndividuo];
         int i = 0;
         //Gera os indivíduos de acordo com o tamanho do candidato
         while (i < tamanhoIndividuo) {
             //Gera um uma rainha aleatória
-            ret[i] = new Random().nextInt(tamanhoIndividuo);
+            novoIndividuo[i] = new Random().nextInt(tamanhoIndividuo);
             i = i + 1;
         }
-        return ret;
+        return novoIndividuo;
     }
 
     /**
      * Função de avaliação do indivíduo, retorna a quantidade de rainhas a
      * salvo.
-     *
-     * @param individuo Uma solução a ser verificada
-     * @return a quantidade de rainhas salvas no indivíduo
+     * 
+     * @param R vetor das rainhas posicionadas. O elemento corresponde à
+     * coluna e seu respectivo conteúdo corresponde à linha.
+     * 
+     * @return  A quantidade de rainhas salvas em R.
      */
-    public static int funcaoFitness(int[] individuo) {
-
-        // Verifica se as rainhas estao salvas
-        // A quantidade rainhas na salvas e o retorno da função fitness
-        int ret = 0;
-        for (int i = 0; i < individuo.length; i++) {
-            if (validaPosicao(individuo, i)) {
-                ret++;
+    public static int fitness(int[] R) {
+        //Recupera a quantidade de rainhas
+        int n = R.length;        
+        int cont = 0;
+        //Verifica se todas as rainhas estão em posições validas
+        for (int i = 0; i < n; i++) {
+            //Verifica a quantidade de rainhas salvas
+            if (validaPosicao(R, i)) {
+                cont = cont + 1;
             }
         }
-        return ret;
+        return cont;
     }
 
     /**
      * Valida se a k-ésima rainha posicionada está sob ataque.
-     *
-     * Uma rainha está sob ataque se há outra rainha na mesma linha, coluna ou
+     * 
+     * Uma rainha está sob ataque se há outra rainha na mesma linha, coluna ou 
      * diagonal onde esta se encontra.
+     * 
+     * Como as rainhas são adicionadas sempre na coluna seguinte, não há necessi-
+     * dade de validar conflitos na mesma coluna.
+     * 
+     * @param R vetor das rainhas posicionadas. O elemento corresponde à
+     * coluna e seu respectivo conteúdo corresponde à linha.
+     * 
+     * @param k linha do vetor a ser analisada
      *
-     * @param R o vetor das rainhas
-     * @param k linha do vetor a ser analisa
-     *
-     * @return true se a k-ésima rainha não estiver sob ataque das demais já
+     * @return true se a k-ésima rainha não estiver sob ataque das demais já 
      * posicionadas
      */
     public static boolean validaPosicao(int[] R, int k) {
-
-        //Para cada uma das rainhas anteriormente posicionadas:
-        for (int i = 0; i < k; i++) {
-
-            //Verifica se a rainha k está na mesma coluna da rainha i
-            if (R[i] == R[k]) {
+                
+        // Rainhas anteriormente posicionadas:
+        for (int i=0; i<k; i++) {            
+            // Se sob ataque na linha
+            if (R[i]==R[k]) {
                 return false;
             }
-
-            // Verifica se a rainha k está na mesma diagonal da rainha i
-            if (Math.abs(R[i] - R[k]) == (k - i)) {
-                return false;
+            
+            // Se sob ataque na diagonal
+            if (Math.abs(R[i]-R[k])==(k-i)) {
+             return false;                
             }
-        }
-        // Se a posição é válida
-        return true;
+        }        
+        // Posição válida
+        return true;        
     }
 
     /**
-     * Verifica se o indivíduo e uma solução do problema
-     *
-     * @param individuo Uma solução a ser verificada.
-     * @return true se o indivíduo e uma solução do problema.
+     * Avalia todas as rainhas posicionadas.
+     * 
+     * @param R vetor das rainhas posicionadas. O elemento corresponde à
+     * coluna e seu respectivo conteúdo corresponde à linha.
+     * 
+     * @return True ou False se existe alguma rainha em posição inválida.
      */
-    public static boolean verificaSolucao(int[] individuo) {
-
-        //Verifica se todas as rainhas estão em posições validas
+    public static boolean valida(int[] R) {               
+        //Recupera a quantidade de rainhas
+        int n = R.length;
         int cont = 0;
-        for (int i = 0; i < individuo.length; i++) {
-            if (validaPosicao(individuo, i) == false) {
-                cont++;
-            }
-        }
-        return (cont == 0);
+        //Verifica se todas as rainhas estão em posições validas
+        for (int i = 0; i < n; i++) {         
+            if (validaPosicao(R, i)==false) {
+                cont = cont + 1;
+            }       
+        }        
+        return (cont==0);
     }
 
     /**
      * Algoritmo que executa as interações do algoritmo Hill Climbing
      *
-     * @param qtdeInteracoes Números de vezes a executar as interações no
+     * @param iteracoes Números de vezes a executar as interações no
      * algoritmo
-     * @param qtdeRainha Quantidade de rainhas no tabuleiro
+     * @param n Quantidade de rainhas no tabuleiro
      * @return Retorna o melhor indivíduo encontrado nas interações
      */
-    public static int[] hillClimbing(int qtdeInteracoes, int qtdeRainha) {
+    public static int[] hillClimbing(int iteracoes, int n) {
         //Gera o candidato inicial
-        int[] candidato = geraIndividuo(qtdeRainha);
+        int[] candidato = geraIndividuo(n);
         //Calcula o custo do candidato inicial
-        int custoCandidato = funcaoFitness(candidato);
+        int custoCandidato = fitness(candidato);
 
         //Controla as interações 
-        int iteracao = 0;
+        int i = 0;
         //Para se chegar no número máximo de interacoes ou achar a solução
-        while ((iteracao < qtdeInteracoes) && (verificaSolucao(candidato) == false)) {
+        while ((i < iteracoes) && (valida(candidato) == false)) {
             // Gera o proximo candidato aleatoriamente
             int[] vizinho = mutacao(candidato);
             //Calcula o custo do novo vizinho
-            int custoVizinho = funcaoFitness(vizinho);
+            int custoVizinho = fitness(vizinho);
             // Verifica se é maior que o anterior
             if (custoVizinho >= custoCandidato) {
                 //Troca se o custo for maior
                 candidato = vizinho;
             }
             //Avança para a próxima interação
-            iteracao = iteracao + 1;
+            i = i + 1;
         }
         //Armazena a interação que encontrou a solução
-        interacaoSolucao = iteracao;
+        interacaoSolucao = i;
         //Retorna o candidato
         return candidato;
     }
@@ -218,15 +230,16 @@ public class NRainhasHillClimbing {
         //Procura o menor indivíduo
         int[] melhorIndividuo = hillClimbing(qtdeInteracoes, qtdeRainha);
 
-        if (verificaSolucao(melhorIndividuo)) {
-            totalSolucoes = totalSolucoes + 1;
+        if (valida(melhorIndividuo)) {
+            //Incrementa o contador de soluções
+            solucoes = solucoes + 1;
             //System.out.println("Solucao encontrada em " + interacaoSolucao + " interacoes");
             //System.out.println("Melhor Individuo = " + vetorToString(melhorIndividuo));
-            //System.out.println("Fitness  = " + funcaoFitness(melhorIndividuo));
+            //System.out.println("Fitness  = " + fitness(melhorIndividuo));
         } else {
             //System.out.println("Solucao não encontrada em " + interacaoSolucao + " interacoes");
             //System.out.println("Melhor Individuo = " + vetorToString(melhorIndividuo));
-            //System.out.println("Fitness  = " + funcaoFitness(melhorIndividuo));
+            //System.out.println("Fitness  = " + fitness(melhorIndividuo));
         }
         //System.out.println("Solucao:");
         //imprimeSolucao(melhorIndividuo);
@@ -244,9 +257,10 @@ public class NRainhasHillClimbing {
      */
     private static void nRainhas(int[] listaProblemasASolucionar, int repeticoesTeste) {
 
-        int qtdeIteracoes = 1000000;
-        double tempoTotalDeTeste = 0;        
+        int iteracoes = 1000000;
+        double tempoTotalDeTeste = 0;                
         long tempoAcumulado = 0;
+        long solucoesAcumulado = 0;                
         
         //Realiza os testes para as quantidades das rainhas especificadas no vetor
         for (int problemaAtual = 0; problemaAtual < listaProblemasASolucionar.length; problemaAtual++) {
@@ -256,13 +270,16 @@ public class NRainhasHillClimbing {
             System.out.println("-----------------------------------------------------------");
             System.out.println("Para " + n + " Rainhas \n");
             
+            //Zera o tempo da execução da iteração
             tempoAcumulado = 0;
+            //Zera o contador de solucoes da iteração
+            solucoesAcumulado = 0;
 
             //Realiza a repetição do teste para a quantidade de rainhas    
             for (int testeAtual = 1; testeAtual <= repeticoesTeste; testeAtual++) {               
                 
                 //Zera o numero de solucoes
-                totalSolucoes = 0;             
+                solucoes = 0;             
 
                 //Executa o gc antes de cada teste
                 System.gc();
@@ -271,22 +288,27 @@ public class NRainhasHillClimbing {
                 long tempo = System.currentTimeMillis();
 
                 //Executa a solução do algoritmo         
-                algoritmoHillClimbing(qtdeIteracoes, n);
+                algoritmoHillClimbing(iteracoes, n);
 
                 //Pega o tempo final do processamento da vez
                 tempo = System.currentTimeMillis() - tempo;
                 //Acumula o tempo do teste ao tempo final
                 tempoAcumulado = tempoAcumulado + tempo;
-                System.out.println("Resultado da " + testeAtual + "ª execução: " + tempo + " milisegundos");
+                //Acumula a soluções do teste
+                solucoesAcumulado = solucoesAcumulado + solucoes;                                
+                System.out.println("Resultado da " + testeAtual + "ª execução: " + tempo + " milisegundos" + " com " + solucoes + " soluções");
             }
             //Calcula a média do tempo
-            double mediaTempo = tempoAcumulado / repeticoesTeste;            
+            double mediaTempo = tempoAcumulado / (double)repeticoesTeste;            
             
-            System.out.println("\nSoluções...: " + totalSolucoes);
-            System.out.println("Tempo Médio: " + mediaTempo + " milisegundos");
-            System.out.println("Acumulado..: " + tempoAcumulado + " milisegundos");            
-            
-            tempoTotalDeTeste = tempoTotalDeTeste + mediaTempo;
+            //Calcula a média de solucoes
+            double mediaSolucoes = solucoesAcumulado / (double)repeticoesTeste;   
+
+            System.out.println("\nSoluções Média: " + mediaSolucoes + " soluções");
+            System.out.println("Tempo Médio...: " + mediaTempo + " milisegundos");
+            System.out.println("Acumulado.....: " + tempoAcumulado + " milisegundos");
+
+            tempoTotalDeTeste = tempoTotalDeTeste + tempoAcumulado;
         }
     
         System.out.println("===========================================================");
@@ -302,11 +324,11 @@ public class NRainhasHillClimbing {
         // Vetor contendo os problemas a serem processados.
         // Cada elemento define a ordem do tabuleiro e, consequentemente, a 
         // quantidade de rainhas a serem posicionadas.
-        int[] listaProblemasASolucionar = {4, 6, };
+        int[] listaProblemasASolucionar = {4, 6, 8, 10 ,12, 14};
         
         // Quantidade de repetições do processamento
         // Útil para fins estatísticos.
-        int repeticoesTeste = 2;
+        int repeticoesTeste = 10;
                 
         System.out.println("Executando N-Rainhas com " + repeticoesTeste + " repetições.\n"); 
         nRainhas(listaProblemasASolucionar, repeticoesTeste);

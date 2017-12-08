@@ -41,7 +41,7 @@ public class NRainhasBackTracking {
     /**
      * Quantidade de solucoes encontradas ao final do algoritmo
      */
-    private static int totalSolucoes;
+    private static int solucoes;
 
     /**
      * Habilita ou desabilida a saida dos dados de impressao
@@ -125,11 +125,11 @@ public class NRainhasBackTracking {
         //Tamanho do Problema
         int n = R.length;
 
-        totalSolucoes++;
+        solucoes++;
         
         if (IMPRIMIRTABULEIRO) {
             
-            System.out.println(" Solução número " + totalSolucoes + ":");
+            System.out.println(" Solução número " + solucoes + ":");
             
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < n; j++) {
@@ -158,11 +158,9 @@ public class NRainhasBackTracking {
      */
     private static void nRainhas(int[] listaProblemasASolucionar, int repeticoesTeste) {
 
-        double tempoTotalDeTeste = 0;
-        double mediaTempo;
+        double tempoTotalDeTeste = 0;        
         long tempoAcumulado;
-        long tempo;
-
+        
         //Realiza os testes para as quantidades das rainhas especificadas no vetor
         for (int problemaAtual = 0; problemaAtual < listaProblemasASolucionar.length; problemaAtual++) {
 
@@ -179,13 +177,13 @@ public class NRainhasBackTracking {
             for (int testeAtual = 1; testeAtual <= repeticoesTeste; testeAtual++) {
 
                 //Zera o numero de solucoes
-                totalSolucoes = 0;
+                solucoes = 0;
 
                 //Executa o garbage collector (gc) antes de cada teste
                 System.gc();
 
                 //Início da execução
-                tempo = System.currentTimeMillis();
+                long tempo = System.currentTimeMillis();
 
                 backTracking(rainhas, 0);
 
@@ -197,9 +195,8 @@ public class NRainhasBackTracking {
                 System.out.println("Resultado da " + testeAtual + "ª execução: " + tempo + " milisegundos");
 
             }
-
-            mediaTempo = tempoAcumulado / repeticoesTeste;
-            System.out.println("\nSoluções...: " + totalSolucoes);
+            double mediaTempo = tempoAcumulado / (double)repeticoesTeste;
+            System.out.println("\nSoluções...: " + solucoes);
             System.out.println("Tempo Médio: " + mediaTempo + " milisegundos");
             System.out.println("Acumulado..: " + tempoAcumulado + " milisegundos");
 
@@ -209,7 +206,6 @@ public class NRainhasBackTracking {
         System.out.println("===========================================================");
         System.out.println("Tempo Global...: " + tempoTotalDeTeste + " milisegundos.");
         System.out.println("===========================================================");
-
     }
 
     /**
@@ -236,6 +232,5 @@ public class NRainhasBackTracking {
         System.out.println("BackTracking");
         System.out.println("Executando N-Rainhas com " + repeticoesTeste + " repetições.\n");
         nRainhas(listaProblemasASolucionar, repeticoesTeste);
-
     }
 }

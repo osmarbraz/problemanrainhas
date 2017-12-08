@@ -12,7 +12,7 @@ public class NRainhasForcaBruta {
      /**
      * Quantidade de solucoes encontradas ao final do algoritmo
      */
-    private static int totalSolucoes;
+    private static int solucoes;
 
     /**
      * Controla impressão do tabuleiro
@@ -20,23 +20,6 @@ public class NRainhasForcaBruta {
      private static final boolean IMPRIMIRTABULEIRO = false;
 
     /**
-     * Valida se a k-ésima rainha posicionada está sob ataque.
-     * 
-     * Uma rainha está sob ataque se há outra rainha na mesma linha, coluna ou 
-     * diagonal onde esta se encontra.
-     * 
-     * Como as rainhas são adicionadas sempre na coluna seguinte, não há necessi-
-     * dade de validar conflitos na mesma coluna.
-     * 
-     * @param R vetor das rainhas posicionadas. O elemento corresponde à
-     * coluna e seu respectivo conteúdo corresponde à linha.
-     * 
-     * @param k linha do vetor a ser analisada
-     *
-     * @return true se a k-ésima rainha não estiver sob ataque das demais já 
-     * posicionadas
-     */
-     /**
      * Valida se a k-ésima rainha posicionada está sob ataque.
      * 
      * Uma rainha está sob ataque se há outra rainha na mesma linha, coluna ou 
@@ -136,11 +119,12 @@ public class NRainhasForcaBruta {
         //Tamanho do Problema
         int n = R.length;
 
-        totalSolucoes++;
+        //Incrementa o contador de soluções
+        solucoes = solucoes + 1;
 
         if (IMPRIMIRTABULEIRO) {
             
-            System.out.println(" Solução número " + totalSolucoes + ":");
+            System.out.println(" Solução número " + solucoes + ":");
             
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < n; j++) {
@@ -168,11 +152,9 @@ public class NRainhasForcaBruta {
     */
     private static void nRainhas(int[] listaProblemasASolucionar, int repeticoesTeste) {
         
-        double tempoTotalDeTeste = 0;
-        double mediaTempo;
+        double tempoTotalDeTeste = 0;        
         long tempoAcumulado;
-        long tempo;
-        
+                
         //Realiza os testes para as quantidades das rainhas especificadas no vetor
         for (int problemaAtual = 0; problemaAtual < listaProblemasASolucionar.length; problemaAtual++) {
 
@@ -188,13 +170,13 @@ public class NRainhasForcaBruta {
             for (int testeAtual = 1; testeAtual <= repeticoesTeste; testeAtual++) {
             
                 //Zera o numero de solucoes
-                totalSolucoes = 0;
+                solucoes = 0;
                 
                 //Executa o garbage collector (gc) antes de cada teste
                 System.gc();
 
                 //Início da execução
-                tempo = System.currentTimeMillis();
+                long tempo = System.currentTimeMillis();
 
                 forcaBruta(rainhas, 0);
 
@@ -205,9 +187,9 @@ public class NRainhasForcaBruta {
                 System.out.println("Resultado da " + testeAtual + "ª execução: " + tempo + " milisegundos");
             }
 
-            mediaTempo = tempoAcumulado / repeticoesTeste;   
+            double mediaTempo = tempoAcumulado / (double)repeticoesTeste;   
 
-            System.out.println("\nSoluções...: " + totalSolucoes);
+            System.out.println("\nSoluções...: " + solucoes);
             System.out.println("Tempo Médio: " + mediaTempo + " milisegundos");
             System.out.println("Acumulado..: " + tempoAcumulado + " milisegundos");
 
