@@ -304,11 +304,11 @@ public class NRainhasHillClimbing {
         // Vetor contendo os problemas a serem processados.
         // Cada elemento define a ordem do tabuleiro e, consequentemente, a 
         // quantidade de rainhas a serem posicionadas.
-        int[] listaProblemasASolucionar = {4, 6};
+        int[] listaProblemasASolucionar = {4, 6, 8, 10 ,12, 14};
         
         // Quantidade de repetições do processamento
         // Útil para fins estatísticos.
-        int repeticoesTeste = 2;
+        int repeticoesTeste = 10;
                 
         System.out.println("Executando N-Rainhas com " + repeticoesTeste + " repetições.\n"); 
         nRainhas(listaProblemasASolucionar, repeticoesTeste);
