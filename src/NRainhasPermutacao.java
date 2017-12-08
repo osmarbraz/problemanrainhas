@@ -232,7 +232,7 @@ public class NRainhasPermutacao {
         // Vetor contendo os problemas a serem processados.
         // Cada elemento define a ordem do tabuleiro e, consequentemente, a 
         // quantidade de rainhas a serem posicionadas.
-        int[] listaProblemasASolucionar = {4, 6, 8, 10 ,12, 14};
+        int[] listaProblemasASolucionar = {4, 6, 8, 10 ,12, 14, 16, 18, 20, 22};
 
         // Quantidade de repetições do processamento
         // Útil para fins estatísticos.
