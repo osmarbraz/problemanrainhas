@@ -311,13 +311,13 @@ public class NRainhasAlgoritmoGenetico {
      * Executa as gerações do Algoritmo Genético
      *
      * @param n Quantidade de rainhas.
-     * @param qtdeGeracoes Quantidade de gerações a ser executado o algoritmo
+     * @param qtdGeracoes Quantidade de gerações a ser executado o algoritmo
      * genético.
      * @param p Tamanho de população.
      * @param mutacao Percentual de probabilidade de mutação dos
      * indivíduos.
      */
-    public static void algoritmoGenetico(int n, int qtdeGeracoes, int p, double mutacao) {
+    public static void algoritmoGenetico(int n, int qtdGeracoes, int p, double mutacao) {
 
         //Define o maior fitness pela quantidade rainhas 
         maiorFitness = n;
@@ -359,7 +359,7 @@ public class NRainhasAlgoritmoGenetico {
             }
             geracao = geracao + 1;
             // Ate que a geração atinja o maxiou ou alcance o maior fitness    
-        } while ((geracao < qtdeGeracoes) && (fitness != maiorFitness));
+        } while ((geracao < qtdGeracoes) && (fitness != maiorFitness));
 
         //Estatisticas da execucao
         if (fitness == maiorFitness) {
@@ -419,14 +419,14 @@ public class NRainhasAlgoritmoGenetico {
 
                 //Parâmetros do Algoritmo Genético
                 //Quantidade de gerações
-                int qtdeGeracoes = 300000;
+                int qtdGeracoes = 300000;
                 //Tamanho da populacao
-                int tamanhoPopulacao = 20;
+                int p = 20;
                 //Probabilidade de mutação dos individuos
-                double probabilidadeMutacao = 0.15;
+                double mutacao = 0.15;
 
                 //Executa a solução do algoritmo
-                algoritmoGenetico(n, qtdeGeracoes, tamanhoPopulacao, probabilidadeMutacao);
+                algoritmoGenetico(n, qtdGeracoes, p, mutacao);
                 
                 //Pega o tempo final do processamento da vez
                 tempo = System.currentTimeMillis() - tempo;
