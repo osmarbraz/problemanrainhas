@@ -306,6 +306,27 @@ public class NRainhasAlgoritmoGenetico {
         // Posição válida
         return true;        
     }
+    
+    /**
+     * Avalia todas as rainhas posicionadas.
+     * 
+     * @param R vetor das rainhas posicionadas. O elemento corresponde à
+     * coluna e seu respectivo conteúdo corresponde à linha.
+     * 
+     * @return True ou False se existe alguma rainha em posição inválida.
+     */
+    public static boolean valida(int[] R) {               
+        //Recupera a quantidade de rainhas
+        int n = R.length;
+        int cont = 0;
+        //Verifica se todas as rainhas estão em posições validas
+        for (int k = 0; k < n; k++) {         
+            if (validaPosicao(R, k)==false) {
+                cont = cont + 1;
+            }       
+        }        
+        return (cont==0);
+    }
 
     /**
      * Executa as gerações do Algoritmo Genético
@@ -315,7 +336,7 @@ public class NRainhasAlgoritmoGenetico {
      * @param p Tamanho de população.
      * @param mutacao Percentual de probabilidade de mutação dos indivíduos.
      */
-    public static void algoritmoGenetico(int n, int geracoes, int p, double mutacao) {
+    public static int[] algoritmoGenetico(int n, int geracoes, int p, double mutacao) {
 
         //Define o maior fitness pela quantidade rainhas 
         maiorFitness = n;
@@ -323,10 +344,14 @@ public class NRainhasAlgoritmoGenetico {
         // gerar a população inicial dos individuos
         Set populacao = geraPopulacaoInicial(p, n);
 
-        int[] melhorIndividuo = null;
-        int melhorFitness = 0;
+        //Armazena o melhor individuo de todas as gerações
+        int[] melhorIndividuo = null;        
+        //Armazena o melhor fitness da geração atual
         int fitness = 0;
-        int geracao = 0;
+        //Armazenao melhor fitness de todas as gerações
+        int melhorFitness = 0;
+        //Conta o número de gerações
+        int i = 0;
         int cont = 0;
 
         do {
@@ -355,13 +380,29 @@ public class NRainhasAlgoritmoGenetico {
                     melhorFitness = -1;
                 }
             }
-            geracao = geracao + 1;
+            i = i + 1;
             // Até que a geracao atinja o maximo de geraces ou alcance o maior fitness    
-        } while ((geracao < geracoes) && (fitness != maiorFitness));
+        } while ((i < geracoes) && (fitness != maiorFitness));
+        //Retorna o melhor indivíduo encontrado     
+        return melhorIndividuo;
+    }
+        
+    /**
+     * Faz a chamada do algoritmo Genetético e apresenta as estatísticas.
+     *
+     * @param n Quantidade de rainhas.
+     * @param geracoes Quantidade de gerações a ser executado o algoritmo genético.
+     * @param p Tamanho de população.
+     * @param mutacao Percentual de probabilidade de mutação dos indivíduos.
+     */
+    public static void executaAlgoritmoGenetico(int n, int geracoes, int p, double mutacao) {      
+        
+        //Guarda o melhor indivíduo
+        //Procura o menor indivíduo
+        int[] melhorIndividuo = algoritmoGenetico(n, geracoes, p, mutacao);
 
-        //Estatisticas da execucao
-        if (fitness == maiorFitness) {
-            //Incrementa o contador de soluções
+        if (valida(melhorIndividuo)) {
+           //Incrementa o contador de soluções
             solucoes = solucoes + 1;
             //System.out.println("Solucao encontrada em " + geracao + " geracoes");
             //System.out.println("Solucao = " + vetorToString(melhorIndividuo));
@@ -372,7 +413,7 @@ public class NRainhasAlgoritmoGenetico {
             //System.out.println("Solucao nao encontrada após " + geracao + " geracoes");
             //System.out.println("Melhor Individuo = " + vetorToString(melhorIndividuo));
             //System.out.println("Fitness = " + fitness(melhorIndividuo));
-        }        
+        }      
     }
 
     /**
@@ -424,7 +465,7 @@ public class NRainhasAlgoritmoGenetico {
                 double mutacao = 0.15;
 
                 //Executa a solução do algoritmo
-                algoritmoGenetico(n, qtdGeracoes, p, mutacao);
+                executaAlgoritmoGenetico(n, qtdGeracoes, p, mutacao);
                 
                 //Pega o tempo final do processamento da vez
                 tempo = System.currentTimeMillis() - tempo;

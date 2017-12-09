@@ -217,27 +217,27 @@ public class NRainhasHillClimbing {
     }
 
     /**
-     * Faz a chamada do algoritmo e HillClimbing apresenta as estatísticas.
+     * Faz a chamada do algoritmo HillClimbing e apresenta as estatísticas.
      *
-     * @param iteracoes
-     * @param n
+     * @param iteracoes Quantidade de iterações do algoritmo
+     * @param n Quantidade de rainhas no tabuleiro
      */
-    public static void algoritmoHillClimbing(int iteracoes, int n) {
+    public static void executaHillClimbing(int iteracoes, int n) {
         //Guarda em que interação ocorreu a solução
         interacaoSolucao = -1;
         
         //Guarda o melhor indivíduo
         //Procura o menor indivíduo
-        int[] melhorInd = hillClimbing(iteracoes, n);
+        int[] melhorIndividuo = hillClimbing(iteracoes, n);
 
-        if (valida(melhorInd)) {
+        if (valida(melhorIndividuo)) {
             //Incrementa o contador de soluções
             solucoes = solucoes + 1;            
             //System.out.println("Solucao encontrada em " + interacaoSolucao + " interacoes");
             //System.out.println("Melhor Individuo = " + vetorToString(melhorIndividuo));
             //System.out.println("Fitness  = " + fitness(melhorIndividuo));
             //System.out.println("Solucao:");
-            imprimeSolucao(melhorInd);
+            imprimeSolucao(melhorIndividuo);
         } else {
             //System.out.println("Solucao não encontrada em " + interacaoSolucao + " interacoes");
             //System.out.println("Melhor Individuo = " + vetorToString(melhorIndividuo));
@@ -288,7 +288,7 @@ public class NRainhasHillClimbing {
                 long tempo = System.currentTimeMillis();
 
                 //Executa a solução do algoritmo         
-                algoritmoHillClimbing(iteracoes, n);
+                executaHillClimbing(iteracoes, n);
 
                 //Pega o tempo final do processamento da vez
                 tempo = System.currentTimeMillis() - tempo;
