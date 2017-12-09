@@ -203,7 +203,7 @@ public class NRainhasHillClimbing {
             //Calcula o custo do novo vizinho
             int custoVizinho = fitness(vizinho);
             // Verifica se é maior que o anterior
-            if (custoVizinho >= custoCandidato) {
+            if (custoVizinho > custoCandidato) {
                 //Troca se o custo for maior
                 candidato = vizinho;
             }
