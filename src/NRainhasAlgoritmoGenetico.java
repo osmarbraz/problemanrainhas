@@ -335,6 +335,7 @@ public class NRainhasAlgoritmoGenetico {
      * @param geracoes Quantidade de gerações a ser executado o algoritmo genético.
      * @param p Tamanho de população.
      * @param mutacao Percentual de probabilidade de mutação dos indivíduos.
+     * @return Retorna o melhor indivíduo encontrado nas geracões
      */
     public static int[] algoritmoGenetico(int n, int geracoes, int p, double mutacao) {
 
@@ -383,7 +384,7 @@ public class NRainhasAlgoritmoGenetico {
             i = i + 1;
             // Até que a geracao atinja o maximo de geraces ou alcance o maior fitness    
         } while ((i < geracoes) && (fitness != maiorFitness));
-        //Retorna o melhor indivíduo encontrado     
+        //Retorna o melhor indivíduo encontrado nas gerações   
         return melhorIndividuo;
     }
         

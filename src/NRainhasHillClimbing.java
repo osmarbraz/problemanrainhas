@@ -212,7 +212,7 @@ public class NRainhasHillClimbing {
         }
         //Armazena a interação que encontrou a solução
         interacaoSolucao = i;
-        //Retorna o candidato
+        //Retorna o melhor candidato encontrado nas iterações
         return candidato;
     }
 
