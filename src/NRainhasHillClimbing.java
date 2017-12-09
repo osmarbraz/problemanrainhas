@@ -172,8 +172,8 @@ public class NRainhasHillClimbing {
         int n = R.length;
         int cont = 0;
         //Verifica se todas as rainhas estão em posições validas
-        for (int i = 0; i < n; i++) {         
-            if (validaPosicao(R, i)==false) {
+        for (int k = 0; k < n; k++) {         
+            if (validaPosicao(R, k)==false) {
                 cont = cont + 1;
             }       
         }        
@@ -219,31 +219,30 @@ public class NRainhasHillClimbing {
     /**
      * Faz a chamada do algoritmo e HillClimbing apresenta as estatísticas.
      *
-     * @param qtdeInteracoes
-     * @param qtdeRainha
+     * @param iteracoes
+     * @param n
      */
-    public static void algoritmoHillClimbing(int qtdeInteracoes, int qtdeRainha) {
+    public static void algoritmoHillClimbing(int iteracoes, int n) {
         //Guarda em que interação ocorreu a solução
         interacaoSolucao = -1;
+        
         //Guarda o melhor indivíduo
-
         //Procura o menor indivíduo
-        int[] melhorIndividuo = hillClimbing(qtdeInteracoes, qtdeRainha);
+        int[] melhorInd = hillClimbing(iteracoes, n);
 
-        if (valida(melhorIndividuo)) {
+        if (valida(melhorInd)) {
             //Incrementa o contador de soluções
             solucoes = solucoes + 1;            
             //System.out.println("Solucao encontrada em " + interacaoSolucao + " interacoes");
             //System.out.println("Melhor Individuo = " + vetorToString(melhorIndividuo));
             //System.out.println("Fitness  = " + fitness(melhorIndividuo));
             //System.out.println("Solucao:");
-            imprimeSolucao(melhorIndividuo);
+            imprimeSolucao(melhorInd);
         } else {
             //System.out.println("Solucao não encontrada em " + interacaoSolucao + " interacoes");
             //System.out.println("Melhor Individuo = " + vetorToString(melhorIndividuo));
             //System.out.println("Fitness  = " + fitness(melhorIndividuo));
-        }
-       
+        }       
     }
 
     /**
@@ -293,8 +292,10 @@ public class NRainhasHillClimbing {
 
                 //Pega o tempo final do processamento da vez
                 tempo = System.currentTimeMillis() - tempo;
+                
                 //Acumula o tempo do teste ao tempo final
                 tempoAcumulado = tempoAcumulado + tempo;
+                
                 //Acumula a soluções do teste
                 solucoesAcumulado = solucoesAcumulado + solucoes;                                
                 System.out.println("Resultado da " + testeAtual + "ª execução: " + tempo + " milisegundos" + " com " + solucoes + " soluções");
@@ -315,7 +316,6 @@ public class NRainhasHillClimbing {
         System.out.println("===========================================================");
         System.out.println("O tempo total do teste e " + tempoTotalDeTeste + " milisegundos.");
         System.out.println("===========================================================");
-
     }
     
     public static void main(String[] args) {
@@ -333,6 +333,5 @@ public class NRainhasHillClimbing {
                 
         System.out.println("Executando N-Rainhas com " + repeticoesTeste + " repetições.\n"); 
         nRainhas(listaProblemasASolucionar, repeticoesTeste);
-
     }
 }

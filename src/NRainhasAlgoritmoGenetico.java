@@ -311,18 +311,16 @@ public class NRainhasAlgoritmoGenetico {
      * Executa as gerações do Algoritmo Genético
      *
      * @param n Quantidade de rainhas.
-     * @param geracoes Quantidade de gerações a ser executado o algoritmo
-     * genético.
+     * @param geracoes Quantidade de gerações a ser executado o algoritmo genético.
      * @param p Tamanho de população.
-     * @param mutacao Percentual de probabilidade de mutação dos
-     * indivíduos.
+     * @param mutacao Percentual de probabilidade de mutação dos indivíduos.
      */
     public static void algoritmoGenetico(int n, int geracoes, int p, double mutacao) {
 
         //Define o maior fitness pela quantidade rainhas 
         maiorFitness = n;
 
-        // gerar a populacao inicial dos individuos
+        // gerar a população inicial dos individuos
         Set populacao = geraPopulacaoInicial(p, n);
 
         int[] melhorIndividuo = null;
@@ -343,7 +341,7 @@ public class NRainhasAlgoritmoGenetico {
                 melhorFitness = fitness;
             } else {
                 cont = cont + 1;
-                //Se nao ocorrer aumento do fitness aumenta a probabilidade de mutação
+                //Se não ocorrer aumento do fitness aumenta a probabilidade de mutação
                 if (cont > 1000) {
                     mutacao = 0.30;
                 } else if (cont > 2000) {
@@ -358,7 +356,7 @@ public class NRainhasAlgoritmoGenetico {
                 }
             }
             geracao = geracao + 1;
-            // Ate que a geração atinja o maxiou ou alcance o maior fitness    
+            // Até que a geracao atinja o maximo de geraces ou alcance o maior fitness    
         } while ((geracao < geracoes) && (fitness != maiorFitness));
 
         //Estatisticas da execucao
@@ -430,8 +428,10 @@ public class NRainhasAlgoritmoGenetico {
                 
                 //Pega o tempo final do processamento da vez
                 tempo = System.currentTimeMillis() - tempo;
+                
                 //Acumula o tempo do teste ao tempo final
                 tempoAcumulado = tempoAcumulado + tempo;
+                
                 //Acumula a soluções do teste
                 solucoesAcumulado = solucoesAcumulado + solucoes;                
                 System.out.println("Resultado da " + testeAtual + "ª execução: " + tempo + " milisegundos" + " com " + solucoes + " soluções");
@@ -447,13 +447,11 @@ public class NRainhasAlgoritmoGenetico {
             System.out.println("Acumulado.....: " + tempoAcumulado + " milisegundos");
 
             tempoTotalDeTeste = tempoTotalDeTeste + tempoAcumulado;
-        }
-        
+        }        
         System.out.println("===========================================================");
         System.out.println("O tempo total do teste e " + tempoTotalDeTeste + " milisegundos.");
         System.out.println("===========================================================");
     }
-
 
     public static void main(String[] args) {
 
