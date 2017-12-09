@@ -263,9 +263,9 @@ public class NRainhasAlgoritmoGenetico {
         int n = R.length;        
         int cont = 0;        
         //Verifica se todas as rainhas estão em posições validas
-        for (int i = 0; i < n; i++) {
+        for (int k = 0; k < n; k++) {
             //Verifica a quantidade de rainhas salvas
-            if (validaPosicao(R, i)) {
+            if (validaPosicao(R, k)) {
                 cont = cont + 1;
             }
         }
@@ -311,13 +311,13 @@ public class NRainhasAlgoritmoGenetico {
      * Executa as gerações do Algoritmo Genético
      *
      * @param n Quantidade de rainhas.
-     * @param qtdGeracoes Quantidade de gerações a ser executado o algoritmo
+     * @param geracoes Quantidade de gerações a ser executado o algoritmo
      * genético.
      * @param p Tamanho de população.
      * @param mutacao Percentual de probabilidade de mutação dos
      * indivíduos.
      */
-    public static void algoritmoGenetico(int n, int qtdGeracoes, int p, double mutacao) {
+    public static void algoritmoGenetico(int n, int geracoes, int p, double mutacao) {
 
         //Define o maior fitness pela quantidade rainhas 
         maiorFitness = n;
@@ -359,7 +359,7 @@ public class NRainhasAlgoritmoGenetico {
             }
             geracao = geracao + 1;
             // Ate que a geração atinja o maxiou ou alcance o maior fitness    
-        } while ((geracao < qtdGeracoes) && (fitness != maiorFitness));
+        } while ((geracao < geracoes) && (fitness != maiorFitness));
 
         //Estatisticas da execucao
         if (fitness == maiorFitness) {

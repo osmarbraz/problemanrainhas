@@ -67,8 +67,8 @@ public class NRainhasForcaBruta {
         int n = R.length;
         int cont = 0;
         //Verifica se todas as rainhas estão em posições validas
-        for (int i = 0; i < n; i++) {         
-            if (validaPosicao(R, i)==false) {
+        for (int k = 0; k < n; k++) {         
+            if (validaPosicao(R, k)==false) {
                 cont = cont + 1;
             }       
         }        

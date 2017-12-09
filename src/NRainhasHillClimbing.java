@@ -115,9 +115,9 @@ public class NRainhasHillClimbing {
         int n = R.length;        
         int cont = 0;
         //Verifica se todas as rainhas estão em posições validas
-        for (int i = 0; i < n; i++) {
+        for (int k = 0; k < n; k++) {
             //Verifica a quantidade de rainhas salvas
-            if (validaPosicao(R, i)) {
+            if (validaPosicao(R, k)) {
                 cont = cont + 1;
             }
         }
