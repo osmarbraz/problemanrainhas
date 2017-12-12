@@ -1,4 +1,3 @@
-
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -42,31 +41,35 @@ public class NRainhasAlgoritmoGenetico {
     }
 
     /**
-     * Imprime as soluções: tabuleiro e o posicionamento das rainhas.
+     * Imprime as soluções do tabuleiro.
+     * 
+     * Percorre o tabuleiro exibindo as posições ocupadas pelas rainhas.
      *
+     * Complexidade O(n^2)
+     * 
      * @param R vetor das rainhas.
      */
     private static void imprimeSolucao(int[] R) {
 
         //Tamanho do Problema
-        int n = R.length;
+        int n = R.length;                                               // Theta(1)
 
-        if (IMPRIMIRTABULEIRO) {
-
-            System.out.println(" Solução número " + solucoes + ":");
-
-            for (int i = 0; i < n; i++) {
-                for (int j = 0; j < n; j++) {
+        if (IMPRIMIRTABULEIRO) {                                        // Theta(1)        
+            
+            System.out.println(" Solução número " + solucoes + ":");    // O(1)
+            
+            for (int i = 0; i < n; i++) {                               // O(n) 
+                for (int j = 0; j < n; j++) {                           // n * O(n)
                     //Posição ocupada
-                    if (R[j] == i) {
-                        System.out.print(" " + i + " ");
-                    } else {
-                        System.out.print(" . ");
+                    if (R[j] == i) {                                    // O(1))
+                        System.out.print(" " + i + " ");                // O(1)
+                    } else {                                            // 0
+                        System.out.print(" . ");                        // O(1) 
                     }
                 }
-                System.out.println(" ");
+                System.out.println(" ");                                // O(1)
             }
-            System.out.println(" ");
+            System.out.println(" ");                                    // O(1)
         }
     }
 
@@ -253,6 +256,8 @@ public class NRainhasAlgoritmoGenetico {
      * Função de avaliação do indivíduo, retorna a quantidade de rainhas a
      * salvo.
      * 
+     * Complexidade O(n^2)
+     * 
      * @param R vetor das rainhas posicionadas. O elemento corresponde à
      * coluna e seu respectivo conteúdo corresponde à linha.
      * 
@@ -260,16 +265,16 @@ public class NRainhasAlgoritmoGenetico {
      */
     public static int fitness(int[] R) {
         //Recupera a quantidade de rainhas
-        int n = R.length;        
-        int cont = 0;        
+        int n = R.length;                                           // Theta(1)
+        int cont = 0;                                               // Theta(1)
         //Verifica se todas as rainhas estão em posições validas
-        for (int k = 0; k < n; k++) {
+        for (int k = 0; k < n; k++) {                               // Theta(1)
             //Verifica a quantidade de rainhas salvas
-            if (validaPosicao(R, k)) {
-                cont = cont + 1;
+            if (validaPosicao(R, k)) {                              // n * O(n)
+                cont = cont + 1;                                    // O(n)
             }
         }
-        return cont;
+        return cont;                                                // Theta(1)
     }
 
     /**
@@ -280,6 +285,8 @@ public class NRainhasAlgoritmoGenetico {
      * 
      * Como as rainhas são adicionadas sempre na coluna seguinte, não há necessi-
      * dade de validar conflitos na mesma coluna.
+     * 
+     * Complexidade Theta(k)
      * 
      * @param R vetor das rainhas posicionadas. O elemento corresponde à
      * coluna e seu respectivo conteúdo corresponde à linha.
@@ -292,23 +299,28 @@ public class NRainhasAlgoritmoGenetico {
     public static boolean validaPosicao(int[] R, int k) {
                 
         // Rainhas anteriormente posicionadas:
-        for (int i=0; i<k; i++) {            
+        for (int i=0; i<k; i++) {                               // Theta(k)
             // Se sob ataque na linha
-            if (R[i]==R[k]) {
-                return false;
+            if (R[i]==R[k]) {                                   // Theta(k)
+                return false;                                   // O(1)
             }
             
             // Se sob ataque na diagonal
-            if (Math.abs(R[i]-R[k])==(k-i)) {
-             return false;                
+            if (Math.abs(R[i]-R[k])==(k-i)) {                   // Theta(k)
+             return false;                                      // O(1)
             }
         }        
         // Posição válida
-        return true;        
+        return true;                                            // Theta(1)
     }
     
     /**
      * Avalia todas as rainhas posicionadas.
+     * 
+     * Chamada o método valida posição para avaliação cada posição do 
+     * vetor de rainhas.
+     * 
+     * Complexidade O(n^2)
      * 
      * @param R vetor das rainhas posicionadas. O elemento corresponde à
      * coluna e seu respectivo conteúdo corresponde à linha.
@@ -317,19 +329,21 @@ public class NRainhasAlgoritmoGenetico {
      */
     public static boolean valida(int[] R) {               
         //Recupera a quantidade de rainhas
-        int n = R.length;
-        int cont = 0;
+        int n = R.length;                                           // Theta(1)
+        int cont = 0;                                               // Theta(1)
         //Verifica se todas as rainhas estão em posições validas
-        for (int k = 0; k < n; k++) {         
-            if (validaPosicao(R, k)==false) {
-                cont = cont + 1;
+        for (int k = 0; k < n; k++) {                               // Theta(n)
+            if (validaPosicao(R, k)==false) {                       // n * O(n)
+                cont = cont + 1;                                    // O(1)    
             }       
         }        
-        return (cont==0);
+        return (cont==0);                                           // Theta(1)
     }
 
     /**
-     * Executa as gerações do Algoritmo Genético
+     * Executa as gerações do Algoritmo Genético.
+     * 
+     * Complexidade O(n^2)
      *
      * @param n Quantidade de rainhas.
      * @param geracoes Quantidade de gerações a ser executado o algoritmo genético.
@@ -340,52 +354,52 @@ public class NRainhasAlgoritmoGenetico {
     public static int[] algoritmoGenetico(int n, int geracoes, int p, double mutacao) {
 
         //Define o maior fitness pela quantidade rainhas 
-        maiorFitness = n;
+        maiorFitness = n;                                                           // Theta(1)
 
         // gerar a população inicial dos individuos
-        Set populacao = geraPopulacaoInicial(p, n);
+        Set populacao = geraPopulacaoInicial(p, n);                                 // Theta(n)
 
         //Armazena o melhor individuo de todas as gerações
-        int[] melhorIndividuo = null;        
+        int[] melhorIndividuo = null;                                               // Theta(1)
         //Armazena o melhor fitness da geração atual
-        int fitness = 0;
+        int fitness = 0;                                                            // Theta(1)
         //Armazenao melhor fitness de todas as gerações
-        int melhorFitness = 0;
+        int melhorFitness = 0;                                                      // Theta(1)
         //Conta o número de gerações
-        int i = 0;
-        int cont = 0;
-
-        do {
+        int i = 0;                                                                  // Theta(1)
+        int cont = 0;                                                               // Theta(1)
+        
+        do {                                                                        // 0
             //Retorna o melhor indivíduo da população
-            melhorIndividuo = proximaGeracao(populacao, mutacao, melhorFitness, n);
+            melhorIndividuo = proximaGeracao(populacao, mutacao, melhorFitness, n); // O(n^2)
             //Retorna o fitness do melhor inidividuo da população
-            fitness = fitness(melhorIndividuo);
+            fitness = fitness(melhorIndividuo);                                     // O(n^2)
             //Verifica se o fitness do melhor indivíduo é o melhor fitnesss
-            if (fitness > melhorFitness) {
-                mutacao = 0.10;
-                cont = 0;
-                melhorFitness = fitness;
-            } else {
-                cont = cont + 1;
+            if (fitness > melhorFitness) {                                          // Theta(1)
+                mutacao = 0.10;                                                     // O(1)
+                cont = 0;                                                           // O(1)
+                melhorFitness = fitness;                                            // O(1)
+            } else {                                                                // 0
+                cont = cont + 1;                                                    // Theta(1)    
                 //Se não ocorrer aumento do fitness aumenta a probabilidade de mutação
-                if (cont > 1000) {
-                    mutacao = 0.30;
-                } else if (cont > 2000) {
-                    mutacao = 0.50;
-                } else if (cont > 5000) {
-                    //Limpa populacao
-                    populacao.clear();
-                    //Carrega uma nova população
-                    populacao = geraPopulacaoInicial(p, n);
-                    mutacao = 0.10;
-                    melhorFitness = -1;
+                if (cont > 1000) {                                                  // Theta(1)
+                    mutacao = 0.30;                                                 // O(1)
+                } else if (cont > 2000) {                                           // Theta(1)
+                    mutacao = 0.50;                                                 // O(1)
+                } else if (cont > 5000) {                                           // Theta(1)
+                    //Limpa populacao                                           
+                    populacao.clear();                                              // O(1)
+                    //Carrega uma nova população        
+                    populacao = geraPopulacaoInicial(p, n);                         // Theta(n)
+                    mutacao = 0.10;                                                 // O(1)
+                    melhorFitness = -1;                                             // O(1)
                 }
             }
-            i = i + 1;
+            i = i + 1;                                                              // Theta(1)
             // Até que a geracao atinja o maximo de geraces ou alcance o maior fitness    
-        } while ((i < geracoes) && (fitness != maiorFitness));
+        } while ((i < geracoes) && (fitness != maiorFitness));                      // Theta(1)
         //Retorna o melhor indivíduo encontrado nas gerações   
-        return melhorIndividuo;
+        return melhorIndividuo;                                                     // Theta(1)
     }
         
     /**

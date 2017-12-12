@@ -50,48 +50,52 @@ public class NRainhasBackTracking {
 
     /**
      * Valida se a k-ésima rainha posicionada está sob ataque.
-     *
-     * Uma rainha está sob ataque se há outra rainha na mesma linha, coluna ou
+     * 
+     * Uma rainha está sob ataque se há outra rainha na mesma linha, coluna ou 
      * diagonal onde esta se encontra.
-     *
-     * Como as rainhas são adicionadas sempre na coluna seguinte, não há
-     * necessi- dade de validar conflitos na mesma coluna.
-     *
-     * @param R vetor das rainhas posicionadas. O elemento corresponde à coluna
-     * e seu respectivo conteúdo corresponde à linha.
-     *
+     * 
+     * Como as rainhas são adicionadas sempre na coluna seguinte, não há necessi-
+     * dade de validar conflitos na mesma coluna.
+     * 
+     * Complexidade Theta(k)
+     * 
+     * @param R vetor das rainhas posicionadas. O elemento corresponde à
+     * coluna e seu respectivo conteúdo corresponde à linha.
+     * 
      * @param k linha do vetor a ser analisada
      *
-     * @return true se a k-ésima rainha não estiver sob ataque das demais já
+     * @return true se a k-ésima rainha não estiver sob ataque das demais já 
      * posicionadas
      */
     public static boolean validaPosicao(int[] R, int k) {
-
+                
         // Rainhas anteriormente posicionadas:
-        for (int i = 0; i < k; i++) {
+        for (int i=0; i<k; i++) {                               // Theta(k)
             // Se sob ataque na linha
-            if (R[i] == R[k]) {
-                return false;
+            if (R[i]==R[k]) {                                   // Theta(k)
+                return false;                                   // O(1)
             }
+            
             // Se sob ataque na diagonal
-            if (Math.abs(R[i] - R[k]) == (k - i)) {
-                return false;
+            if (Math.abs(R[i]-R[k])==(k-i)) {                   // Theta(k)
+             return false;                                      // O(1)
             }
-        }
-
+        }        
         // Posição válida
-        return true;
+        return true;                                            // Theta(1)
     }
 
     /**
      * *************************************************
-     * A função recursiva do método backTracking().
+     * A função recursiva do método backTracking.
      *
      * Cada instância é responsável por posicionar uma rainha na primeira linha
      * válida da coluna em análise, ou seja, sem que a mesma esteja sob ataque.
      *
      * Se uma rainha está em uma posição válida, então a mesma é posicionada e,
      * recursivamente, as rainhas seguintes são posicionadas.
+     * 
+     * Complexidade O(n!)
      *
      * @param R vetor das rainhas posicionadas. O elemento corresponde à coluna
      * e seu respectivo conteúdo corresponde à linha.
@@ -100,49 +104,54 @@ public class NRainhasBackTracking {
      */
     public static void backTracking(int[] R, int k) {
 
-        int n = R.length;
-        if (k == n) {
-            imprimeSolucao(R);
-        } else {
+        int n = R.length;                                   // Theta(1)
+        if (k == n) {                                       // Theta(1)
+            imprimeSolucao(R);                              // O(n^2)
+        } else {                                            // 0
             /* posiciona a rainha k + 1 */
-            for (int i = 0; i < n; i++) {
-                R[k] = i;
-                //Avança para a próxima rainha/coluna
-                if (validaPosicao(R, k)) {
-                    backTracking(R, k + 1);
+            for (int i = 0; i < n; i++) {                   // Theta(n)
+                R[k] = i;                                   // Theta(n)
+                //Avança para a próxima rainha/coluna       
+                if (validaPosicao(R, k)) {                  // n * O(n)
+                    backTracking(R, k + 1);                 // n * T(k+1)
                 }
             }
         }
     }
 
     /**
-     * Imprime as soluções: tabuleiro e o posicionamento das rainhas.
+     * Imprime as soluções do tabuleiro.
+     * 
+     * Percorre o tabuleiro exibindo as posições ocupadas pelas rainhas.
      *
+     * Complexidade O(n^2)
+     * 
      * @param R vetor das rainhas.
      */
     private static void imprimeSolucao(int[] R) {
 
         //Tamanho do Problema
-        int n = R.length;
+        int n = R.length;                                               // Theta(1)
 
-        solucoes++;
-        
-        if (IMPRIMIRTABULEIRO) {
+        //Incrementa o contador de soluções
+        solucoes = solucoes + 1;                                        // Theta(1)
+
+        if (IMPRIMIRTABULEIRO) {                                        // Theta(1)        
             
-            System.out.println(" Solução número " + solucoes + ":");
+            System.out.println(" Solução número " + solucoes + ":");    // O(1)
             
-            for (int i = 0; i < n; i++) {
-                for (int j = 0; j < n; j++) {
+            for (int i = 0; i < n; i++) {                               // O(n) 
+                for (int j = 0; j < n; j++) {                           // n * O(n)
                     //Posição ocupada
-                    if (R[j] == i) {
-                        System.out.print(" " + i + " ");
-                    } else {
-                        System.out.print(" . ");
+                    if (R[j] == i) {                                    // O(1))
+                        System.out.print(" " + i + " ");                // O(1)
+                    } else {                                            // 0
+                        System.out.print(" . ");                        // O(1) 
                     }
                 }
-                System.out.println(" ");
+                System.out.println(" ");                                // O(1)
             }
-            System.out.println(" ");
+            System.out.println(" ");                                    // O(1)
         }
     }
 

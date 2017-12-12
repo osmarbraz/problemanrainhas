@@ -38,31 +38,35 @@ public class NRainhasHillClimbing {
     }
 
     /**
-     * Imprime as soluções: tabuleiro e o posicionamento das rainhas.
+     * Imprime as soluções do tabuleiro.
+     * 
+     * Percorre o tabuleiro exibindo as posições ocupadas pelas rainhas.
      *
+     * Complexidade O(n^2)
+     * 
      * @param R vetor das rainhas.
      */
     private static void imprimeSolucao(int[] R) {
 
-        // Tamanho do Problema
-        int n = R.length;
-        
-        if (IMPRIMIRTABULEIRO) {
+        //Tamanho do Problema
+        int n = R.length;                                               // Theta(1)  
+
+        if (IMPRIMIRTABULEIRO) {                                        // Theta(1)        
             
-            System.out.println(" Solução número " + solucoes + ":");
+            System.out.println(" Solução número " + solucoes + ":");    // O(1)
             
-            for (int i = 0; i < n; i++) {
-                for (int j = 0; j < n; j++) {
+            for (int i = 0; i < n; i++) {                               // O(n) 
+                for (int j = 0; j < n; j++) {                           // n * O(n)
                     //Posição ocupada
-                    if (R[j] == i) {
-                        System.out.print(" " + i + " ");
-                    } else {
-                        System.out.print(" . ");
+                    if (R[j] == i) {                                    // O(1))
+                        System.out.print(" " + i + " ");                // O(1)
+                    } else {                                            // 0
+                        System.out.print(" . ");                        // O(1) 
                     }
                 }
-                System.out.println(" ");
+                System.out.println(" ");                                // O(1)
             }
-            System.out.println(" ");
+            System.out.println(" ");                                    // O(1)
         }
     }
 
@@ -133,6 +137,8 @@ public class NRainhasHillClimbing {
      * Como as rainhas são adicionadas sempre na coluna seguinte, não há necessi-
      * dade de validar conflitos na mesma coluna.
      * 
+     * Complexidade Theta(k)
+     * 
      * @param R vetor das rainhas posicionadas. O elemento corresponde à
      * coluna e seu respectivo conteúdo corresponde à linha.
      * 
@@ -144,23 +150,28 @@ public class NRainhasHillClimbing {
     public static boolean validaPosicao(int[] R, int k) {
                 
         // Rainhas anteriormente posicionadas:
-        for (int i=0; i<k; i++) {            
+        for (int i=0; i<k; i++) {                               // Theta(k)
             // Se sob ataque na linha
-            if (R[i]==R[k]) {
-                return false;
+            if (R[i]==R[k]) {                                   // Theta(k)
+                return false;                                   // O(1)
             }
             
             // Se sob ataque na diagonal
-            if (Math.abs(R[i]-R[k])==(k-i)) {
-             return false;                
+            if (Math.abs(R[i]-R[k])==(k-i)) {                   // Theta(k)
+             return false;                                      // O(1)
             }
         }        
         // Posição válida
-        return true;        
+        return true;                                            // Theta(1)
     }
-
+    
     /**
      * Avalia todas as rainhas posicionadas.
+     * 
+     * Chamada o método valida posição para avaliação cada posição do 
+     * vetor de rainhas.
+     * 
+     * Complexidade O(n^2)
      * 
      * @param R vetor das rainhas posicionadas. O elemento corresponde à
      * coluna e seu respectivo conteúdo corresponde à linha.
@@ -169,19 +180,21 @@ public class NRainhasHillClimbing {
      */
     public static boolean valida(int[] R) {               
         //Recupera a quantidade de rainhas
-        int n = R.length;
-        int cont = 0;
+        int n = R.length;                                           // Theta(1)
+        int cont = 0;                                               // Theta(1)
         //Verifica se todas as rainhas estão em posições validas
-        for (int k = 0; k < n; k++) {         
-            if (validaPosicao(R, k)==false) {
-                cont = cont + 1;
+        for (int k = 0; k < n; k++) {                               // Theta(n)
+            if (validaPosicao(R, k)==false) {                       // n * O(n)
+                cont = cont + 1;                                    // O(1)    
             }       
         }        
-        return (cont==0);
+        return (cont==0);                                           // Theta(1)
     }
 
     /**
-     * Algoritmo que executa as interações do algoritmo Hill Climbing
+     * Algoritmo que executa as interações do algoritmo Hill Climbing.
+     * 
+     * Complexidade O(n^2)
      *
      * @param iteracoes Números de vezes a executar as interações no
      * algoritmo
@@ -190,30 +203,30 @@ public class NRainhasHillClimbing {
      */
     public static int[] hillClimbing(int iteracoes, int n) {
         //Gera o candidato inicial
-        int[] candidato = geraIndividuo(n);
-        //Calcula o custo do candidato inicial
-        int custoCandidato = fitness(candidato);
+        int[] candidato = geraIndividuo(n);                                 // Theta(n)
+        //Calcula o custo do candidato inicial          
+        int custoCandidato = fitness(candidato);                            // O(n^2)
 
         //Controla as interações 
-        int i = 0;
+        int i = 0;                                                          // Theta(1)
         //Para se chegar no número máximo de interacoes ou achar a solução
-        while ((i < iteracoes) && (valida(candidato) == false)) {
+        while ((i < iteracoes) && (valida(candidato) == false)) {           // O(n^2)
             // Gera o proximo candidato aleatoriamente
-            int[] vizinho = mutacao(candidato);
-            //Calcula o custo do novo vizinho
-            int custoVizinho = fitness(vizinho);
-            // Verifica se é maior que o anterior
-            if (custoVizinho > custoCandidato) {
+            int[] vizinho = mutacao(candidato);                             // Theta(1)
+            //Calcula o custo do novo vizinho                               
+            int custoVizinho = fitness(vizinho);                            // O(n^2)
+            // Verifica se é maior que o anterior   
+            if (custoVizinho > custoCandidato) {                            // Theta(1)
                 //Troca se o custo for maior
-                candidato = vizinho;
+                candidato = vizinho;                                        // O(1)
             }
             //Avança para a próxima interação
-            i = i + 1;
+            i = i + 1;                                                      // Theta(1)
         }
         //Armazena a interação que encontrou a solução
-        interacaoSolucao = i;
-        //Retorna o melhor candidato encontrado nas iterações
-        return candidato;
+        interacaoSolucao = i;                                               // Theta(1)
+        //Retorna o melhor candidato encontrado nas iterações   
+        return candidato;                                                   // Theta(1)
     }
 
     /**

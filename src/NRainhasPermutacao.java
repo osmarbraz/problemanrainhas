@@ -21,58 +21,65 @@ public class NRainhasPermutacao {
 
     /**
      * Valida se a k-ésima rainha posicionada está sob ataque.
-     *
-     * Uma rainha está sob ataque se há outra rainha na mesma linha, coluna ou
+     * 
+     * Uma rainha está sob ataque se há outra rainha na mesma linha, coluna ou 
      * diagonal onde esta se encontra.
-     *
-     * Como as rainhas são adicionadas sempre na coluna seguinte, não há
-     * necessi- dade de validar conflitos na mesma coluna.
-     *
-     * @param R vetor das rainhas posicionadas. O elemento corresponde à coluna
-     * e seu respectivo conteúdo corresponde à linha.
-     *
+     * 
+     * Como as rainhas são adicionadas sempre na coluna seguinte, não há necessi-
+     * dade de validar conflitos na mesma coluna.
+     * 
+     * Complexidade Theta(k)
+     * 
+     * @param R vetor das rainhas posicionadas. O elemento corresponde à
+     * coluna e seu respectivo conteúdo corresponde à linha.
+     * 
      * @param k linha do vetor a ser analisada
      *
-     * @return true se a k-ésima rainha não estiver sob ataque das demais já
+     * @return true se a k-ésima rainha não estiver sob ataque das demais já 
      * posicionadas
      */
     public static boolean validaPosicao(int[] R, int k) {
-
+                
         // Rainhas anteriormente posicionadas:
-        for (int i = 0; i < k; i++) {
+        for (int i=0; i<k; i++) {                               // Theta(k)
             // Se sob ataque na linha
-            if (R[i] == R[k]) {
-                return false;
+            if (R[i]==R[k]) {                                   // Theta(k)
+                return false;                                   // O(1)
             }
-
+            
             // Se sob ataque na diagonal
-            if (Math.abs(R[i] - R[k]) == (k - i)) {
-                return false;
+            if (Math.abs(R[i]-R[k])==(k-i)) {                   // Theta(k)
+             return false;                                      // O(1)
             }
-        }
+        }        
         // Posição válida
-        return true;
+        return true;                                            // Theta(1)
     }
 
     /**
      * Avalia todas as rainhas posicionadas.
-     *
-     * @param R vetor das rainhas posicionadas. O elemento corresponde à coluna
-     * e seu respectivo conteúdo corresponde à linha.
-     *
+     * 
+     * Chamada o método valida posição para avaliação cada posição do 
+     * vetor de rainhas.
+     * 
+     * Complexidade O(n^2)
+     * 
+     * @param R vetor das rainhas posicionadas. O elemento corresponde à
+     * coluna e seu respectivo conteúdo corresponde à linha.
+     * 
      * @return True ou False se existe alguma rainha em posição inválida.
      */
-    public static boolean valida(int[] R) {
+    public static boolean valida(int[] R) {               
         //Recupera a quantidade de rainhas
-        int n = R.length;
-        int cont = 0;
+        int n = R.length;                                           // Theta(1)
+        int cont = 0;                                               // Theta(1)
         //Verifica se todas as rainhas estão em posições validas
-        for (int k = 0; k < n; k++) {
-            if (validaPosicao(R, k) == false) {
-                cont = cont + 1;
-            }
-        }
-        return (cont == 0);
+        for (int k = 0; k < n; k++) {                               // Theta(n)
+            if (validaPosicao(R, k)==false) {                       // n * O(n)
+                cont = cont + 1;                                    // O(1)    
+            }       
+        }        
+        return (cont==0);                                           // Theta(1)
     }
 
     /**
@@ -85,7 +92,7 @@ public class NRainhasPermutacao {
      * Se uma rainha está em uma posição válida, então a mesma é posicionada e,
      * recursivamente, as rainhas seguintes são posicionadas.
      *
-     * Ma
+     * Complexidade Theta(n!)
      *
      * @param R vetor onde as rainhas serão inseridas
      * @param visitado vetor onde as posições usadas são marcadas
@@ -94,58 +101,62 @@ public class NRainhasPermutacao {
     public static void permutacao(int[] R, int[] visitado, int k) {
 
         //Recupera a quantidade de rainhas
-        int n = R.length;
+        int n = R.length;                                               // Theta(1)
 
         //Se k e igual da quantidade rainhas cheguei no final da linha
-        if (k == n) {
+        if (k == n) {                                                   // Theta(1)
             //Avalia todas as rainhas colocadas 
-            if (valida(R)) {
-                imprimeSolucao(R);
+            if (valida(R)) {                                            // O(n^2)
+                imprimeSolucao(R);                                      // Theta(n^2)
             }
-        } else {
+        } else {                                                        // 0
             //Percorre o vetor de rainhas           
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < n; i++) {                               // Theta(n)
                 //realiza a permutação somente para elementos não utilizados                
-                if (visitado[i] == 0) {
-                    visitado[i] = 1;
-                    R[k] = i;
+                if (visitado[i] == 0) {                                 // Theta(n)
+                    visitado[i] = 1;                                    // O(n)
+                    R[k] = i;                                           // O(n)
                     //Avança para próxima linha (k=k+1)                                   
-                    permutacao(R, visitado, k + 1);
-                    visitado[i] = 0;
+                    permutacao(R, visitado, k + 1);                     // O(n) * T(k+1)
+                    visitado[i] = 0;                                    // O(n)
                 }
             }
         }
     }
 
     /**
-     * Imprime as soluções: tabuleiro e o posicionamento das rainhas.
+     * Imprime as soluções do tabuleiro.
+     * 
+     * Percorre o tabuleiro exibindo as posições ocupadas pelas rainhas.
      *
+     * Complexidade O(n^2)
+     * 
      * @param R vetor das rainhas.
      */
     private static void imprimeSolucao(int[] R) {
 
         //Tamanho do Problema
-        int n = R.length;
+        int n = R.length;                                               // Theta(1)
 
         //Incrementa o contador de soluções
-        solucoes = solucoes + 1;
+        solucoes = solucoes + 1;                                        // Theta(1)
 
-        if (IMPRIMIRTABULEIRO) {
+        if (IMPRIMIRTABULEIRO) {                                        // Theta(1)        
             
-            System.out.println(" Solução número " + solucoes + ":");
-        
-            for (int i = 0; i < n; i++) {
-                for (int j = 0; j < n; j++) {
+            System.out.println(" Solução número " + solucoes + ":");    // O(1)
+            
+            for (int i = 0; i < n; i++) {                               // O(n) 
+                for (int j = 0; j < n; j++) {                           // n * O(n)
                     //Posição ocupada
-                    if (R[j] == i) {
-                        System.out.print(" " + i + " ");
-                    } else {
-                        System.out.print(" . ");
+                    if (R[j] == i) {                                    // O(1))
+                        System.out.print(" " + i + " ");                // O(1)
+                    } else {                                            // 0
+                        System.out.print(" . ");                        // O(1) 
                     }
                 }
-                System.out.println(" ");
+                System.out.println(" ");                                // O(1)
             }
-            System.out.println(" ");
+            System.out.println(" ");                                    // O(1)
         }
     }
 

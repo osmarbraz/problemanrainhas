@@ -28,6 +28,8 @@ public class NRainhasForcaBruta {
      * Como as rainhas são adicionadas sempre na coluna seguinte, não há necessi-
      * dade de validar conflitos na mesma coluna.
      * 
+     * Complexidade Theta(k)
+     * 
      * @param R vetor das rainhas posicionadas. O elemento corresponde à
      * coluna e seu respectivo conteúdo corresponde à linha.
      * 
@@ -39,23 +41,28 @@ public class NRainhasForcaBruta {
     public static boolean validaPosicao(int[] R, int k) {
                 
         // Rainhas anteriormente posicionadas:
-        for (int i=0; i<k; i++) {            
+        for (int i=0; i<k; i++) {                               // Theta(k)
             // Se sob ataque na linha
-            if (R[i]==R[k]) {
-                return false;
+            if (R[i]==R[k]) {                                   // Theta(k)
+                return false;                                   // O(1)
             }
             
             // Se sob ataque na diagonal
-            if (Math.abs(R[i]-R[k])==(k-i)) {
-             return false;                
+            if (Math.abs(R[i]-R[k])==(k-i)) {                   // Theta(k)
+             return false;                                      // O(1)
             }
         }        
         // Posição válida
-        return true;        
+        return true;                                            // Theta(1)
     }
    
     /**
      * Avalia todas as rainhas posicionadas.
+     * 
+     * Chamada o método valida posição para avaliação cada posição do 
+     * vetor de rainhas.
+     * 
+     * Complexidade O(n^2)
      * 
      * @param R vetor das rainhas posicionadas. O elemento corresponde à
      * coluna e seu respectivo conteúdo corresponde à linha.
@@ -64,15 +71,15 @@ public class NRainhasForcaBruta {
      */
     public static boolean valida(int[] R) {               
         //Recupera a quantidade de rainhas
-        int n = R.length;
-        int cont = 0;
+        int n = R.length;                                           // Theta(1)
+        int cont = 0;                                               // Theta(1)
         //Verifica se todas as rainhas estão em posições validas
-        for (int k = 0; k < n; k++) {         
-            if (validaPosicao(R, k)==false) {
-                cont = cont + 1;
+        for (int k = 0; k < n; k++) {                               // Theta(n)
+            if (validaPosicao(R, k)==false) {                       // n * O(n)
+                cont = cont + 1;                                    // O(1)    
             }       
         }        
-        return (cont==0);
+        return (cont==0);                                           // Theta(1)
     }
     
     /**
@@ -85,59 +92,65 @@ public class NRainhasForcaBruta {
      * Se uma rainha está em uma posição válida, então a mesma é posicionada e, 
      * recursivamente, as rainhas seguintes são posicionadas.
      * 
+     * Complexidade Theta(n^n)
+     * 
      * @param R vetor onde as rainhas serão inseridas
      * @param k coordenada da linha corrente onde a rainhas devera ser inserida
      */  
      public static void forcaBruta(int[] R, int k) {
 
         //Recupera a quantidade de rainhas
-        int n = R.length;
-
+        int n = R.length;                                                   //Theta(1)
+            
         //Se k e igual da quantidade rainhas cheguei no final da linha
-        if (k == n) {  
+        if (k == n) {                                                       // Theta(1)   
             //Avalia todas as rainhas colocadas 
-            if (valida(R)) {
-                imprimeSolucao(R);
-           }
-        } else {
+            if (valida(R)) {                                                // O(n^2)
+                imprimeSolucao(R);                                          // O(n^2)
+           }                        
+        } else {                                                            // 0
             //Percorre o vetor de rainhas           
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < n; i++) {                                   // Theta(n)
                 //Avança para próxima linha (k=k+1)                                   
-                R[k] = i;
-                forcaBruta(R, k + 1);                
+                R[k] = i;                                                   // Theta(n)
+                forcaBruta(R, k + 1);                                       // n * T(k+1)
             }
         }
     }
 
     /**
-     * Imprime as soluções: tabuleiro e o posicionamento das rainhas.
+     * Imprime as soluções do tabuleiro.
+     * 
+     * Percorre o tabuleiro exibindo as posições ocupadas pelas rainhas.
      *
+     * Complexidade O(n^2)
+     * 
      * @param R vetor das rainhas.
      */
     private static void imprimeSolucao(int[] R) {
 
         //Tamanho do Problema
-        int n = R.length;
+        int n = R.length;                                               // Theta(1)
 
         //Incrementa o contador de soluções
-        solucoes = solucoes + 1;
+        solucoes = solucoes + 1;                                        // Theta(1)
 
-        if (IMPRIMIRTABULEIRO) {
+        if (IMPRIMIRTABULEIRO) {                                        // Theta(1)        
             
-            System.out.println(" Solução número " + solucoes + ":");
+            System.out.println(" Solução número " + solucoes + ":");    // O(1)
             
-            for (int i = 0; i < n; i++) {
-                for (int j = 0; j < n; j++) {
+            for (int i = 0; i < n; i++) {                               // O(n) 
+                for (int j = 0; j < n; j++) {                           // n * O(n)
                     //Posição ocupada
-                    if (R[j] == i) {
-                        System.out.print(" " + i + " ");
-                    } else {
-                        System.out.print(" . ");
+                    if (R[j] == i) {                                    // O(1))
+                        System.out.print(" " + i + " ");                // O(1)
+                    } else {                                            // 0
+                        System.out.print(" . ");                        // O(1) 
                     }
                 }
-                System.out.println(" ");
+                System.out.println(" ");                                // O(1)
             }
-            System.out.println(" ");
+            System.out.println(" ");                                    // O(1)
         }
     }
 
