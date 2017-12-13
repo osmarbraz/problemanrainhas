@@ -16,27 +16,9 @@ public class NRainhasHillClimbing {
     //Gerador de número aleatórios
     private static final Random RANDOMICO = new Random();
 
-    //Habilita ou desabilita a saída dos dados de impressao
+    //Habilita ou desabilita a saída dos dados de impressão
     private static final boolean IMPRIMIRTABULEIRO = false;
-
-    /**
-     * Transforma o vetor em uma string para escrever em tela.
-     *
-     * @param vet Vetor com os dados inteiros a serem transformados em string
-     * @return Um literal com os dados do vetor separados por ;
-     */
-    private static String vetorToString(int[] vet) {
-        String ret = "";
-        if ((vet != null) && (vet.length > 0)) {
-            for (int i = 0; i < vet.length; i++) {
-                ret = ret + vet[i] + ";";
-            }
-            //retira o ultimo ; da string
-            ret = ret.substring(0, ret.length() - 1);
-        }
-        return ret;
-    }
-
+   
     /**
      * Imprime as soluções do tabuleiro.
      * 
@@ -77,31 +59,38 @@ public class NRainhasHillClimbing {
      * @return um indivíduo com a mutação
      */
     private static int[] mutacao(int[] individuo) {
+        
         //Seleciona a posição da mutação
         int posicao = RANDOMICO.nextInt(individuo.length);
         //Novo valor para a posicao selecionado
         int novovalor = RANDOMICO.nextInt(individuo.length);
         //Realiza a mutação na posição com o novoValor
         individuo[posicao] = novovalor;
+        
         return individuo;
     }
 
     /**
-     * Gera um indivíduo aleatóriamente.
+     * Gera um indivíduo com n posições de forma aleatória.
      *
-     * @param tamanhoIndividuo O tamanho do indivíduo a ser gerado.
-     * @return Um vetor com um novo indivíduo gerado aleatoriamente.
+     * Gera rainhas repetidas
+     *
+     * @param n Tamanho do indivíduo
+     * @return um indivíduo da populacao com repetição de rainha
      */
-    private static int[] geraIndividuo(int tamanhoIndividuo) {
+    private static int[] geraIndividuo(int n) {
+        
         //Inicializa o vetor de retorno
-        int[] novoIndividuo = new int[tamanhoIndividuo];
+        int[] novoIndividuo = new int[n];
         int i = 0;
+        
         //Gera os indivíduos de acordo com o tamanho do candidato
-        while (i < tamanhoIndividuo) {
+        while (i < n) {
             //Gera um uma rainha aleatória
-            novoIndividuo[i] = new Random().nextInt(tamanhoIndividuo);
+            novoIndividuo[i] = new Random().nextInt(n);
             i = i + 1;
         }
+        
         return novoIndividuo;
     }
 
@@ -109,23 +98,28 @@ public class NRainhasHillClimbing {
      * Função de avaliação do indivíduo, retorna a quantidade de rainhas a
      * salvo.
      * 
+     * Complexidade O(n^2)
+     * 
      * @param R vetor das rainhas posicionadas. O elemento corresponde à
      * coluna e seu respectivo conteúdo corresponde à linha.
      * 
      * @return  A quantidade de rainhas salvas em R.
      */
     public static int fitness(int[] R) {
+        
         //Recupera a quantidade de rainhas
-        int n = R.length;        
-        int cont = 0;
+        int n = R.length;                                           //Theta(1)
+        int cont = 0;                                               //Theta(1)
+        
         //Verifica se todas as rainhas estão em posições validas
-        for (int k = 0; k < n; k++) {
+        for (int k = 0; k < n; k++) {                               //Theta(n)
             //Verifica a quantidade de rainhas salvas
-            if (validaPosicao(R, k)) {
-                cont = cont + 1;
+            if (validaPosicao(R, k)) {                              // n * O(n)
+                cont = cont + 1;                                    // O(1)
             }
         }
-        return cont;
+        
+        return cont;                                                // Theta(1)
     }
 
     /**
@@ -147,20 +141,20 @@ public class NRainhasHillClimbing {
      * @return true se a k-ésima rainha não estiver sob ataque das demais já 
      * posicionadas
      */
-    public static boolean validaPosicao(int[] R, int k) {
-                
+    public static boolean validaPosicao(int[] R, int k) {    
+        
         // Rainhas anteriormente posicionadas:
         for (int i=0; i<k; i++) {                               // Theta(k)
             // Se sob ataque na linha
             if (R[i]==R[k]) {                                   // Theta(k)
                 return false;                                   // O(1)
-            }
-            
+            }            
             // Se sob ataque na diagonal
             if (Math.abs(R[i]-R[k])==(k-i)) {                   // Theta(k)
              return false;                                      // O(1)
             }
         }        
+        
         // Posição válida
         return true;                                            // Theta(1)
     }
@@ -178,7 +172,8 @@ public class NRainhasHillClimbing {
      * 
      * @return True ou False se existe alguma rainha em posição inválida.
      */
-    public static boolean valida(int[] R) {               
+    public static boolean valida(int[] R) {         
+        
         //Recupera a quantidade de rainhas
         int n = R.length;                                           // Theta(1)
         int cont = 0;                                               // Theta(1)
@@ -188,6 +183,7 @@ public class NRainhasHillClimbing {
                 cont = cont + 1;                                    // O(1)    
             }       
         }        
+        
         return (cont==0);                                           // Theta(1)
     }
 

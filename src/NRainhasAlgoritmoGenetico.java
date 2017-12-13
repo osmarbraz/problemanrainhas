@@ -33,7 +33,7 @@ public class NRainhasAlgoritmoGenetico {
         Set populacao = new HashSet();
         while (populacao.size() < p) {
             //Gera um individuo
-            int[] individuo = gerarIndividuo(n);                        
+            int[] individuo = geraIndividuo(n);                        
             //Adiciona o novo individuo a populacao
             populacao.add(individuo);
         }
@@ -238,19 +238,18 @@ public class NRainhasAlgoritmoGenetico {
      * @param n Tamanho do indivíduo
      * @return um indivíduo da populacao com repetição de rainha
      */
-    private static int[] gerarIndividuo(int n) {
+    private static int[] geraIndividuo(int n) {
         //Inicializa o vetor de retorno
-        int[] ret = new int[n];
-
+        int[] novoIndividuo = new int[n];
         int i = 0;
         //Gera os genes de individuo de acordo com o tamanho do gene
         while (i < n) {
             //Gera um uma rainha aleatória
-            ret[i] = RANDOMICO.nextInt(n);
+            novoIndividuo[i] = RANDOMICO.nextInt(n);
             i = i + 1;
         }
-        return ret;
-    }
+        return novoIndividuo;
+    }        
     
    /**
      * Função de avaliação do indivíduo, retorna a quantidade de rainhas a
@@ -296,15 +295,14 @@ public class NRainhasAlgoritmoGenetico {
      * @return true se a k-ésima rainha não estiver sob ataque das demais já 
      * posicionadas
      */
-    public static boolean validaPosicao(int[] R, int k) {
-                
+    public static boolean validaPosicao(int[] R, int k) {  
+        
         // Rainhas anteriormente posicionadas:
         for (int i=0; i<k; i++) {                               // Theta(k)
             // Se sob ataque na linha
             if (R[i]==R[k]) {                                   // Theta(k)
                 return false;                                   // O(1)
-            }
-            
+            }            
             // Se sob ataque na diagonal
             if (Math.abs(R[i]-R[k])==(k-i)) {                   // Theta(k)
              return false;                                      // O(1)
@@ -327,7 +325,8 @@ public class NRainhasAlgoritmoGenetico {
      * 
      * @return True ou False se existe alguma rainha em posição inválida.
      */
-    public static boolean valida(int[] R) {               
+    public static boolean valida(int[] R) {   
+        
         //Recupera a quantidade de rainhas
         int n = R.length;                                           // Theta(1)
         int cont = 0;                                               // Theta(1)

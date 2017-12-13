@@ -69,16 +69,19 @@ public class NRainhasForcaBruta {
      * 
      * @return True ou False se existe alguma rainha em posição inválida.
      */
-    public static boolean valida(int[] R) {               
+    public static boolean valida(int[] R) {  
+        
         //Recupera a quantidade de rainhas
         int n = R.length;                                           // Theta(1)
         int cont = 0;                                               // Theta(1)
+        
         //Verifica se todas as rainhas estão em posições validas
         for (int k = 0; k < n; k++) {                               // Theta(n)
             if (validaPosicao(R, k)==false) {                       // n * O(n)
                 cont = cont + 1;                                    // O(1)    
             }       
-        }        
+        }     
+        
         return (cont==0);                                           // Theta(1)
     }
     
@@ -238,6 +241,5 @@ public class NRainhasForcaBruta {
         System.out.println("Força Bruta");
         System.out.println("Executando N-Rainhas com " + repeticoesTeste + " repetições.\n"); 
         nRainhas(listaProblemasASolucionar, repeticoesTeste);
-
     }
 }
