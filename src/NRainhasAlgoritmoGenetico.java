@@ -233,7 +233,7 @@ public class NRainhasAlgoritmoGenetico {
     /**
      * Gera um indivíduo com n posições de forma aleatória.
      *
-     * Gera rainhas repetidas
+     * Gera n rainhas aleatórias(com repetição) para um tabuleiro.
      *
      * @param n Tamanho do indivíduo
      * @return um indivíduo da populacao com repetição de rainha
