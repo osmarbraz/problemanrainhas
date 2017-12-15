@@ -233,7 +233,7 @@ public class NRainhasSimulatedAnnealing {
         //Enquanto a temperatura não é O ou não chegou no melhor
         while ((T > 0) && (C != melhorFitness)) {        
             
-           //Gera o viznho Si a partir de S
+           //Gera o vizinho Si a partir de S
            int[] Si = geraVizinho(S);
         
            //Calcula o custo do vizinho Si   

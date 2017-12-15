@@ -11,12 +11,15 @@ public class NRainhasHillClimbing {
      * Atributo do número de soluções encontradas ao final do algoritmo
      */
     private static int solucoes;
-    private static int interacaoSolucao;
-
-    //Gerador de número aleatórios
+   
+    /**
+     * Gerador de número aleatórios para o algoritmo
+     */
     private static final Random RANDOMICO = new Random();
 
-    //Habilita ou desabilita a saída dos dados de impressão
+    /**
+     * Habilita ou desabilida a saída dos dados de impressao
+     */
     private static final boolean IMPRIMIRTABULEIRO = false;
    
     /**
@@ -230,8 +233,6 @@ public class NRainhasHillClimbing {
             //Avança para a próxima interação
             i = i + 1;                                                      // Theta(1)
         }
-        //Armazena a interação que encontrou a solução
-        interacaoSolucao = i;                                               // Theta(1)
         //Retorna o melhor candidato encontrado nas iterações   
         return candidato;                                                   // Theta(1)
     }
@@ -243,9 +244,6 @@ public class NRainhasHillClimbing {
      * @param n Quantidade de rainhas no tabuleiro
      */
     public static void executaHillClimbing(int iteracoes, int n) {
-        //Guarda em que interação ocorreu a solução
-        interacaoSolucao = -1;
-        
         //Guarda o melhor indivíduo
         //Procura o menor indivíduo
         int[] melhorIndividuo = hillClimbing(iteracoes, n);
