@@ -13,8 +13,6 @@ public class NRainhasAlgoritmoGenetico {
      * Atributo do numero de soluções encontradas ao final do algoritmo
      */
     private static int solucoes;
-    //private static int qtdeRainha;
-    private static int maiorFitness;
 
     //Gerador de número aleatórios
     private static final Random RANDOMICO = new Random();
@@ -352,8 +350,8 @@ public class NRainhasAlgoritmoGenetico {
      */
     public static int[] algoritmoGenetico(int n, int geracoes, int p, double mutacao) {
 
-        //Define o maior fitness pela quantidade rainhas 
-        maiorFitness = n;                                                           // Theta(1)
+        //Define o maior fitness pela quantidade rainhas posicionadas corretamente
+        int maiorFitness = n;                                                       // Theta(1)
 
         // gerar a população inicial dos individuos
         Set populacao = geraPopulacaoInicial(p, n);                                 // Theta(n)
@@ -362,7 +360,7 @@ public class NRainhasAlgoritmoGenetico {
         int[] melhorIndividuo = null;                                               // Theta(1)
         //Armazena o melhor fitness da geração atual
         int fitness = 0;                                                            // Theta(1)
-        //Armazenao melhor fitness de todas as gerações
+        //Armazena o melhor fitness de todas as gerações
         int melhorFitness = 0;                                                      // Theta(1)
         //Conta o número de gerações
         int i = 0;                                                                  // Theta(1)
@@ -396,7 +394,7 @@ public class NRainhasAlgoritmoGenetico {
             }
             i = i + 1;                                                              // Theta(1)
             // Até que a geracao atinja o maximo de geraces ou alcance o maior fitness    
-        } while ((i < geracoes) && (fitness != maiorFitness));                      // Theta(1)
+        } while ((i < geracoes) && (melhorFitness != maiorFitness));                // Theta(1)
         //Retorna o melhor indivíduo encontrado nas gerações   
         return melhorIndividuo;                                                     // Theta(1)
     }
