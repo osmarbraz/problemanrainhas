@@ -14,8 +14,8 @@ public class NRainhasForcaBruta {
      */
     private static int solucoes;
 
-    /**
-     * Controla impressão do tabuleiro
+     /**
+     * Habilita ou desabilida a saída dos dados de impressao
      */
      private static final boolean IMPRIMIRTABULEIRO = false;
 
