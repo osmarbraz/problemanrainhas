@@ -10,14 +10,18 @@ import java.util.Set;
 public class NRainhasAlgoritmoGenetico {
 
     /**
-     * Atributo do numero de soluções encontradas ao final do algoritmo
+     * Armazena o número de soluções encontradas ao final do algoritmo
      */
     private static int solucoes;
 
-    //Gerador de número aleatórios
+    /**
+     * Gerador de número aleatórios para o algoritmo
+     */
     private static final Random RANDOMICO = new Random();
 
-    //Habilita ou desabilita a saida dos dados de impressão
+     /**
+     * Habilita ou desabilita a saida dos dados de impressão
+     */
     private static final boolean IMPRIMIRTABULEIRO = false;
     
     /**
