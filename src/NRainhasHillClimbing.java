@@ -51,6 +51,16 @@ public class NRainhasHillClimbing {
             System.out.println(" ");                                    // O(1)
         }
     }
+    
+     public static int moverParaBaixo(int n, int coluna, int deslocamento){                
+	coluna = coluna + deslocamento;
+	
+        //Verifica se está acima dos limites
+	if (coluna>=n){
+            coluna = coluna%n;
+	}	
+        return coluna;
+    }
 
     /**
      * Realiza a mutação em um indivíduo de forma aleatória
@@ -59,13 +69,14 @@ public class NRainhasHillClimbing {
      * @return um indivíduo com a mutação
      */
     private static int[] mutacao(int[] individuo) {
-        
+        int n = individuo.length;
         //Seleciona a posição da mutação
         int posicao = RANDOMICO.nextInt(individuo.length);
         //Novo valor para a posicao selecionado
         int novovalor = RANDOMICO.nextInt(individuo.length);
         //Realiza a mutação na posição com o novoValor
-        individuo[posicao] = novovalor;
+        //individuo[posicao] = novovalor;
+        individuo[posicao] = moverParaBaixo(n,individuo[posicao],novovalor);
         
         return individuo;
     }

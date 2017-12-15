@@ -168,6 +168,16 @@ public class NRainhasAlgoritmoGenetico {
         return melhorIndividuo;
     }
 
+    public static int moverParaBaixo(int n, int coluna, int deslocamento){                
+	coluna = coluna + deslocamento;
+	
+        //Verifica se está acima dos limites
+	if (coluna>=n){
+            coluna = coluna%n;
+	}	
+        return coluna;
+    }
+    
     /**
      * Realiza a mutação em um indivíduo de forma aleatória.
      *
@@ -175,12 +185,14 @@ public class NRainhasAlgoritmoGenetico {
      * @return um indivíduo com a mutação
      */
     private static int[] mutacao(int[] individuo) {
+        int n = individuo.length;
         //Seleciona a posicao da mutacao
         int posicao = RANDOMICO.nextInt(individuo.length);
         //Novo valor para a posicao selecionado
         int novovalor = RANDOMICO.nextInt(individuo.length);
         //Realiza a mutação na posição com o novoValor
         individuo[posicao] = novovalor;
+        //individuo[posicao] = moverParaBaixo(n,individuo[posicao],novovalor);
         return individuo;
     }
 
@@ -378,8 +390,8 @@ public class NRainhasAlgoritmoGenetico {
             //Verifica se o fitness do melhor indivíduo é o melhor fitnesss
             if (fitness > melhorFitness) {                                          // Theta(1)
                 mutacao = 0.10;                                                     // O(1)
-                cont = 0;                                                           // O(1)
                 melhorFitness = fitness;                                            // O(1)
+                cont = 0;                                                           // O(1)
             } else {                                                                // 0
                 cont = cont + 1;                                                    // Theta(1)    
                 //Se não ocorrer aumento do fitness aumenta a probabilidade de mutação
@@ -397,7 +409,7 @@ public class NRainhasAlgoritmoGenetico {
                 }
             }
             i = i + 1;                                                              // Theta(1)
-            // Até que a geracao atinja o maximo de geraces ou alcance o maior fitness    
+        // Até que a geracao atinja o maximo de geraces ou alcance o maior fitness    
         } while ((i < geracoes) && (melhorFitness != maiorFitness));                // Theta(1)
         //Retorna o melhor indivíduo encontrado nas gerações   
         return melhorIndividuo;                                                     // Theta(1)
