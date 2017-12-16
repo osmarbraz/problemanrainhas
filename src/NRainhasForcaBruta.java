@@ -3,8 +3,15 @@
  *
  * Forca bruta.
  * 
- * O programa utiliza o método da força bruta para gerar todas as soluções do problema.
- * Utiliza um vetor para armazenar as posições das rainhas.
+ * O objetivo deste programa é encontrar o número de possibilidades para posicionar
+ * N Rainhas em um tabuleiro de dimensões N x N.
+ *
+ * A entrada do programa é um número inteiro que define as dimensões do tabuleiro
+ * e, consequentemente, o número de rainhas a serem posicionadas.
+ *
+ * A estratégia consiste em utilizar o método da Força Bruta aplicando a técnica 
+ * de busca em profundidade para gerar todas as posibilidades e depois verificar
+ * se esta possibilidade é válida.
  *
  */
 public class NRainhasForcaBruta {

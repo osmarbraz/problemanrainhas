@@ -1,10 +1,17 @@
-
 /**
  * @author Ana Paula, Osmar e Samuel
  *
- * Forca bruta por permutacao
- * O programa utiliza o método de permutação para gerar todas as soluções do problema.
- * Utiliza um vetor para armazenar as posições das rainhas.
+ * Forca bruta por permutação.
+ * 
+ * O objetivo deste programa é encontrar o número de possibilidades para posicionar
+ * N Rainhas em um tabuleiro de dimensões N x N.
+ *
+ * A entrada do programa é um número inteiro que define as dimensões do tabuleiro
+ * e, consequentemente, o número de rainhas a serem posicionadas.
+ *
+ * A estratégia consiste em utilizar o método da Força Bruta  com permutação aplicando 
+ * a técnica de busca em profundidade para gerar todas as posibilidades sem repetições
+ * e depois verificar se esta possibilidade é válida.
  *
  */
 public class NRainhasPermutacao {

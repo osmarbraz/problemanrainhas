@@ -2,6 +2,8 @@
  *
  * @author Ana Paula, Osmar e Samuel
  *
+ * BackaTracking. 
+ * 
  * O objetivo deste programa é encontrar o número de possibilidades para posicionar
  * N Rainhas em um tabuleiro de dimensões N x N.
  *

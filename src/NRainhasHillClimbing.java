@@ -1,10 +1,10 @@
-
-import java.util.Random;
-
 /**
  *
  * @author Ana Paula, Osmar e Samuel
  */
+
+import java.util.Random;
+
 public class NRainhasHillClimbing {
 
     /**

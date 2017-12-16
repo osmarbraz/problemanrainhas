@@ -1,10 +1,15 @@
-import java.util.Random;
-
 /**
- *
  * @author Ana Paula, Osmar e Samuel
  *
+ * Simulated Annealing
+ * 
+ * O programa utiliza Simulated Annealing para gerar encontrar uma solução para 
+ * um tabuleiro contendo n rainhas.
+ *
  */
+
+import java.util.Random;
+
 public class NRainhasSimulatedAnnealing {
 
     /**
@@ -63,7 +68,7 @@ public class NRainhasSimulatedAnnealing {
         //Inicializa o vetor de retorno
         int[] novoIndividuo = new int[n];
         int i = 0;
-        //Gera os genes de individuo de acordo com o tamanho do gene
+        //Gera as rainhas aleatóriamente de acordo com o tamanho especificado em n
         while (i < n) {
             //Gera um uma rainha aleatória
             novoIndividuo[i] = RANDOMICO.nextInt(n);
@@ -73,24 +78,25 @@ public class NRainhasSimulatedAnnealing {
     }
     
    /**
-     * Função de avaliação do indivíduo, retorna a quantidade de rainhas a
-     * salvo.
+     * Função de avaliação do indivíduo, retorna a quantidade de rainhas 
+     * atacadas.
      * 
      * Complexidade O(n^2)
      * 
      * @param R vetor das rainhas posicionadas. O elemento corresponde à
      * coluna e seu respectivo conteúdo corresponde à linha.
      * 
-     * @return  A quantidade de rainhas salvas em R.
+     * @return A quantidade de rainhas atacadas em R.
      */
     public static int fitness(int[] R) {
-        //Recupera a quantidade de rainhas
+        //Recupera a quantidade de rainhas de R.
         int n = R.length;                                           // Theta(1)
+        //Variável para acumular a quantidade de rainhas atacadas.
         int cont = 0;                                               // Theta(1)
-        //Verifica se todas as rainhas estão em posições validas
+        //Verifica se todas as rainhas estão sendo atacadas
         for (int k = 0; k < n; k++) {                               // Theta(1)
-            //Verifica a quantidade de rainhas salvas
-            if (validaPosicao(R, k)) {                              // n * O(n)
+            //Verifica se a rainha na posição k esta atacada em R
+            if (validaPosicao(R, k)==false) {                       // n * O(n)
                 cont = cont + 1;                                    // O(n)
             }
         }
@@ -186,15 +192,19 @@ public class NRainhasSimulatedAnnealing {
      * @return Um novo indivíduo vizinho a R.
      */
     public static int[] geraVizinho(int R[]){
-	
+	//Quantidade de rainhas
 	int n = R.length;	
+        
+        //Escolhe uma coluna aleatóriamente
 	int coluna = RANDOMICO.nextInt(n);
+        //Escolhe um deslocamento aleatóriamente
         int deslocamento = RANDOMICO.nextInt(n);
         
-	 //Inicializa o vetor de retorno
+	//Inicializa o vetor de retorno
         int[] novoIndividuo = new int[n];
-        int i = 0;
         
+        //Iterador dos indivíduos
+        int i = 0;        
         //Compia o tabuleiro
         while (i < n) {            
             novoIndividuo[i] = R[i];
@@ -212,69 +222,74 @@ public class NRainhasSimulatedAnnealing {
      * Complexidade 
      *
      * @param n Quantidade de rainhas.
-     * @param alfa Quantidade de iterações a ser executado simulação por anelamento.     
+     * @param M Número máximo de iterações (Entrada). 
+     * @param alfa Qator de redução da temperatura.     
      * @param T0 Temperatura inicial.
      * @return Retorna o melhor indivíduo encontrado nas geracões
      */
-    public static int[] simulatedAnnealing(int n, double alfa, double T0) {
+    public static int[] simulatedAnnealing(int n, int M, double alfa, double T0) {
 
-        //Define o maior fitness pela quantidade rainhas posicionadas corretamente
-        int melhorFitness = n;
+        //Define o melhor fitness com a quantidade de rainhas atacadas.
+        int melhorFitness = 0;
         
         //temperatura inicial
         double T = T0;
                 
-        //Gera o candidato inicial
+        //Gera o candidato inicial S com n rainhas
         int[] S = geraIndividuo(n);   
         
         //Calcula o custo do candidato inicial(S)          
         int C = fitness(S);
         
-        //Enquanto a temperatura não é O ou não chegou no melhor
-        while ((T > 0) && (C != melhorFitness)) {        
-            
-           //Gera o vizinho Si a partir de S
-           int[] Si = geraVizinho(S);
+        //Iterador de pertubações em uma iteração
+        int i = 0;
+                
+        //Enquanto i não chegou ao final da iteração M e não é o melhor fitness        
+        while ((i < M) && (C != melhorFitness) ){        
         
-           //Calcula o custo do vizinho Si   
+            //Gera o vizinho Si a partir de S
+            int[] Si = geraVizinho(S);
+        
+            //Calcula o custo do vizinho Si   
            int Ci = fitness(Si);   
            
-           //Calcula o delta do fitness
+           //Calcula o delta do fitness de Ci e C
            int delta = Ci - C;
-           
-           //Se o vizinho tem custo menor 
-           if (delta > 0){ 
-                //Escolhe o vizinho (Si)
+          
+           //Se o Si tem custo menor
+           if (delta <= 0){
+                //Escolhe o vizinho(Si)
                 S = Si;
-                C = Ci;
-            } else { 
-                double P = Math.exp(delta/T);		
-		double rand = Math.random();				
-                // Escolhe o vizinho(Si)
-		if(P > rand){ 
+                C = Ci;                
+            } else {
+                if (Math.exp(-delta/T) > Math.random()) {
+                    // Escolhe o vizinho(Si)
                     S = Si;
                     C = Ci;
-		}
+                }
             }
             //Atualiza a temperatura
-            T = T - alfa;      
-        }
+            T = T * alfa;  
+            //Incrementa o iterador
+            i = i + 1;
+        }      
         //Retorna o melhor indivíduo encontrado nas gerações   
         return S;                                                     
     }
         
     /**
-     * Faz a chamada do algoritmo Genetético e apresenta as estatísticas.
+     * Faz a chamada do algoritmo de Simulated Annealing e apresenta as estatísticas.
      *
      * @param n Quantidade de rainhas.
-     * @param alfa Quantidade de iterações a ser executado na simulação.     
-     * @param T0 Percentual de probabilidade de mutação dos indivíduos.
+     * @param M Número máximo de iterações (Entrada).
+     * @param alfa Fator de redução da temperatura.
+     * @param T0 Temperatura inicial.
      */
-    public static void executaSimulatedAnnealing(int n, double alfa, double T0) {      
+    public static void executaSimulatedAnnealing(int n, int M, double alfa, double T0) {      
         
         //Guarda o melhor indivíduo
         //Procura o menor indivíduo
-        int[] melhorIndividuo = simulatedAnnealing(n, alfa, T0);
+        int[] melhorIndividuo = simulatedAnnealing(n, M, alfa, T0);
 
         if (valida(melhorIndividuo)) {
            //Incrementa o contador de soluções
@@ -332,14 +347,17 @@ public class NRainhasSimulatedAnnealing {
                 long tempo = System.currentTimeMillis();
 
                 //Parâmetros do Simulated Annealing
-                //Fator redução temperatura
-                double alfa = 0.0001;
+                //Número máximo de iterações (Entrada);
+                int M = 2500;
+                                
+                //Fator de redução da temperatura
+                double alfa = 0.01;
                 
-                //Temperatura inicial
-                double T0 = 22;
+                //Temperatura inicial, utiliza a quantidade rainhas
+                double T0 = n;
 
                 //Executa a solução da simulação
-                executaSimulatedAnnealing(n, alfa, T0);
+                executaSimulatedAnnealing(n, M, alfa, T0);
                 
                 //Pega o tempo final do processamento da vez
                 tempo = System.currentTimeMillis() - tempo;
