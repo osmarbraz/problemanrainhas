@@ -5,7 +5,7 @@
  * 
  * O programa utiliza algoritmo Genético para gerar encontrar uma solução para 
  * um tabuleiro contendo n rainhas.
- *
+ * 
  */
 import java.util.HashSet;
 import java.util.Random;
@@ -108,7 +108,7 @@ public class NRainhasAlgoritmoGenetico {
             if (RANDOMICO.nextDouble() <= mutacao) {
                 //So realiza a mutacao se o ffitness for pior que o atual
                 int ffitness = fitness(novoIndividuo);
-                if (ffitness > fitnessAtual) {
+                if (ffitness <= fitnessAtual) {
                     novoIndividuo = mutacao(novoIndividuo);
                 }
             }
@@ -119,7 +119,7 @@ public class NRainhasAlgoritmoGenetico {
         Object[] pais = populacao.toArray();
         int[] fitness = new int[pais.length];
         //Um numero baixo para o melhor fitness
-        int melhorF = n;
+        int melhorF = -1;
         for (int i = 0; i < pais.length; i++) {
             fitness[i] = fitness((int[]) pais[i]);
             //Localiza o melhor fitness
@@ -140,7 +140,7 @@ public class NRainhasAlgoritmoGenetico {
                 }
             }
             //Decrementa o fitness para pegar o próximo
-            melhorF++;
+            melhorF--;
         }
         novaPopulacao.addAll(populacao);
 
@@ -149,7 +149,7 @@ public class NRainhasAlgoritmoGenetico {
         //Procura o melhor indivíduo na nova população
         Object[] pop = novaPopulacao.toArray();
         fitness = new int[pop.length];
-        melhorF = n;
+        melhorF = -1;
         for (int i = 0; i < fitness.length; i++) {
             fitness[i] = fitness((int[]) pop[i]);
             if (melhorF < fitness[i]) {
@@ -159,7 +159,7 @@ public class NRainhasAlgoritmoGenetico {
         }
         populacao.clear();
         while (populacao.size() < tamanhoPopulacao) {
-            if (melhorF > 0) {
+            if (melhorF < 0) {
                 break;
             }
             for (int i = 0; i < fitness.length; i++) {
@@ -167,7 +167,7 @@ public class NRainhasAlgoritmoGenetico {
                     populacao.add((int[]) pop[i]);
                 }
             }
-            melhorF++;
+            melhorF--;
         }
         return melhorIndividuo;
     }
@@ -287,7 +287,7 @@ public class NRainhasAlgoritmoGenetico {
         //Verifica se todas as rainhas estão em posições validas
         for (int k = 0; k < n; k++) {                               // Theta(1)
             //Verifica a quantidade de rainhas salvas
-            if (validaPosicao(R, k)==false) {                              // n * O(n)
+            if (validaPosicao(R, k)) {                              // n * O(n)
                 cont = cont + 1;                                    // O(n)
             }
         }
@@ -371,7 +371,7 @@ public class NRainhasAlgoritmoGenetico {
     public static int[] algoritmoGenetico(int n, int geracoes, int p, double mutacao) {
 
         //Define o maior fitness pela quantidade rainhas posicionadas corretamente
-        int maiorFitness = 0;                                                       // Theta(1)
+        int maiorFitness = n;                                                       // Theta(1)
 
         // gerar a população inicial dos individuos
         Set populacao = geraPopulacaoInicial(p, n);                                 // Theta(n)
@@ -392,7 +392,7 @@ public class NRainhasAlgoritmoGenetico {
             //Retorna o fitness do melhor inidividuo da população
             fitness = fitness(melhorIndividuo);                                     // O(n^2)
             //Verifica se o fitness do melhor indivíduo é o melhor fitnesss
-            if (fitness < melhorFitness) {                                          // Theta(1)
+            if (fitness > melhorFitness) {                                          // Theta(1)
                 mutacao = 0.10;                                                     // O(1)
                 melhorFitness = fitness;                                            // O(1)
                 cont = 0;                                                           // O(1)

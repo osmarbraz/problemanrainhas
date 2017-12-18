@@ -5,7 +5,7 @@
  * 
  * O programa utiliza Simulated Annealing para gerar encontrar uma solução para 
  * um tabuleiro contendo n rainhas.
- *
+ * 
  */
 
 import java.util.Random;

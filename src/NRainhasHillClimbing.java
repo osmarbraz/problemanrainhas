@@ -1,6 +1,11 @@
 /**
  *
  * @author Ana Paula, Osmar e Samuel
+ * 
+ * Hill Climbing
+ * 
+ * O programa utiliza Hill Climbing para gerar encontrar uma solução para 
+ * um tabuleiro contendo n rainhas.
  */
 
 import java.util.Random;
