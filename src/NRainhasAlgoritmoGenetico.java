@@ -1,9 +1,9 @@
 /**
  * @author Ana Paula, Osmar e Samuel
  *
- * Algoritmo Genético
+ * Algoritmo GenÃ©tico
  * 
- * O programa utiliza algoritmo Genético para gerar encontrar uma solução para 
+ * O programa utiliza algoritmo GenÃ©tico para gerar encontrar uma soluÃ§Ã£o para 
  * um tabuleiro contendo n rainhas.
  * 
  */
@@ -14,42 +14,42 @@ import java.util.Set;
 public class NRainhasAlgoritmoGenetico {
 
     /**
-     * Armazena o número de soluções encontradas ao final do algoritmo
+     * Armazena o nÃºmero de soluÃ§Ãµes encontradas ao final do algoritmo
      */
     private static int solucoes;
 
     /**
-     * Gerador de número aleatórios para o algoritmo
+     * Gerador de nÃºmero aleatÃ³rios para o algoritmo
      */
     private static final Random RANDOMICO = new Random();
 
      /**
-     * Habilita ou desabilita a saida dos dados de impressão
+     * Habilita ou desabilita a saida dos dados de impressÃ£o
      */
     private static final boolean IMPRIMIRTABULEIRO = false;
     
     /**
-     * Carrega a população inicial de indivíduos do AG. 
+     * Carrega a populaÃ§Ã£o inicial de indivÃ­duos do AG. 
      *     
-     * @param p quantidade de indivíduos da população inicial
-     * @param n tamanho do indivíduo a ser gerado
-     * @return Um conjunto de indivíduos gerados aleatóriamente
+     * @param p quantidade de indivÃ­duos da populaÃ§Ã£o inicial
+     * @param n tamanho do indivÃ­duo a ser gerado
+     * @return Um conjunto de indivÃ­duos gerados aleatï¿½riamente
      */
     private static Set geraPopulacaoInicial(int p, int n) {            // Theta(n)
         Set populacao = new HashSet();                                 // Theta(1)
-        while (populacao.size() < p) {                                 // Theta(1) - p é uma constante 
+        while (populacao.size() < p) {                                 // Theta(1) - p Ã© uma constante 
             //Gera um individuo
             int[] individuo = geraIndividuo(n);                        // Theta(n)
             //Adiciona o novo individuo a populacao
-            populacao.add(individuo);                                  // Theta(1) - p é uma constante
+            populacao.add(individuo);                                  // Theta(1) - p Ã© uma constante
         }
         return populacao;                                              // Theta(1)
     }
 
     /**
-     * Imprime as soluções do tabuleiro.
+     * Imprime as soluï¿½ï¿½es do tabuleiro.
      * 
-     * Percorre o tabuleiro exibindo as posições ocupadas pelas rainhas.
+     * Percorre o tabuleiro exibindo as posiÃ§Ãµes ocupadas pelas rainhas.
      *
      * Complexidade O(n^2)
      * 
@@ -62,11 +62,11 @@ public class NRainhasAlgoritmoGenetico {
 
         if (IMPRIMIRTABULEIRO) {                                        // Theta(1)        
             
-            System.out.println(" Solução número " + solucoes + ":");    // O(1)
+            System.out.println(" SolucÃ§Ã£o nÃºmero " + solucoes + ":");    // O(1)
             
             for (int i = 0; i < n; i++) {                               // O(n)
                 for (int j = 0; j < n; j++) {                           // n * O(n)
-                    //Posição ocupada
+                    //PosiÃ§Ã£o ocupada
                     if (R[j] == i) {                                    // n^2 * O(1)
                         System.out.print(" " + i + " ");                // n^2 * O(1)
                     } else {                                            // 0
@@ -80,29 +80,29 @@ public class NRainhasAlgoritmoGenetico {
     }
 
     /**
-     * Lógica do Algoritmo Genético mantendo os melhores na população.
+     * LÃ³gica do Algoritmo GenÃ©tico mantendo os melhores na populaÃ§Ã£o.
      *
-     * Retorna o melhor indivíduo da população.
+     * Retorna o melhor indivÃ­duo da populaÃ§Ã£o.
      *
-     * @param populacao População de individuos
-     * @param mutacao Taxa de probabilidade de mutação da população
-     * @param fitnessAtual Fitness da geração atual
-     * @param n Tamanho dos indivíduos da população
-     * @return O melhor indivíduo da população
+     * @param populacao PopulaÃ§Ã£o de individuos
+     * @param mutacao Taxa de probabilidade de mutaÃ§Ã£o da populaÃ§Ã£o
+     * @param fitnessAtual Fitness da geraÃ§Ã£o atual
+     * @param n Tamanho dos indivÃ­duos da populaÃ§Ã£o
+     * @return O melhor indivÃ­duo da populaÃ§Ã£o
      */
     private static int[] proximaGeracao(Set populacao, double mutacao, int fitnessAtual, int n) {          // O(n^2)
 
-        //Conjunto de novos indivíduos da próxima geração
+        //Conjunto de novos indivÃ­duos da prÃ³xima geraÃ§Ã£o
         Set novaPopulacao = new HashSet();                                                                 // Theta(1)
-        //Gera a nova populacao com base na população anteior        
+        //Gera a nova populacao com base na populaÃ§Ã£o anteior        
         int tamanhoPopulacao = populacao.size();                                                           // Theta(1)
         //Gera os novos invidiuos para a nova geracao
-        while (novaPopulacao.size() < tamanhoPopulacao) {                                                  // Theta(1) - tamanhoPopulacao é uma constante
+        while (novaPopulacao.size() < tamanhoPopulacao) {                                                  // Theta(1) - tamanhoPopulacao ï¿½ uma constante
             //Seleciona o primeiro individuo para realizar o crossover
             int individuo1[] = selecionarIndividuo(populacao, null, n);                                    // Theta(1)
             //Seleciona o segundo individuo diferente do anterior para realiar o crossover
             int individuo2[] = selecionarIndividuo(populacao, individuo1, n);                              // Theta(1)
-            //Gera o crossover entre individuo1 e individuo2 para gerar u novo indivíduo do cruzamento
+            //Gera o crossover entre individuo1 e individuo2 para gerar u novo indivÃ­duo do cruzamento
             int novoIndividuo[] = crossover(individuo1, individuo2);                                       // Theta(n)                                
             //Verifica a probabilidade de realizar mutacao no filho
             if (RANDOMICO.nextDouble() <= mutacao) {                                                       // Theta(1)
@@ -115,7 +115,7 @@ public class NRainhasAlgoritmoGenetico {
             //Adiciona o filho ao conjunto
             novaPopulacao.add(novoIndividuo);                                                              // Theta(1)
         }
-        // Adicionar dois dos melhores pais a população
+        // Adicionar dois dos melhores pais a populaÃ§Ã£o
         Object[] pais = populacao.toArray();                                                               // Theta(1)
         int[] fitness = new int[pais.length];                                                              // Theta(1)
         //Um numero baixo para o melhor fitness
@@ -130,7 +130,7 @@ public class NRainhasAlgoritmoGenetico {
         populacao.clear();                                                                                 // Theta(1)
         while (populacao.size() < 2) {                                                                     // Theta(1)
             for (int i = 0; i < fitness.length; i++) {                                                     // Theta(1)
-                //Adiciona os melhores a população
+                //Adiciona os melhores a populaÃ§Ã£o
                 if (fitness[i] == melhorF) {                                                               // Theta(1)
                     populacao.add((int[]) pais[i]);                                                        // O(1)
                 }
@@ -139,14 +139,14 @@ public class NRainhasAlgoritmoGenetico {
                     break;                                                                                 // O(1)
                 }
             }
-            //Decrementa o fitness para pegar o próximo
+            //Decrementa o fitness para pegar o prÃ³ximo
             melhorF--;                                                                                     // Theta(1)
         }
         novaPopulacao.addAll(populacao);                                                                   // Theta(1)
 
-        //Guarda o melhor indivíduo
+        //Guarda o melhor indivÃ­duo
         int[] melhorIndividuo = null;                                                                      // Theta(1)
-        //Procura o melhor indivíduo na nova população
+        //Procura o melhor indivÃ­duo na nova populaÃ§Ã£o
         Object[] pop = novaPopulacao.toArray();                                                            // Theta(1)
         fitness = new int[pop.length];                                                                     // Theta(1)
         melhorF = -1;                                                                                      // Theta(1)
@@ -175,7 +175,7 @@ public class NRainhasAlgoritmoGenetico {
     public static int moverParaBaixo(int n, int coluna, int deslocamento){      // Theta(1)             
 	coluna = coluna + deslocamento;                                         // Theta(1)
 	
-        //Verifica se está acima dos limites
+        //Verifica se estÃ¡ acima dos limites
 	if (coluna>=n){                                                         // Theta(1)
             coluna = coluna%n;                                                  // O(1)
 	}	
@@ -183,10 +183,10 @@ public class NRainhasAlgoritmoGenetico {
     }
     
     /**
-     * Realiza a mutação em um indivíduo de forma aleatória.
+     * Realiza a mutaÃ§Ã£o em um indivÃ­duo de forma aleatÃ³ria.
      *
-     * @param individuo Um individuo a sofrer mutação
-     * @return um indivíduo com a mutação
+     * @param individuo Um individuo a sofrer mutaÃ§Ã£o
+     * @return um indivÃ­duo com a mutaÃ§Ã£o
      */
     private static int[] mutacao(int[] individuo) {                             // Theta(1)
         int n = individuo.length;                                               // Theta(1)
@@ -194,20 +194,20 @@ public class NRainhasAlgoritmoGenetico {
         int posicao = RANDOMICO.nextInt(individuo.length);                      // Theta(1)
         //Novo valor para a posicao selecionado
         int novovalor = RANDOMICO.nextInt(individuo.length);                    // Theta(1)
-        //Realiza a mutação na posição com o novoValor
+        //Realiza a mutaÃ§Ã£o na posiÃ§Ã£o com o novoValor
         individuo[posicao] = novovalor;                                         // Theta(1)
         //individuo[posicao] = moverParaBaixo(n,individuo[posicao],novovalor);
         return individuo;                                                       // Theta(1)
     }
 
     /**
-     * Realiza o crossover entre dois individuos da população.
+     * Realiza o crossover entre dois individuos da populaÃ§Ã£o.
      *
-     * @param individuo1 Indivíduo que fornece a 1a parte dos genes para o novo
-     * indivíduo
-     * @param individuo2 Indivíduo que fornece a 2a parte dos genes para o novo
-     * indivíduo
-     * @return um indivíduo resultante do crossover
+     * @param individuo1 IndivÃ­duo que fornece a 1a parte dos genes para o novo
+     * indivÃ­duo
+     * @param individuo2 IndivÃ­duo que fornece a 2a parte dos genes para o novo
+     * indivÃ­duo
+     * @return um indivÃ­duo resultante do crossover
      */
     private static int[] crossover(int[] individuo1, int[] individuo2) {        // Theta(n)
         //Cria o filho resultante do crossover
@@ -215,46 +215,46 @@ public class NRainhasAlgoritmoGenetico {
         //Seleciona o ponto de crossover
         int posicao = RANDOMICO.nextInt(individuo1.length);                     // Theta(1)
         //Copia os genes do inicio ate a posicao do individuo1 para o filho
-        for (int i = 0; i < posicao; i++) {                                     // Theta(n) - posicao é o tamanho do indivíduo, ou seja, n
+        for (int i = 0; i < posicao; i++) {                                     // Theta(n) - posicao Ã© o tamanho do indivÃ­duo, ou seja, n
             novo[i] = individuo1[i];                                            // Theta(n)
         }
         //Copia os genes da posicao ate o final do individuo2 para o filho
-        for (int i = posicao; i < individuo2.length; i++) {                     // Theta(n) - posicao é o tamanho do indivíduo, ou seja, n
+        for (int i = posicao; i < individuo2.length; i++) {                     // Theta(n) - posicao Ã© o tamanho do indivÃ­duo, ou seja, n
             novo[i] = individuo2[i];                                            // Theta(n)
         }
         return novo;                                                            // Theta(1)
     }
 
     /**
-     * Seleciona um indivíduo da população aleatoriamente.
+     * Seleciona um indivÃ­duo da populaÃ§Ã£o aleatoriamente.
      *
-     * @param populacao Conjunto da população
+     * @param populacao Conjunto da populaÃ§Ã£o
      * @param individuoBase para ser utilizado para nao selecionar
      * @param n tamanho do individuo a ser gerado
-     * @return Um individuo selecionado aleatoramente da população
+     * @return Um individuo selecionado aleatoramente da populaÃ§Ã£o
      */
     private static int[] selecionarIndividuo(Set populacao, int[] individuoBase, int n) {   // Theta(1)
         //Cria um vetor para receber um novo elemento
         int[] individuoSelecionado = new int[n];                                            // Theta(1)
         //Transforma a populacao em um vetor de objetos
         Object[] tmp = populacao.toArray();                                                 // Theta(1)
-        //Enquanto for igual a individuoBase seleciona outro indivíduo
-        while (java.util.Arrays.equals(individuoSelecionado, individuoBase)) {              // Theta(1) - Sorteio é feito até que o novo indivíduo não seja igual ao atual a tendência é não repetir o while
-            //Seleciona uma posicao da população
+        //Enquanto for igual a individuoBase seleciona outro indivÃ­duo
+        while (java.util.Arrays.equals(individuoSelecionado, individuoBase)) {              // Theta(1) - Sorteio Ã© feito atï¿½ que o novo indivÃ­duo nÃ£o seja igual ao atual a tendï¿½ncia ï¿½ nÃ£o repetir o while
+            //Seleciona uma posicao da populaÃ§Ã£o
             int i = RANDOMICO.nextInt((populacao.size()));                                  // Theta(1)
-            //Recupera o indivíduo sorteado
+            //Recupera o indivÃ­duo sorteado
             individuoSelecionado = (int[]) tmp[i];                                          // Theta(1)
         }
         return individuoSelecionado;                                                        // Theta(1)
     }
 
     /**
-     * Gera um indivíduo com n posições de forma aleatória.
+     * Gera um indivÃ­duo com n posiÃ§Ãµes de forma aleatÃ³ria.
      *
-     * Gera n rainhas aleatórias(com repetição) para um tabuleiro.
+     * Gera n rainhas aleatÃ³rias(com repetiÃ§Ã£o) para um tabuleiro.
      *
-     * @param n Tamanho do indivíduo
-     * @return um indivíduo da populacao com repetição de rainha
+     * @param n Tamanho do indivÃ­duo
+     * @return um indivÃ­duo da populacao com repetiÃ§Ã£o de rainha
      */
     private static int[] geraIndividuo(int n) {                          // Theta(n)
         //Inicializa o vetor de retorno
@@ -262,7 +262,7 @@ public class NRainhasAlgoritmoGenetico {
         int i = 0;                                                       // Theta(1)
         //Gera os genes de individuo de acordo com o tamanho do gene
         while (i < n) {                                                  // Theta(n)
-            //Gera um uma rainha aleatória
+            //Gera um uma rainha aleatÃ³ria
             novoIndividuo[i] = RANDOMICO.nextInt(n);                     // Theta(n)
             i = i + 1;                                                   // Theta(n)
         }
@@ -270,13 +270,13 @@ public class NRainhasAlgoritmoGenetico {
     }        
     
    /**
-     * Função de avaliação do indivíduo, retorna a quantidade de rainhas a
+     * FunÃ§Ã£o de avaliaÃ§Ã£o do indivÃ­duo, retorna a quantidade de rainhas a
      * salvo.
      * 
      * Complexidade O(n^2)
      * 
-     * @param R vetor das rainhas posicionadas. O elemento corresponde à
-     * coluna e seu respectivo conteúdo corresponde à linha.
+     * @param R vetor das rainhas posicionadas. O elemento corresponde a
+     * coluna e seu respectivo conteÃºdo corresponde a linha.
      * 
      * @return  A quantidade de rainhas salvas em R.
      */
@@ -284,7 +284,7 @@ public class NRainhasAlgoritmoGenetico {
         //Recupera a quantidade de rainhas
         int n = R.length;                                           // Theta(1)
         int cont = 0;                                               // Theta(1)
-        //Verifica se todas as rainhas estão em posições validas
+        //Verifica se todas as rainhas estÃ£o em posiÃ§Ãµes validas
         for (int k = 0; k < n; k++) {                               // Theta(n)
             //Verifica a quantidade de rainhas salvas
             if (validaPosicao(R, k)) {                              // n * Theta(n)
@@ -295,22 +295,22 @@ public class NRainhasAlgoritmoGenetico {
     }
 
     /**
-     * Valida se a k-ésima rainha posicionada está sob ataque.
+     * Valida se a k-Ã©sima rainha posicionada estÃ¡ sob ataque.
      * 
-     * Uma rainha está sob ataque se há outra rainha na mesma linha, coluna ou 
+     * Uma rainha estÃ¡ sob ataque se hÃ¡ outra rainha na mesma linha, coluna ou 
      * diagonal onde esta se encontra.
      * 
-     * Como as rainhas são adicionadas sempre na coluna seguinte, não há necessi-
+     * Como as rainhas sÃ£o adicionadas sempre na coluna seguinte, nÃ£o hÃ¡ necessi-
      * dade de validar conflitos na mesma coluna.
      * 
      * Complexidade Theta(k)
      * 
-     * @param R vetor das rainhas posicionadas. O elemento corresponde à
-     * coluna e seu respectivo conteúdo corresponde à linha.
+     * @param R vetor das rainhas posicionadas. O elemento corresponde a
+     * coluna e seu respectivo conteÃºdo corresponde a linha.
      * 
      * @param k linha do vetor a ser analisada
      *
-     * @return true se a k-ésima rainha não estiver sob ataque das demais já 
+     * @return true se a k-Ã©sima rainha nÃ£o estiver sob ataque das demais jÃ¡ 
      * posicionadas
      */
     public static boolean validaPosicao(int[] R, int k) {  
@@ -326,29 +326,29 @@ public class NRainhasAlgoritmoGenetico {
              return false;                                      // O(1)
             }
         }        
-        // Posição válida
+        // PosiÃ§Ã£o vÃ¡lida
         return true;                                            // Theta(1)
     }
     
     /**
      * Avalia todas as rainhas posicionadas.
      * 
-     * Chamada o método valida posição para avaliação cada posição do 
+     * Chamada o mÃ©todo valida posiÃ§Ã£o para avaliaÃ§Ã£o cada posiÃ§Ã£o do 
      * vetor de rainhas.
      * 
      * Complexidade O(n^2)
      * 
-     * @param R vetor das rainhas posicionadas. O elemento corresponde à
-     * coluna e seu respectivo conteúdo corresponde à linha.
+     * @param R vetor das rainhas posicionadas. O elemento corresponde a
+     * coluna e seu respectivo conteÃºdo corresponde a linha.
      * 
-     * @return True ou False se existe alguma rainha em posição inválida.
+     * @return True ou False se existe alguma rainha em posiÃ§Ã£o invÃ¡lida.
      */
     public static boolean valida(int[] R) {                         // O(n^2)
         
         //Recupera a quantidade de rainhas
         int n = R.length;                                           // Theta(1)
         int cont = 0;                                               // Theta(1)
-        //Verifica se todas as rainhas estão em posições validas
+        //Verifica se todas as rainhas estÃ£o em posiÃ§Ãµes validas
         for (int k = 0; k < n; k++) {                               // Theta(n)
             if (validaPosicao(R, k)==false) {                       // n * O(n) = O(n^2)
                 cont = cont + 1;                                    // O(1)    
@@ -358,47 +358,47 @@ public class NRainhasAlgoritmoGenetico {
     }
 
     /**
-     * Executa as gerações do Algoritmo Genético.
+     * Executa as geraÃ§Ãµes do Algoritmo GenÃ©tico.
      * 
      * Complexidade O(n^2)
      *
      * @param n Quantidade de rainhas.
-     * @param geracoes Quantidade de gerações a ser executado o algoritmo genético.
-     * @param p Tamanho de população.
-     * @param mutacao Percentual de probabilidade de mutação dos indivíduos.
-     * @return Retorna o melhor indivíduo encontrado nas geracões
+     * @param geracoes Quantidade de geraÃ§Ãµes a ser executado o algoritmo genÃ©tico.
+     * @param p Tamanho de populaÃ§Ã£o.
+     * @param mutacao Percentual de probabilidade de mutaÃ§Ã£o dos indivÃ­duos.
+     * @return Retorna o melhor indivÃ­duo encontrado nas geraÃ§Ãµes
      */
     public static int[] algoritmoGenetico(int n, int geracoes, int p, double mutacao) { // O(n^2)
 
         //Define o maior fitness pela quantidade rainhas posicionadas corretamente
         int maiorFitness = n;                                                       // Theta(1)
 
-        // gerar a população inicial dos individuos
+        // gerar a populaÃ§Ã£o inicial dos individuos
         Set populacao = geraPopulacaoInicial(p, n);                                     // Theta(n)
 
-        //Armazena o melhor individuo de todas as gerações
+        //Armazena o melhor individuo de todas as geraÃ§Ãµes
         int[] melhorIndividuo = null;                                                   // Theta(1)
-        //Armazena o melhor fitness da geração atual
+        //Armazena o melhor fitness da geraÃ§Ã£o atual
         int fitness = 0;                                                            // Theta(1)
-        //Armazena o melhor fitness de todas as gerações
+        //Armazena o melhor fitness de todas as geraÃ§Ãµes
         int melhorFitness = 0;                                                      // Theta(1)
-        //Conta o número de gerações
+        //Conta o nÃºmero de geraÃ§Ãµes
         int i = 0;                                                                      // Theta(1)
         int cont = 0;                                                                   // Theta(1)
          
         do {                                                                            // 0
-            //Retorna o melhor indivíduo da população
+            //Retorna o melhor indivÃ­duo da populaÃ§Ã£o
             melhorIndividuo = proximaGeracao(populacao, mutacao, melhorFitness, n);     // O(n^2)
-            //Retorna o fitness do melhor inidividuo da população
+            //Retorna o fitness do melhor inidividuo da populaÃ§Ã£o
             fitness = fitness(melhorIndividuo);                                         // O(n^2)
-            //Verifica se o fitness do melhor indivíduo é o melhor fitnesss
+            //Verifica se o fitness do melhor indivÃ­duo Ã© o melhor fitnesss
             if (fitness > melhorFitness) {                                          // Theta(1)
                 mutacao = 0.10;                                                     // O(1)
                 melhorFitness = fitness;                                            // O(1)
                 cont = 0;                                                           // O(1)
             } else {                                                                // 0
                 cont = cont + 1;                                                    // Theta(1)    
-                //Se não ocorrer aumento do fitness aumenta a probabilidade de mutação
+                //Se nÃ£o ocorrer aumento do fitness aumenta a probabilidade de mutaÃ§Ã£o
                 if (cont > 1000) {                                                      // Theta(1)
                     mutacao = 0.30;                                                     // O(1)
                 } else if (cont > 2000) {                                               // Theta(1)
@@ -406,35 +406,35 @@ public class NRainhasAlgoritmoGenetico {
                 } else if (cont > 5000) {                                               // Theta(1)
                     //Limpa populacao                                           
                     populacao.clear();                                                  // O(1)
-                    //Carrega uma nova população        
+                    //Carrega uma nova populaÃ§Ã£o        
                     populacao = geraPopulacaoInicial(p, n);                             // Theta(n)
                     mutacao = 0.10;                                                     // O(1)
                     melhorFitness = -1;                                                 // O(1)
                 }
             }
             i = i + 1;                                                              // Theta(1)
-        // Até que a geracao atinja o maximo de geraces ou alcance o maior fitness    
+        // AtÃ© que a geracao atinja o maximo de geraces ou alcance o maior fitness    
         } while ((i < geracoes) && (melhorFitness != maiorFitness));                // Theta(1)
-        //Retorna o melhor indivíduo encontrado nas gerações   
+        //Retorna o melhor indivÃ­duo encontrado nas geraÃ§Ãµes   
         return melhorIndividuo;                                                         // Theta(1)
     }
         
     /**
-     * Faz a chamada do algoritmo Genetético e apresenta as estatísticas.
+     * Faz a chamada do algoritmo GenÃ©tico e apresenta as estatÃ­sticas.
      *
      * @param n Quantidade de rainhas.
-     * @param geracoes Quantidade de gerações a ser executado o algoritmo genético.
-     * @param p Tamanho de população.
-     * @param mutacao Percentual de probabilidade de mutação dos indivíduos.
+     * @param geracoes Quantidade de geraÃ§Ãµes a ser executado o algoritmo genÃ©tico.
+     * @param p Tamanho de populaÃ§Ã£o.
+     * @param mutacao Percentual de probabilidade de mutaÃ§Ã£o dos indivÃ­duos.
      */
     public static void executaAlgoritmoGenetico(int n, int geracoes, int p, double mutacao) { // O(n^2)   
         
-        //Guarda o melhor indivíduo
-        //Procura o menor indivíduo
+        //Guarda o melhor indivÃ­duo
+        //Procura o menor indivÃ­duo
         int[] melhorIndividuo = algoritmoGenetico(n, geracoes, p, mutacao);                   // O(n^2)
 
         if (valida(melhorIndividuo)) {                                                        // O(n^2)
-           //Incrementa o contador de soluções
+           //Incrementa o contador de soluÃ§Ãµes
             solucoes = solucoes + 1;
             //System.out.println("Solucao encontrada em " + geracao + " geracoes");
             //System.out.println("Solucao = " + vetorToString(melhorIndividuo));
@@ -442,7 +442,7 @@ public class NRainhasAlgoritmoGenetico {
             //System.out.println("Solucao");
              imprimeSolucao(melhorIndividuo);                                                 // O(n^2)
         } else {                                                                              // 0
-            //System.out.println("Solucao nao encontrada após " + geracao + " geracoes");
+            //System.out.println("Solucao nao encontrada apÃ³s " + geracao + " geracoes");
             //System.out.println("Melhor Individuo = " + vetorToString(melhorIndividuo));
             //System.out.println("Fitness = " + fitness(melhorIndividuo));
         }      
@@ -451,12 +451,12 @@ public class NRainhasAlgoritmoGenetico {
     /**
      * Chamada do algoritmo.
      *
-     * Provê o resultado da execução para cada problema resolvido, imprimindo em
-     * tela detalhes estatísticos para cada caso e tempo global.
+     * ProvÃª o resultado da execuÃ§Ã£o para cada problema resolvido, imprimindo em
+     * tela detalhes estatÃ­sticos para cada caso e tempo global.
      *
      * @param listaProblemasASolucionar vetor contendo os problemas a serem
      * executados.
-     * @param repeticoesTeste quantidade de repetições para cada problema.
+     * @param repeticoesTeste quantidade de repetiÃ§Ãµes para cada problema.
      */
     private static void nRainhas(int[] listaProblemasASolucionar, int repeticoesTeste) {                    // O(n^2)
    
@@ -465,38 +465,38 @@ public class NRainhasAlgoritmoGenetico {
         long solucoesAcumulado = 0;                                                                         // Theta(1)
         
         //Realiza os testes para as quantidades das rainhas especificadas no vetor
-        for (int problemaAtual = 0; problemaAtual < listaProblemasASolucionar.length; problemaAtual++) {    // Theta(1) -- ListaProblemasASolucionar.length é uma constante
+        for (int problemaAtual = 0; problemaAtual < listaProblemasASolucionar.length; problemaAtual++) {    // Theta(1) -- ListaProblemasASolucionar.length ï¿½ uma constante
 
             int n = listaProblemasASolucionar[problemaAtual];                                               // Theta(1)
             
             System.out.println("-----------------------------------------------------------");              // Theta(1)
             System.out.println("Para " + n + " Rainhas \n");                                                // Theta(1)
             
-            //Zera o tempo da execução da iteração
+            //Zera o tempo da execuÃ§Ã£o da iteraÃ§Ã£o
             tempoAcumulado = 0;                                                                             // Theta(1)
-            //Zera o contador de solucoes da iteração 
+            //Zera o contador de solucoes da iteraÃ§Ã£o 
             solucoesAcumulado = 0;                                                                          // Theta(1)
                         
             //Repete o teste para as vezes especificadas no vetor
-            for (int testeAtual = 1; testeAtual <= repeticoesTeste; testeAtual++) {                         // Theta(1) -- repeticoesTeste é uma constante
+            for (int testeAtual = 1; testeAtual <= repeticoesTeste; testeAtual++) {                         // Theta(1) -- repeticoesTeste ï¿½ uma constante
                 //Zera o contador de solucoes
                 solucoes = 0;                                                                               // Theta(1)
                 
                 //Executa o garbage collector (gc) antes de cada teste
                 System.gc();                                                                                // ???
 
-                //Início da execução
+                //InÃ­cio da execuÃ§Ã£o
                 long tempo = System.currentTimeMillis();                                                    // ???
 
-                //Parâmetros do Algoritmo Genético
-                //Quantidade de gerações
+                //ParÃ¢metros do Algoritmo GenÃ©tico
+                //Quantidade de geraÃ§Ãµes
                 int qtdGeracoes = 300000;                                                                   // Theta(1)
                 //Tamanho da populacao
                 int p = 20;                                                                                 // Theta(1)
-                //Probabilidade de mutação dos individuos
+                //Probabilidade de mutaÃ§Ã£o dos individuos
                 double mutacao = 0.15;                                                                      // Theta(1)
 
-                //Executa a solução do algoritmo
+                //Executa a soluÃ§Ã£o do algoritmo
                 executaAlgoritmoGenetico(n, qtdGeracoes, p, mutacao);                                       // O(n^2)
                 
                 //Pega o tempo final do processamento da vez
@@ -505,19 +505,19 @@ public class NRainhasAlgoritmoGenetico {
                 //Acumula o tempo do teste ao tempo final
                 tempoAcumulado = tempoAcumulado + tempo;                                                    // Theta(1)
                 
-                //Acumula a soluções do teste
+                //Acumula a soluÃ§Ãµes do teste
                 solucoesAcumulado = solucoesAcumulado + solucoes;                                           // Theta(1)
-                System.out.println("Resultado da " + testeAtual + "ª execução: " + tempo + 
-                                   " milisegundos" + " com " + solucoes + " soluções");                     // Theta(1)
+                System.out.println("Resultado da " + testeAtual + "e execuÃ§Ã£o: " + tempo + 
+                                   " milisegundos" + " com " + solucoes + " soluÃ§Ãµes");                     // Theta(1)
             }
-            //Calcula a média do tempo
+            //Calcula a mÃ©dia do tempo
             double mediaTempo = tempoAcumulado / (double) repeticoesTeste;                                  // Theta(1)   
             
-            //Calcula a média de solucoes
+            //Calcula a mÃ©dia de solucoes
             double mediaSolucoes = solucoesAcumulado / (double)repeticoesTeste;                             // Theta(1)
 
-            System.out.println("\nSoluções Média: " + mediaSolucoes + " soluções");                         // Theta(1)
-            System.out.println("Tempo Médio...: " + mediaTempo + " milisegundos");                          // Theta(1)
+            System.out.println("\nSoluÃ§Ãµes MÃ©dia: " + mediaSolucoes + " soluÃ§Ãµes");                         // Theta(1)
+            System.out.println("Tempo MÃ©dio...: " + mediaTempo + " milisegundos");                          // Theta(1)
             System.out.println("Acumulado.....: " + tempoAcumulado + " milisegundos");                      // Theta(1)
 
             tempoTotalDeTeste = tempoTotalDeTeste + tempoAcumulado;                                         // Theta(1)
@@ -529,18 +529,18 @@ public class NRainhasAlgoritmoGenetico {
 
     public static void main(String[] args) {
 
-        System.out.println("Algoritmo Genético");
+        System.out.println("Algoritmo GenÃ©tico");
         
         // Vetor contendo os problemas a serem processados.
         // Cada elemento define a ordem do tabuleiro e, consequentemente, a 
         // quantidade de rainhas a serem posicionadas.
         int[] listaProblemasASolucionar = {4, 6, 8, 10 ,12, 14, 16, 18, 20, 22};
 
-        // Quantidade de repetições do processamento
-        // Útil para fins estatísticos.
+        // Quantidade de repetiÃ§Ãµes do processamento
+        // Ãštil para fins estatÃ­sticos.
         int repeticoesTeste = 10;
 
-        System.out.println("Executando N-Rainhas com " + repeticoesTeste + " repetições.\n\n");
+        System.out.println("Executando N-Rainhas com " + repeticoesTeste + " repetiÃ§Ãµes.\n\n");
         nRainhas(listaProblemasASolucionar, repeticoesTeste);
     }
 }
