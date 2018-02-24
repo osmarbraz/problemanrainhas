@@ -107,18 +107,28 @@ public class NRainhasSimulatedAnnealing {
      *
      * @return True ou False se existe alguma rainha em posição inválida.
      */
-    public static boolean valida(int[] R) {
+    public static boolean valida(int[] R) {  
+        
         //Recupera a quantidade de rainhas
         int n = R.length;                                           // Theta(1)
-        int cont = 0;                                               // Theta(1)
+        
         //Verifica se todas as rainhas estão em posições validas
-        for (int k = 0; k < n; k++) {                               // Theta(n)
-            if (validaPosicao(R, k) == false) {                     // n * O(n)
-                cont = cont + 1;                                    // O(1)    
-            }
+        int k = 0;                                                  // Theta(1)        
+                
+        //Percorre as n posições, se encontrar uma posição inválida 
+        //interrompe o laço
+        while ((k < n ) && (validaPosicao(R, k))) {                 // n * Theta(1) + n * O(n)  = O(n^2)
+           k = k + 1;                                               // O(n)
         }
-        return (cont == 0);                                         // Theta(1)
-    }    
+                
+        //Se k==n, então necessariamente não houve posição inválida identificada
+        if (k==n) {
+           return true;                                             // Theta(1)
+        } else {
+            //Se o while foi interrompido antes existe posição invalida
+           return false;                                            // Theta(1)
+        }        
+    }   
     
     /**
      * Gera um indivíduo com n posições de forma aleatória.
@@ -225,7 +235,7 @@ public class NRainhasSimulatedAnnealing {
      *
      * @param n Quantidade de rainhas.
      * @param M Número máximo de iterações (Entrada).
-     * @param alfa Qator de redução da temperatura.
+     * @param alfa Fator de redução da temperatura.
      * @param T0 Temperatura inicial.
      * @return Retorna o melhor indivíduo encontrado nas geracões
      */
