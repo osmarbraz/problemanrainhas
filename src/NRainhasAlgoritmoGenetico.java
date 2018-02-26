@@ -380,52 +380,52 @@ public class NRainhasAlgoritmoGenetico {
     public static int[] algoritmoGenetico(int n, int geracoes, int p, double mutacao) { // O(n^2)
 
         //Define o maior fitness pela quantidade rainhas posicionadas corretamente
-        int maiorFitness = n;                                                       // Theta(1)
+        int maiorFitness = n;                                                           // Theta(1)
 
         // gerar a população inicial dos individuos
         Set populacao = geraPopulacaoInicial(p, n);                                     // Theta(n)
 
         //Armazena o melhor individuo de todas as gerações
-        int[] melhorIndividuo = null;                                               // Theta(1)
+        int[] melhorIndividuo = null;                                                   // Theta(1)
         //Armazena o melhor fitness da geração atual
-        int fitness = 0;                                                            // Theta(1)
+        int fitness = 0;                                                                // Theta(1)
         //Armazena o melhor fitness de todas as gerações
-        int melhorFitness = 0;                                                      // Theta(1)
+        int melhorFitness = 0;                                                          // Theta(1)
         //Conta o número de gerações
-        int i = 0;                                                                  // Theta(1)
-        int cont = 0;                                                               // Theta(1)
+        int i = 0;                                                                      // Theta(1)
+        int cont = 0;                                                                   // Theta(1)
          
-        do {                                                                        // 0
+        do {                                                                            // 0
             //Retorna o melhor indivíduo da população
-            melhorIndividuo = proximaGeracao(populacao, mutacao, melhorFitness, n); // O(n^2)
+            melhorIndividuo = proximaGeracao(populacao, mutacao, melhorFitness, n);     // O(n^2)
             //Retorna o fitness do melhor inidividuo da população
-            fitness = fitness(melhorIndividuo);                                     // O(n^2)
+            fitness = fitness(melhorIndividuo);                                         // O(n^2)
             //Verifica se o fitness do melhor indivíduo é o melhor fitnesss
-            if (fitness > melhorFitness) {                                          // Theta(1)
-                mutacao = 0.10;                                                     // O(1)
-                melhorFitness = fitness;                                            // O(1)
-                cont = 0;                                                           // O(1)
-            } else {                                                                // 0
-                cont = cont + 1;                                                    // Theta(1)    
+            if (fitness > melhorFitness) {                                              // Theta(1)
+                mutacao = 0.10;                                                         // O(1)
+                melhorFitness = fitness;                                                // O(1)
+                cont = 0;                                                               // O(1)
+            } else {                                                                    // 0
+                cont = cont + 1;                                                        // Theta(1)    
                 //Se não ocorrer aumento do fitness aumenta a probabilidade de mutação
-                if (cont > 1000) {                                                  // Theta(1)
-                    mutacao = 0.30;                                                 // O(1)
-                } else if (cont > 2000) {                                           // Theta(1)
-                    mutacao = 0.50;                                                 // O(1)
-                } else if (cont > 5000) {                                           // Theta(1)
+                if (cont > 1000) {                                                      // Theta(1)
+                    mutacao = 0.30;                                                     // O(1)
+                } else if (cont > 2000) {                                               // Theta(1)
+                    mutacao = 0.50;                                                     // O(1)
+                } else if (cont > 5000) {                                               // Theta(1)
                     //Limpa populacao                                           
-                    populacao.clear();                                              // O(1)
+                    populacao.clear();                                                  // O(1)
                     //Carrega uma nova população        
-		    populacao = geraPopulacaoInicial(p, n);                         // Theta(n)
-                    mutacao = 0.10;                                                 // O(1)
-                    melhorFitness = -1;                                             // O(1)
+		    populacao = geraPopulacaoInicial(p, n);                             // Theta(n)
+                    mutacao = 0.10;                                                     // O(1)
+                    melhorFitness = -1;                                                 // O(1)
                 }
             }
-            i = i + 1;                                                              // Theta(1)
+            i = i + 1;                                                                  // Theta(1)
         // Até que a geracao atinja o maximo de geraces ou alcance o maior fitness    
-        } while ((i < geracoes) && (melhorFitness != maiorFitness));                // Theta(1)
+        } while ((i < geracoes) && (melhorFitness != maiorFitness));                    // Theta(1)
         //Retorna o melhor indivíduo encontrado nas gerações   
-        return melhorIndividuo;                                                     // Theta(1)
+        return melhorIndividuo;                                                         // Theta(1)
     }
         
     /**
@@ -474,7 +474,7 @@ public class NRainhasAlgoritmoGenetico {
         long solucoesAcumulado = 0;                                                                         // Theta(1)
         
         //Realiza os testes para as quantidades das rainhas especificadas no vetor
-        for (int problemaAtual = 0; problemaAtual < listaProblemasASolucionar.length; problemaAtual++) {    // Theta(1) -- ListaProblemasASolucionar.length � uma constante
+        for (int problemaAtual = 0; problemaAtual < listaProblemasASolucionar.length; problemaAtual++) {    // Theta(1) -- ListaProblemasASolucionar.length é uma constante
 
             int n = listaProblemasASolucionar[problemaAtual];                                               // Theta(1)
             
@@ -487,15 +487,15 @@ public class NRainhasAlgoritmoGenetico {
             solucoesAcumulado = 0;                                                                          // Theta(1)
                         
             //Repete o teste para as vezes especificadas no vetor
-            for (int testeAtual = 1; testeAtual <= repeticoesTeste; testeAtual++) {                         // Theta(1) -- repeticoesTeste � uma constante
+            for (int testeAtual = 1; testeAtual <= repeticoesTeste; testeAtual++) {                         // Theta(1) -- repeticoesTeste é uma constante
                 //Zera o contador de solucoes
                 solucoes = 0;                                                                               // Theta(1)
                 
                 //Executa o garbage collector (gc) antes de cada teste
-                System.gc();                                                                                // ???
+                System.gc();                                                                                // Theta(1)
 
                 //Início da execução
-                long tempo = System.currentTimeMillis();                                                    // ???
+                long tempo = System.currentTimeMillis();                                                    // Theta(1)
 
                 //Parâmetros do Algoritmo Genético
                 //Quantidade de gerações

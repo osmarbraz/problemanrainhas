@@ -138,17 +138,17 @@ public class NRainhasSimulatedAnnealing {
      * @param n Tamanho do indivíduo
      * @return um indivíduo da populacao com repetição de rainha
      */
-    private static int[] geraIndividuo(int n) {
+    private static int[] geraIndividuo(int n) {                                     // Theta(n)
         //Inicializa o vetor de retorno
-        int[] novoIndividuo = new int[n];
-        int i = 0;
+        int[] novoIndividuo = new int[n];                                           // Theta(1)
+        int i = 0;                                                                  // Theta(1)
         //Gera as rainhas aleatóriamente de acordo com o tamanho especificado em n
-        while (i < n) {
+        while (i < n) {                                                             // Theta(n)
             //Gera um uma rainha aleatória
-            novoIndividuo[i] = RANDOMICO.nextInt(n);
-            i = i + 1;
+            novoIndividuo[i] = RANDOMICO.nextInt(n);                                // Theta(n)
+            i = i + 1;                                                              // Theta(n)
         }
-        return novoIndividuo;
+        return novoIndividuo;                                                       // Theta(1)
     }
     
     /**
@@ -186,13 +186,13 @@ public class NRainhasSimulatedAnnealing {
      * @return A nova posição da rainha de acordo com o deslocamento.
      */
     public static int moverParaBaixo(int n, int coluna, int deslocamento) {
-        coluna = coluna + deslocamento;
-
+        coluna = coluna + deslocamento;                                     // Theta(1)
+        
         //Verifica se está acima dos limites
-        if (coluna >= n) {
-            coluna = coluna % n;
+        if (coluna >= n) {                                                  // Theta(1)
+            coluna = coluna % n;                                            // O(1)
         }
-        return coluna;
+        return coluna;                                                      // Theta(1)
     }
 
     /**
@@ -203,35 +203,35 @@ public class NRainhasSimulatedAnnealing {
      * @param R Um indíviuo que deve ser modificado.
      * @return Um novo indivíduo vizinho a R.
      */
-    public static int[] geraVizinho(int R[]) {
+    public static int[] geraVizinho(int R[]) {              // Theta(n)
         //Quantidade de rainhas
-        int n = R.length;
+        int n = R.length;                                   // Theta(1)
 
         //Escolhe uma coluna aleatóriamente
-        int coluna = RANDOMICO.nextInt(n);
+        int coluna = RANDOMICO.nextInt(n);                  // Theta(1)
         //Escolhe um deslocamento aleatóriamente
-        int deslocamento = RANDOMICO.nextInt(n);
+        int deslocamento = RANDOMICO.nextInt(n);            // Theta(1)
 
         //Inicializa o vetor de retorno
-        int[] novoIndividuo = new int[n];
+        int[] novoIndividuo = new int[n];                   // Theta(1)
 
         //Iterador dos indivíduos
-        int i = 0;
+        int i = 0;                                          // Theta(1)
         //Compia o tabuleiro
-        while (i < n) {
-            novoIndividuo[i] = R[i];
-            i = i + 1;
+        while (i < n) {                                     // Theta(n)
+            novoIndividuo[i] = R[i];                        // Theta(n)
+            i = i + 1;                                      // Theta(n)
         }
         //novoIndividuo[coluna] = moverParaBaixo(n, novoIndividuo[coluna], deslocamento);       
-        novoIndividuo[coluna] = deslocamento;
+        novoIndividuo[coluna] = deslocamento;               // Theta(1)
 
-        return novoIndividuo;
+        return novoIndividuo;                               // Theta(1)
     }
 
     /**
      * Executa as iterações do Simulated Annealing.
      *
-     * Complexidade
+     * Complexidade O(n^2)
      *
      * @param n Quantidade de rainhas.
      * @param M Número máximo de iterações (Entrada).
@@ -242,51 +242,51 @@ public class NRainhasSimulatedAnnealing {
     public static int[] simulatedAnnealing(int n, int M, double alfa, double T0) {
 
         //Define o melhor fitness com a quantidade de rainhas atacadas.
-        int melhorFitness = 0;
+        int melhorFitness = 0;                                                  // Theta(1)
 
         //temperatura inicial
-        double T = T0;
+        double T = T0;                                                          // Theta(1)
 
         //Gera o candidato inicial S com n rainhas
-        int[] S = geraIndividuo(n);
+        int[] S = geraIndividuo(n);                                             // Theta(n)
 
         //Calcula o custo do candidato inicial(S)          
-        int C = fitness(S);
+        int C = fitness(S);                                                     // Theta(n)
 
         //Iterador de pertubações em uma iteração
-        int i = 0;
+        int i = 0;                                                              // Theta(1)
 
         //Enquanto i não chegou ao final da iteração M e não é o melhor fitness        
-        while ((i < M) && (C != melhorFitness)) {
+        while ((i < M) && (C != melhorFitness)) {                               // O(n^2)
 
             //Gera o vizinho Si a partir de S
-            int[] Si = geraVizinho(S);
+            int[] Si = geraVizinho(S);                                          // Theta(n)
 
             //Calcula o custo do vizinho Si   
-            int Ci = fitness(Si);
+            int Ci = fitness(Si);                                               // Theta(n)
 
             //Calcula o delta do fitness de Ci e C
-            int delta = Ci - C;
+            int delta = Ci - C;                                                 // Theta(1)
 
             //Se o Si tem custo menor
-            if (delta <= 0) {
+            if (delta <= 0) {                                                   // Theta(1)
                 //Escolhe o vizinho(Si)
-                S = Si;
-                C = Ci;
+                S = Si;                                                         // O(1)
+                C = Ci;                                                         // O(1)
             } else {
-                if (Math.exp(-delta / T) > Math.random()) {
+                if (Math.exp(-delta / T) > Math.random()) {                     // Theta(1)
                     // Escolhe o vizinho(Si)
-                    S = Si;
-                    C = Ci;
+                    S = Si;                                                     // O(1)
+                    C = Ci;                                                     // O(1)
                 }
             }
             //Atualiza a temperatura
-            T = T * alfa;
+            T = T * alfa;                                                       // Theta(1)
             //Incrementa o iterador
-            i = i + 1;
+            i = i + 1;                                                          // Theta(1)
         }
         //Retorna o melhor indivíduo encontrado nas gerações   
-        return S;
+        return S;                                                               // Theta(1)
     }
 
     /**
@@ -298,21 +298,21 @@ public class NRainhasSimulatedAnnealing {
      * @param alfa Fator de redução da temperatura.
      * @param T0 Temperatura inicial.
      */
-    public static void executaSimulatedAnnealing(int n, int M, double alfa, double T0) {
+    public static void executaSimulatedAnnealing(int n, int M, double alfa, double T0) {   // O(n^2)
 
         //Guarda o melhor indivíduo
         //Procura o menor indivíduo
-        int[] melhorIndividuo = simulatedAnnealing(n, M, alfa, T0);
+        int[] melhorIndividuo = simulatedAnnealing(n, M, alfa, T0);                        // O(n^2)
 
-        if (valida(melhorIndividuo)) {
+        if (valida(melhorIndividuo)) {                                                     // O(n^2)
             //Incrementa o contador de soluções
-            solucoes = solucoes + 1;
+            solucoes = solucoes + 1;                                                        
             //System.out.println("Solucao encontrada em " + geracao + " geracoes");
             //System.out.println("Solucao = " + vetorToString(melhorIndividuo));
             //System.out.println("Fitness = " + fitness(melhorIndividuo));
             //System.out.println("Solucao");
-            imprimeSolucao(melhorIndividuo);
-        } else {
+            imprimeSolucao(melhorIndividuo);                                               // O(n^2)
+        } else {                                                                           // 0 
             //System.out.println("Solucao nao encontrada após " + geracao + " geracoes");
             //System.out.println("Melhor Individuo = " + vetorToString(melhorIndividuo));
             //System.out.println("Fitness = " + fitness(melhorIndividuo));
@@ -329,74 +329,75 @@ public class NRainhasSimulatedAnnealing {
      * executados.
      * @param repeticoesTeste quantidade de repetições para cada problema.
      */
-    private static void nRainhas(int[] listaProblemasASolucionar, int repeticoesTeste) {
+    private static void nRainhas(int[] listaProblemasASolucionar, int repeticoesTeste) {                    //O(n^2)
 
-        double tempoTotalDeTeste = 0;
-        long tempoAcumulado = 0;
-        long solucoesAcumulado = 0;
+        double tempoTotalDeTeste = 0;                                                                       //Theta(1)
+        long tempoAcumulado = 0;                                                                            //Theta(1)
+        long solucoesAcumulado = 0;                                                                         //Theta(1)
 
         //Realiza os testes para as quantidades das rainhas especificadas no vetor
-        for (int problemaAtual = 0; problemaAtual < listaProblemasASolucionar.length; problemaAtual++) {
+        for (int problemaAtual = 0; problemaAtual < listaProblemasASolucionar.length; problemaAtual++) {    // Theta(1) -- ListaProblemasASolucionar.length é uma constante
 
-            int n = listaProblemasASolucionar[problemaAtual];
+            int n = listaProblemasASolucionar[problemaAtual];                                               // Theta(1)
 
-            System.out.println("-----------------------------------------------------------");
-            System.out.println("Para " + n + " Rainhas \n");
-
+            System.out.println("-----------------------------------------------------------");              // Theta(1)
+            System.out.println("Para " + n + " Rainhas \n");                                                // Theta(1)
+            
             //Zera o tempo da execução da iteração
-            tempoAcumulado = 0;
+            tempoAcumulado = 0;                                                                             // Theta(1)
             //Zera o contador de solucoes da iteração
-            solucoesAcumulado = 0;
+            solucoesAcumulado = 0;                                                                          // Theta(1)
 
             //Repete o teste para as vezes especificadas no vetor
-            for (int testeAtual = 1; testeAtual <= repeticoesTeste; testeAtual++) {
+            for (int testeAtual = 1; testeAtual <= repeticoesTeste; testeAtual++) {                         // Theta(1) -- repeticoesTeste é uma constante
                 //Zera o contador de solucoes
-                solucoes = 0;
+                solucoes = 0;                                                                               // Theta(1)
 
                 //Executa o garbage collector (gc) antes de cada teste
-                System.gc();
+                System.gc();                                                                                // Theta(1)
 
                 //Início da execução
-                long tempo = System.currentTimeMillis();
+                long tempo = System.currentTimeMillis();                                                    // Theta(1)
 
                 //Parâmetros do Simulated Annealing
                 //Número máximo de iterações (Entrada);
-                int M = 5000;
+                int M = 5000;                                                                               // Theta(1)
 
                 //Fator de redução da temperatura
-                double alfa = 0.01;
+                double alfa = 0.01;                                                                         // Theta(1)
 
                 //Temperatura inicial, utiliza a quantidade rainhas
-                double T0 = n;
+                double T0 = n;                                                                              //Theta(1)
 
                 //Executa a solução da simulação
-                executaSimulatedAnnealing(n, M, alfa, T0);
+                executaSimulatedAnnealing(n, M, alfa, T0);                                                  // O(n^2)
 
                 //Pega o tempo final do processamento da vez
-                tempo = System.currentTimeMillis() - tempo;
+                tempo = System.currentTimeMillis() - tempo;                                                 // Theta(1)
 
                 //Acumula o tempo do teste ao tempo final
-                tempoAcumulado = tempoAcumulado + tempo;
+                tempoAcumulado = tempoAcumulado + tempo;                                                    // Theta(1)
 
                 //Acumula a soluções do teste
-                solucoesAcumulado = solucoesAcumulado + solucoes;
-                System.out.println("Resultado da " + testeAtual + "ª execução: " + tempo + " milisegundos" + " com " + solucoes + " soluções");
+                solucoesAcumulado = solucoesAcumulado + solucoes;                                           // Theta(1) 
+                System.out.println("Resultado da " + testeAtual + "ª execução: " + tempo 
+                        + " milisegundos" + " com " + solucoes + " soluções");                              // Theta(1) 
             }
             //Calcula a média do tempo
-            double mediaTempo = tempoAcumulado / (double) repeticoesTeste;
+            double mediaTempo = tempoAcumulado / (double) repeticoesTeste;                                  // Theta(1)
 
             //Calcula a média de solucoes
-            double mediaSolucoes = solucoesAcumulado / (double) repeticoesTeste;
+            double mediaSolucoes = solucoesAcumulado / (double) repeticoesTeste;                            // Theta(1) 
 
-            System.out.println("\nSoluções Média: " + mediaSolucoes + " soluções");
-            System.out.println("Tempo Médio...: " + mediaTempo + " milisegundos");
-            System.out.println("Acumulado.....: " + tempoAcumulado + " milisegundos");
+            System.out.println("\nSoluções Média: " + mediaSolucoes + " soluções");                         // Theta(1)
+            System.out.println("Tempo Médio...: " + mediaTempo + " milisegundos");                          // Theta(1)
+            System.out.println("Acumulado.....: " + tempoAcumulado + " milisegundos");                      // Theta(1)
 
-            tempoTotalDeTeste = tempoTotalDeTeste + tempoAcumulado;
+            tempoTotalDeTeste = tempoTotalDeTeste + tempoAcumulado;                                         // Theta(1)
         }
-        System.out.println("===========================================================");
-        System.out.println("O tempo total do teste e " + tempoTotalDeTeste + " milisegundos.");
-        System.out.println("===========================================================");
+        System.out.println("===========================================================");                  // Theta(1)
+        System.out.println("O tempo total do teste e " + tempoTotalDeTeste + " milisegundos.");             // Theta(1)
+        System.out.println("===========================================================");                  // Theta(1)
     }
 
     public static void main(String[] args) {
