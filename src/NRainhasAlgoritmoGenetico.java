@@ -354,15 +354,15 @@ public class NRainhasAlgoritmoGenetico {
         //Percorre as n posições, se encontrar uma posição inválida 
         //interrompe o laço
         while ((k < n ) && (validaPosicao(R, k))) {                 // n * Theta(1) + n * O(n)  = O(n^2)
-           k = k + 1;                                               // O(n)
+           k = k + 1;                                               // n * O(1) = O(n)
         }
                 
         //Se k==n, então necessariamente não houve posição inválida identificada
-        if (k==n) {
-           return true;                                             // Theta(1)
+        if (k==n) {                                                 // Theta(1)
+           return true;                                             // O(1)
         } else {
             //Se o while foi interrompido antes existe posição invalida
-           return false;                                            // Theta(1)
+           return false;                                            // O(1)
         }        
     }
 
@@ -503,7 +503,7 @@ public class NRainhasAlgoritmoGenetico {
                 //Tamanho da populacao
                 int p = 20;                                                                                 // Theta(1)
                 //Probabilidade de mutação dos individuos
-                double mutacao = 0.15;                                                                      // Theta(1)
+                double mutacao = 0.05;                                                                      // Theta(1)
 
                 //Executa a solução do algoritmo
                 executaAlgoritmoGenetico(n, qtdGeracoes, p, mutacao);                                       // O(n^2)
@@ -516,7 +516,7 @@ public class NRainhasAlgoritmoGenetico {
                 
                 //Acumula a soluções do teste
                 solucoesAcumulado = solucoesAcumulado + solucoes;                                           // Theta(1)
-                System.out.println("Resultado da " + testeAtual + "e execução: " + tempo + 
+                System.out.println("Resultado da " + testeAtual + "ª execução: " + tempo + 
                                    " milisegundos" + " com " + solucoes + " soluções");                     // Theta(1)
             }
             //Calcula a média do tempo

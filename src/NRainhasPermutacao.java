@@ -87,15 +87,15 @@ public class NRainhasPermutacao {
         //Percorre as n posições, se encontrar uma posição inválida 
         //interrompe o laço
         while ((k < n ) && (validaPosicao(R, k))) {                 // n * Theta(1) + n * O(n)  = O(n^2)
-           k = k + 1;                                               // O(n)
+           k = k + 1;                                               // n * O(1) = O(n)
         }
                 
         //Se k==n, então necessariamente não houve posição inválida identificada
-        if (k==n) {
-           return true;                                             // Theta(1)
+        if (k==n) {                                                 // Theta(1)
+           return true;                                             // O(1)
         } else {
             //Se o while foi interrompido antes existe posição invalida
-           return false;                                            // Theta(1)
+           return false;                                            // O(1)
         }        
     }
 
