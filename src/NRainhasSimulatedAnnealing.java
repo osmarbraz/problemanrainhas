@@ -260,10 +260,10 @@ public class NRainhasSimulatedAnnealing {
         while ((i < M) && (C != melhorFitness)) {                               // O(n^2)
 
             //Gera o vizinho Si a partir de S
-            int[] Si = geraVizinho(S);                                          // Theta(n)
+            int[] Si = geraVizinho(S);                                          // M * Theta(n), logo Theta(n) 
 
             //Calcula o custo do vizinho Si   
-            int Ci = fitness(Si);                                               // Theta(n)
+            int Ci = fitness(Si);                                               // O(n^2)
 
             //Calcula o delta do fitness de Ci e C
             int delta = Ci - C;                                                 // Theta(1)
@@ -407,7 +407,7 @@ public class NRainhasSimulatedAnnealing {
         // Vetor contendo os problemas a serem processados.
         // Cada elemento define a ordem do tabuleiro e, consequentemente, a 
         // quantidade de rainhas a serem posicionadas.
-        int[] listaProblemasASolucionar = {4, 6, 8, 10, 12, 14, 16, 18, 20, 22};
+        int[] listaProblemasASolucionar = {4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28 , 30};
 
         // Quantidade de repetições do processamento
         // Útil para fins estatísticos.
