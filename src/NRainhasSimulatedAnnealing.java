@@ -361,7 +361,7 @@ public class NRainhasSimulatedAnnealing {
 
                 //Parâmetros do Simulated Annealing
                 //Número máximo de iterações (Entrada);
-                int M = 5000;                                                                               // Theta(1)
+                int M = 2500;                                                                               // Theta(1)
 
                 //Fator de redução da temperatura
                 double alfa = 0.01;                                                                         // Theta(1)
@@ -407,7 +407,7 @@ public class NRainhasSimulatedAnnealing {
         // Vetor contendo os problemas a serem processados.
         // Cada elemento define a ordem do tabuleiro e, consequentemente, a 
         // quantidade de rainhas a serem posicionadas.
-        int[] listaProblemasASolucionar = {4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28 , 30};
+        int[] listaProblemasASolucionar = {4, 6, 8, 10, 12, 14, 16, 18, 20, 22};
 
         // Quantidade de repetições do processamento
         // Útil para fins estatísticos.
