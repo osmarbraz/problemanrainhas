@@ -251,13 +251,13 @@ public class NRainhasSimulatedAnnealing {
         int[] S = geraIndividuo(n);                                             // Theta(n)
 
         //Calcula o custo do candidato inicial(S)          
-        int C = fitness(S);                                                     // Theta(n)
+        int C = fitness(S);                                                     // O(n^2)
 
         //Iterador de pertubações em uma iteração
         int i = 0;                                                              // Theta(1)
 
         //Enquanto i não chegou ao final da iteração M e não é o melhor fitness        
-        while ((i < M) && (C != melhorFitness)) {                               // O(n^2)
+        while ((i < M) && (C != melhorFitness)) {                               // Theta(1)
 
             //Gera o vizinho Si a partir de S
             int[] Si = geraVizinho(S);                                          // M * Theta(n), logo Theta(n) 
