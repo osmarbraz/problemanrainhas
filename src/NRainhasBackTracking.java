@@ -50,13 +50,13 @@ public class NRainhasBackTracking {
     private static final boolean IMPRIMIRTABULEIRO = false;
 
     /**
-     * Valida se a k-ésima rainha posicionada está sob ataque.
+     * Verifica se a k-ésima rainha posicionada está sob ataque.
      * 
      * Uma rainha está sob ataque se há outra rainha na mesma linha, coluna ou 
      * diagonal onde esta se encontra.
      * 
      * Como as rainhas são adicionadas sempre na coluna seguinte, não há necessi-
-     * dade de validar conflitos na mesma coluna.
+     * dade de verificar conflitos na mesma coluna.
      * 
      * Complexidade Theta(k)
      * 
@@ -68,7 +68,7 @@ public class NRainhasBackTracking {
      * @return true se a k-ésima rainha não estiver sob ataque das demais já 
      * posicionadas
      */
-    public static boolean validaPosicao(int[] R, int k) {
+    public static boolean verificaRainha(int[] R, int k) {
                 
         // Rainhas anteriormente posicionadas:
         for (int i=0; i<k; i++) {                               // Theta(k)
@@ -113,7 +113,7 @@ public class NRainhasBackTracking {
             for (int i = 0; i < n; i++) {                   // Theta(n)
                 R[k] = i;                                   // Theta(n)
                 //Avança para a próxima rainha/coluna       
-                if (validaPosicao(R, k)) {                  // n * O(n)
+                if (verificaRainha(R, k)) {                 // n * O(n)
                     backTracking(R, k + 1);                 // n * T(k+1)
                 }
             }

@@ -33,7 +33,7 @@ public class NRainhasPermutacao {
      * diagonal onde esta se encontra.
      * 
      * Como as rainhas são adicionadas sempre na coluna seguinte, não há necessi-
-     * dade de validar conflitos na mesma coluna.
+     * dade de verificar conflitos na mesma coluna.
      * 
      * Complexidade Theta(k)
      * 
@@ -45,7 +45,7 @@ public class NRainhasPermutacao {
      * @return true se a k-ésima rainha não estiver sob ataque das demais já 
      * posicionadas
      */
-    public static boolean validaPosicao(int[] R, int k) {
+    public static boolean verificaRainha(int[] R, int k) {
                 
         // Rainhas anteriormente posicionadas:
         for (int i=0; i<k; i++) {                               // Theta(k)
@@ -64,10 +64,9 @@ public class NRainhasPermutacao {
     }
 
     /**
-     * Avalia todas as rainhas posicionadas.
+     * Verifica todas as rainhas posicionadas.
      * 
-     * Chamada o método valida posição para avaliação cada posição do 
-     * vetor de rainhas.
+     * Chamada do método verificaRainha para avaliação de cada posição do vetor de rainhas.
      * 
      * Complexidade O(n^2)
      * 
@@ -76,7 +75,7 @@ public class NRainhasPermutacao {
      * 
      * @return True ou False se existe alguma rainha em posição inválida.
      */
-    public static boolean valida(int[] R) {  
+    public static boolean verificaArranjo(int[] R) {  
         
         //Recupera a quantidade de rainhas
         int n = R.length;                                           // Theta(1)
@@ -86,7 +85,7 @@ public class NRainhasPermutacao {
                 
         //Percorre as n posições, se encontrar uma posição inválida 
         //interrompe o laço
-        while ((k < n ) && (validaPosicao(R, k))) {                 // n * Theta(1) + n * O(n)  = O(n^2)
+        while ((k < n ) && (verificaRainha(R, k))) {                // n * Theta(1) + n * O(n)  = O(n^2)
            k = k + 1;                                               // n * O(1) = O(n)
         }
                 
@@ -123,7 +122,7 @@ public class NRainhasPermutacao {
         //Se k e igual da quantidade rainhas cheguei no final da linha
         if (k == n) {                                                   // Theta(1)
             //Avalia todas as rainhas colocadas 
-            if (valida(R)) {                                            // O(n^2)
+            if (verificaArranjo(R)) {                                   // O(n^2)
                 imprimeSolucao(R);                                      // Theta(n^2)
             }
         } else {                                                        // 0

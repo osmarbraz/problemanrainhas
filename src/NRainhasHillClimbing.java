@@ -133,7 +133,7 @@ public class NRainhasHillClimbing {
         //Verifica se todas as rainhas estão em posições validas
         for (int k = 0; k < n; k++) {                               //Theta(n)
             //Verifica a quantidade de rainhas salvas
-            if (validaPosicao(R, k)) {                              // n * O(n)
+            if (verificaRainha(R, k)) {                              // n * O(n)
                 cont = cont + 1;                                    // O(1)
             }
         }
@@ -148,7 +148,7 @@ public class NRainhasHillClimbing {
      * diagonal onde esta se encontra.
      * 
      * Como as rainhas são adicionadas sempre na coluna seguinte, não há necessi-
-     * dade de validar conflitos na mesma coluna.
+     * dade de verificar conflitos na mesma coluna.
      * 
      * Complexidade Theta(k)
      * 
@@ -160,7 +160,7 @@ public class NRainhasHillClimbing {
      * @return true se a k-ésima rainha não estiver sob ataque das demais já 
      * posicionadas
      */
-    public static boolean validaPosicao(int[] R, int k) {    
+    public static boolean verificaRainha(int[] R, int k) {    
         
         // Rainhas anteriormente posicionadas:
         for (int i=0; i<k; i++) {                               // Theta(k)
@@ -179,10 +179,9 @@ public class NRainhasHillClimbing {
     }
     
     /**
-     * Avalia todas as rainhas posicionadas.
+     * Verifica todas as rainhas posicionadas.
      * 
-     * Chamada o método valida posição para avaliação cada posição do 
-     * vetor de rainhas.
+     * Chamada do método verificaRainha para avaliação de cada posição do vetor de rainhas.
      * 
      * Complexidade O(n^2)
      * 
@@ -191,7 +190,7 @@ public class NRainhasHillClimbing {
      * 
      * @return True ou False se existe alguma rainha em posição inválida.
      */
-    public static boolean valida(int[] R) {  
+    public static boolean verificaArranjo(int[] R) {  
         
         //Recupera a quantidade de rainhas
         int n = R.length;                                           // Theta(1)
@@ -201,7 +200,7 @@ public class NRainhasHillClimbing {
                 
         //Percorre as n posições, se encontrar uma posição inválida 
         //interrompe o laço
-        while ((k < n ) && (validaPosicao(R, k))) {                 // n * Theta(1) + n * O(n)  = O(n^2)
+        while ((k < n ) && (verificaRainha(R, k))) {                // n * Theta(1) + n * O(n)  = O(n^2)
            k = k + 1;                                               // n * O(1) = O(n)
         }
                 
@@ -233,7 +232,7 @@ public class NRainhasHillClimbing {
         //Controla as interações 
         int i = 0;                                                          // Theta(1)
         //Para se chegar no número máximo de interacoes ou achar a solução
-        while ((i < iteracoes) && (valida(candidato) == false)) {           // O(n^2)
+        while ((i < iteracoes) && (verificaArranjo(candidato) == false)) {  // O(n^2)
             // Gera o proximo candidato aleatoriamente
             int[] vizinho = mutacao(candidato);                             // Theta(1)
             //Calcula o custo do novo vizinho                               
@@ -261,7 +260,7 @@ public class NRainhasHillClimbing {
         //Procura o menor indivíduo
         int[] melhorIndividuo = hillClimbing(iteracoes, n);
 
-        if (valida(melhorIndividuo)) {
+        if (verificaArranjo(melhorIndividuo)) {
             //Incrementa o contador de soluções
             solucoes = solucoes + 1;            
             //System.out.println("Solucao encontrada em " + interacaoSolucao + " interacoes");

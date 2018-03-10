@@ -58,13 +58,13 @@ public class NRainhasSimulatedAnnealing {
     }    
 
     /**
-     * Valida se a k-ésima rainha posicionada está sob ataque.
+     * Verifica se a k-ésima rainha posicionada está sob ataque.
      *
      * Uma rainha está sob ataque se há outra rainha na mesma linha, coluna ou
      * diagonal onde esta se encontra.
      *
      * Como as rainhas são adicionadas sempre na coluna seguinte, não há
-     * necessi- dade de validar conflitos na mesma coluna.
+     * necessidade de verificar conflitos na mesma coluna.
      *
      * Complexidade Theta(k)
      *
@@ -76,7 +76,7 @@ public class NRainhasSimulatedAnnealing {
      * @return true se a k-ésima rainha não estiver sob ataque das demais já
      * posicionadas
      */
-    public static boolean validaPosicao(int[] R, int k) {
+    public static boolean verificaRainha(int[] R, int k) {
 
         // Rainhas anteriormente posicionadas:
         for (int i = 0; i < k; i++) {                           // Theta(k)
@@ -95,11 +95,10 @@ public class NRainhasSimulatedAnnealing {
     }
     
  /**
-     * Avalia todas as rainhas posicionadas.
+     * Verifica as rainhas posicionadas.
      *
-     * Chamada o método valida posição para avaliação cada posição do vetor de
-     * rainhas.
-     *
+     * Chamada do método verificaRainha para avaliação de cada posição do vetor de rainhas.
+     * 
      * Complexidade O(n^2)
      *
      * @param R vetor das rainhas posicionadas. O elemento corresponde à coluna
@@ -107,7 +106,7 @@ public class NRainhasSimulatedAnnealing {
      *
      * @return True ou False se existe alguma rainha em posição inválida.
      */
-    public static boolean valida(int[] R) {  
+    public static boolean verificaArranjo(int[] R) {  
         
         //Recupera a quantidade de rainhas
         int n = R.length;                                           // Theta(1)
@@ -117,7 +116,7 @@ public class NRainhasSimulatedAnnealing {
                 
         //Percorre as n posições, se encontrar uma posição inválida 
         //interrompe o laço
-        while ((k < n ) && (validaPosicao(R, k))) {                 // n * Theta(1) + n * O(n)  = O(n^2)
+        while ((k < n ) && (verificaRainha(R, k))) {                // n * Theta(1) + n * O(n)  = O(n^2)
            k = k + 1;                                               // n * O(1) = O(n)
         }
                 
@@ -170,7 +169,7 @@ public class NRainhasSimulatedAnnealing {
         //Verifica se todas as rainhas estão sendo atacadas
         for (int k = 0; k < n; k++) {                               // Theta(1)
             //Verifica se a rainha na posição k esta atacada em R
-            if (validaPosicao(R, k) == false) {                     // n * O(n)
+            if (verificaRainha(R, k) == false) {                    // n * O(n)
                 cont = cont + 1;                                    // O(n)
             }
         }
@@ -304,7 +303,7 @@ public class NRainhasSimulatedAnnealing {
         //Procura o menor indivíduo
         int[] melhorIndividuo = simulatedAnnealing(n, M, alfa, T0);                        // O(n^2)
 
-        if (valida(melhorIndividuo)) {                                                     // O(n^2)
+        if (verificaArranjo(melhorIndividuo)) {                                            // O(n^2)
             //Incrementa o contador de soluções
             solucoes = solucoes + 1;                                                        
             //System.out.println("Solucao encontrada em " + geracao + " geracoes");
