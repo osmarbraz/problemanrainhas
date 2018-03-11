@@ -352,7 +352,7 @@ public class NRainhasAlgoritmoGenetico {
                 
         //Percorre as n posições, se encontrar uma posição inválida 
         //interrompe o laço
-        while ((k < n ) && (verificaRainha(R, k))) {                 // n * Theta(1) + n * O(n)  = O(n^2)
+        while ((k < n ) && (verificaRainha(R, k))) {                // n * Theta(1) + n * O(n)  = O(n^2)
            k = k + 1;                                               // n * O(1) = O(n)
         }
                 
@@ -441,7 +441,7 @@ public class NRainhasAlgoritmoGenetico {
         //Procura o menor indivíduo
         int[] melhorIndividuo = algoritmoGenetico(n, geracoes, p, mutacao);                   // O(n^2)
 
-        if (verificaArranjo(melhorIndividuo)) {                                                        // O(n^2)
+        if (verificaArranjo(melhorIndividuo)) {                                               // O(n^2)
            //Incrementa o contador de soluções
             solucoes = solucoes + 1;
             //System.out.println("Solucao encontrada em " + geracao + " geracoes");
